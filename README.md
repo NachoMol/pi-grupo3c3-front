@@ -40,11 +40,11 @@ La aplicación de renta de coches permite a los usuarios buscar, reservar y admi
 2. Instala las dependencias con pnpm:
 
      ```
-        pnpm install
+        npm install
      ```
 
 3. Inicia la aplicación en modo de desarrollo:
 
     ```
-        pnpm run dev
+        npm run dev
     ```

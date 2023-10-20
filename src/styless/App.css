@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+ 
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -18,6 +18,40 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #d6caab;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-section {
+  
+}
+
+.categories-section {
+  
+  
+}
+
+.recommendations-section {
+  
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +67,27 @@
   }
 }
 
-.card {
-  padding: 2em;
+@media (min-width: 375px){ 
+  body{
+
+  }
+  
 }
 
-.read-the-docs {
-  color: #888;
+@media (min-width: 720px){ 
+  
+  body{
+    
+  }
 }
+
+@media (min-width: 1366px){ 
+  body{
+    
+  }
+  
+}
+
+
+
+

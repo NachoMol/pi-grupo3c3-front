@@ -1,10 +1,13 @@
-import './App.css'
+import './styless/App.css'
+import Header from './components/Header'
+import BodyContainer from './components/BodyContainer'
 
 function App() {
 
   return (
     <>
-      <h1>Explorer</h1>
+      <Header/>
+      <BodyContainer/>
     </>
   )
 }
