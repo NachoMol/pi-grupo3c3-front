@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import '../styless/App.css'; 
 
 
@@ -15,6 +16,9 @@ const BodyContainer = () => {
                 <div className="recommendations-section">
                     <h2>Recomendations</h2>
                 </div>
+                <Link to={'/detail/'}>
+                <p>Detalle de producto</p>
+                </Link>
             </div>
         
     );
