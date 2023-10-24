@@ -5,9 +5,9 @@ const Detail = () => {
   return (
     <>
     <header className='detail_header'>
-      <h2>Titulo del producto</h2>
+      <h2 className='detail_title'>Titulo del producto</h2>
       <Link to={'/'}>
-        <p>Volver al inicio</p>
+      <img className='back-logo' src="../../public/images/back-logo.png" alt="volver al inicio" />
       </Link>
     </header>
     <body>texto descriptivo del producto e imagenes</body>

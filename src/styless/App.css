@@ -18,6 +18,10 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.back-logo{
+  padding: 40px;
+}
+
 .card {
   padding: 2em;
 }
@@ -29,6 +33,10 @@
   background-color: rgba(55, 25, 87, 1);
   color: rgba(217, 217, 217, 1);
   ;
+}
+
+.detail_title{
+  padding: 20px;
 }
 
 
