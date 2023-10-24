@@ -11,6 +11,9 @@ const Detail = () => {
       </Link>
     </header>
     <body>texto descriptivo del producto e imagenes</body>
+    <Link to={'/CarGallery'}>
+    <button>More photos</button>
+    </Link>
     </>
   )
 }
