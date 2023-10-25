@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import CarGallery from '../components/CarGallery'
 
 const Detail = () => {
   return (
@@ -13,9 +14,10 @@ const Detail = () => {
     <body>
     <div className='detail-div'>
     <div>
-    <Link to={'/CarGallery'}>
+      <CarGallery/>
+    {/* <Link to={'/CarGallery'}>
     <button>More photos</button>
-    </Link>
+    </Link> */}
     </div>
     <div className='detail-information'>
       <h3>Car details</h3>

@@ -47,6 +47,7 @@
 .detail-information{
   font-family: Arial, sans-serif;
   font-size: 16px;
+  width: 20vw;
   background-color: rgba(255, 255, 255, 1);
   margin: 30px;
   padding: 20px;
@@ -151,7 +152,6 @@ header{
   }
   
 }
-
 
 
 
