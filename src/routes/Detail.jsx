@@ -11,6 +11,7 @@ const Detail = () => {
       </Link>
     </header>
     <body>
+    <div className='detail-div'>
     <div>
     <Link to={'/CarGallery'}>
     <button>More photos</button>
@@ -20,6 +21,7 @@ const Detail = () => {
       <p>Año 2016</p>
       <p>Version: 1.4 Ltz 153cv</p>
       <p>Transmisión: Manual</p>
+    </div>
     </div>
     </body>
     </>
