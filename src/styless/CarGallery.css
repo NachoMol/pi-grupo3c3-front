@@ -30,7 +30,7 @@
   align-items: center;
   justify-items: center;
   padding: 0;
-  margin:50px 0px 40px 0px;
+  margin:20px 0px 40px 0px;
   list-style-type: none;
 }
 
@@ -48,3 +48,23 @@
   height: auto;
   object-fit: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
 }
+
+@media (max-width: 720px){   
+.photosContainer{
+  grid-gap: 20px;
+}
+}
+
+@media (max-width: 400px){   
+  .mainPhotoContainer {
+    width: 80vw;
+  }
+  
+  .mainPhoto {
+    width: 80vw;
+  }
+  
+  .photosContainer {
+    width: 80vw;
+  }
+  }

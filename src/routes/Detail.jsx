@@ -6,10 +6,10 @@ const Detail = () => {
   return (
     <>
     <header className='detail_header'>
-      <h2 className='detail_title'>Chevrolet Cruze II 1.4 LTZ 153CV Hatchback 2016</h2>
-      <Link to={'/'}>
-      <img className='back-logo' src="../../public/images/back-logo.png" alt="volver al inicio" />
+      <Link to={'/'} className='back-logo'>
+      <img src="../../public/images/back-logo.png" alt="volver al inicio" />
       </Link>
+      <h2 className='detail_title'>Chevrolet Cruze II 1.4 LTZ 153CV Hatchback 2016</h2>
     </header>
     <body>
     <div className='detail-div'>
