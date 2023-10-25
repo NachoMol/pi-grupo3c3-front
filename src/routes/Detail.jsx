@@ -18,11 +18,12 @@ const Detail = () => {
     </Link>
     </div>
     <div className='detail-information'>
-      <p>Año 2016</p>
+      <h3>Car details</h3>
+      <p>Year: 2016</p>
       <p>Version: 1.4 Ltz 153cv</p>
-      <p>Transmisión: Manual</p>
-      <h4>Precio: $10.0000 por día</h4>
-      <button>Reservar ahora</button>
+      <p>Transmission: Manual</p>
+      <h4>Price: $10.0000 per day</h4>
+      <button>Rent now</button>
     </div>
     </div>
     </body>
