@@ -1,72 +1,72 @@
-.container {
-    background-color: #f8f8f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form-container {
-    background-color: #ffffff;
-    border: 1px solid #e2e2e2;
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
+    background-color: #fff;
     text-align: center;
   }
   
-  h2 {
-    margin: 0 0 20px;
+  .form-container h2 {
     font-size: 24px;
+    margin-bottom: 20px;
     color: #333;
   }
   
-  form {
-    display: flex;
-    flex-direction: column;
+  .form-content {
+    text-align: left;
   }
   
   .label {
-    margin: 10px 0;
-    text-align: left;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
   }
   
   .input-text,
   .input-number,
-  textarea {
+  .textarea {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .textarea {
     width: 100%;
     padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #e2e2e2;
+    margin-top: 5px;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
+    resize: none; 
   }
   
-  textarea {
-    min-height: 100px;
+  .button {
+    background-color: #302253;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    margin:0 auto;
+    margin-top: 20px;
+  }
+  
+  .button:hover {
+    background-color: #5e2b96;
   }
   
   .error-message {
     color: #ff0000;
     margin-top: 10px;
-  }
-  
-  .button {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  /* Estilos para los campos de entrada de número sin flechas */
-  .input-number::-webkit-inner-spin-button,
-  .input-number::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  .input-number[type="number"] {
-    -moz-appearance: textfield;
   }

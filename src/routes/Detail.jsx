@@ -28,7 +28,7 @@ const Detail = () => {
       <p><strong>Car Type: </strong>Basic</p>
       <p><strong>Seats: </strong>4</p>
       <h4><strong>Price: </strong>$10.0000 per day</h4>
-      <button className='action-button'>Rent now</button>
+      <button className='rent-button'>Rent now</button>
     </div>
     </div>
     
