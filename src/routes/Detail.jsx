@@ -1,17 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import CarGallery from '../components/CarGallery'
+import '../styless/App.css'
+import '../styless/Detail.css'
 
 const Detail = () => {
   return (
     <>
     <header className='detail_header'>
-      <Link to={'/'} className='back-logo'>
-      <img src="../../public/images/back-logo.png" alt="volver al inicio" />
+      <Link to={'/'} className='back-logo-container'>
+      <img className='back-logo' src="https://www.iconpacks.net/icons/3/free-icon-left-arrow-7252.png" alt="" />
       </Link>
       <h2 className='detail_title'>Chevrolet Cruze II 1.4 LTZ 153CV Hatchback 2016</h2>
     </header>
-    <body>
+    
     <div className='detail-div'>
     <div>
       <CarGallery/>
@@ -29,7 +31,7 @@ const Detail = () => {
       <button className='action-button'>Rent now</button>
     </div>
     </div>
-    </body>
+    
     </>
   )
 }

@@ -1,0 +1,138 @@
+.action-button{ 
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.detail_header{
+    width: 100%;
+    display: flex;
+    background-color: rgba(55, 25, 87, 1);
+    color: rgba(217, 217, 217, 1);
+    align-items: center;
+    height: 90px;
+  }
+  
+  .detail_title{
+    flex: 1;
+    text-align: center;
+  }
+
+  .back-logo-container{
+    display: flex;
+    align-items: center;
+    padding: 45px 5px 45px 30px;
+  }
+  .back-logo{
+    width: 40px;
+    height: auto;
+  }
+  
+  .detail-div{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  .detail-information{
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    display: inline-grid;
+    width: 20vw;
+    height: auto;
+    background-color: rgba(255, 255, 255, 1);
+    margin-top: 15px;
+    margin-bottom: 1em;
+    padding: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
+  }
+  
+  .detail-information h3 {
+    font-size: 20px; /* Tamaño de fuente más grande para el título */
+  }
+  
+  .detail-information strong {
+    font-weight: bold; /* Puedes ajustar el peso de la fuente para un énfasis más fuerte */
+  }
+  
+  .read-the-docs {
+    color: #888;
+  }
+  
+  .rent-button {
+    background-color: rgb(48, 34, 83);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .rent-button:hover {
+    background-color: rgb(78, 54, 120);
+  }
+
+  @media (max-width: 1060px){
+    .detail-information{
+      width: 25vw;
+      padding:10px 15px;
+  }
+  }
+
+  @media (max-width: 990px){
+    .detail-information{
+      font-size: 14px;
+      width: 30vw;
+      padding: 0px 10px 10px 10px;
+      }
+      .detail-information h3 {
+        font-size: 18px;
+      }
+      }
+  
+   @media (max-width: 790px){
+    .detail-information{
+      display: block;
+    }
+    .detail-information h3 {
+      font-size: 16px;
+    }
+    }
+
+    @media (max-width: 604px){
+      .detail-information h3 {
+        font-size: 14px;
+      }
+      .detail-information h4 {
+        margin: 5px 0px;
+      }
+      .detail-information{
+        font-size: 12px;
+      }
+    }
+   @media (max-width: 460px){
+    .detail-div{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+    .detail-information{
+      width: 60vw;
+      font-size: 14px;
+  }
+  .detail-information h3 {
+    font-size: 16px;
+  }
+  } 
+  
