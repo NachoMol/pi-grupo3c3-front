@@ -71,14 +71,14 @@ const Admin = () => {
             required
           />
 
-          <label className="label">Images (One URL per line):</label>
+          {/* <label className="label">Images (One URL per line):</label>
           <textarea
             className="textarea"
             name="images"
             value={vehicle.images.join('\n')}
             onChange={handleImageChange}
             required
-          />
+          /> */}
 
           <label className="label">Vehicle Type:</label>
           <input
