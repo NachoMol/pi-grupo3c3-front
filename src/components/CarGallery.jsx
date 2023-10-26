@@ -36,7 +36,7 @@ const CarGallery = () => {
           className={`mainPhoto ${isZoomed ? 'zoomed-photo' : ''}`}
           src={images[currentImageIndex]}
           alt=''
-          onClick={toggleZoom}
+          onClick={!isZoomed ? toggleZoom : null} // Modificación aquí
         />
         <div className="arrow right-arrow" onClick={handleZoomNextClick}>
           <img className={`arrowIcons ${isZoomed ? 'visible' : ''}`} src="https://www.iconpacks.net/icons/2/free-icon-arrow-right-3098.png" alt="" />
