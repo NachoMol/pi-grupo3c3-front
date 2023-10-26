@@ -14,10 +14,7 @@ const BodyContainer = () => {
                 </div>
                 <div className="recommendations-section">
                     <h2>Recomendations</h2>
-                </div>
-                <Link to={'/detail/'}>
-                <p>Detalle de producto</p>
-                </Link>
+                </div>                
                 <Link to={'/admin'}>
                     <p>Admin</p>
                 </Link>
