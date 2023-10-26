@@ -67,29 +67,7 @@ header{
     animation: logo-spin infinite 20s linear;
   }
 }
-/* @media (max-width: 860px){
-  .detail-information{
-    font-size: 14px;
-    width: 30vw;
-}
-.detail_title{
-  font-size: 20px;
-}
-}
 
-@media (max-width: 400px){
-  .detail-div{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  }
-  .detail-information{
-    font-size: 14px;
-    width: 60vw;
-}
-} */
 
 
 @media (min-width: 1366px){

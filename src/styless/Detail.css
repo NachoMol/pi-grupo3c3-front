@@ -1,3 +1,9 @@
+.action-button{ 
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
 
 .detail_header{
     width: 100%;
@@ -32,8 +38,9 @@
   .detail-information{
     font-family: Arial, sans-serif;
     font-size: 16px;
+    display: inline-grid;
     width: 20vw;
-    height: 80%;
+    height: auto;
     background-color: rgba(255, 255, 255, 1);
     margin-top: 15px;
     margin-bottom: 1em;
@@ -74,29 +81,45 @@
     background-color: rgb(78, 54, 120);
   }
 
-  @media (max-width: 860px){
+  @media (max-width: 1060px){
     .detail-information{
-      font-size: 14px;
       width: 25vw;
       padding:10px 15px;
   }
-  .detail-information h3 {
-    font-size: 18px;
-  }
   }
 
-  @media (max-width: 660px){
+  @media (max-width: 990px){
     .detail-information{
-      font-size: 12px;
+      font-size: 14px;
       width: 30vw;
-      padding: 0px 20px 10px 20px;
+      padding: 0px 10px 10px 10px;
       }
       .detail-information h3 {
-        font-size: 16px;
+        font-size: 18px;
       }
       }
   
-  @media (max-width: 460px){
+   @media (max-width: 790px){
+    .detail-information{
+      display: block;
+    }
+    .detail-information h3 {
+      font-size: 16px;
+    }
+    }
+
+    @media (max-width: 604px){
+      .detail-information h3 {
+        font-size: 14px;
+      }
+      .detail-information h4 {
+        margin: 5px 0px;
+      }
+      .detail-information{
+        font-size: 12px;
+      }
+    }
+   @media (max-width: 460px){
     .detail-div{
       display: flex;
       flex-direction: column;
@@ -105,8 +128,11 @@
       width: 100%;
     }
     .detail-information{
-      font-size: 14px;
       width: 60vw;
+      font-size: 14px;
   }
+  .detail-information h3 {
+    font-size: 16px;
   }
+  } 
   

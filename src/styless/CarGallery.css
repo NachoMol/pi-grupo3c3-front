@@ -102,13 +102,17 @@
   padding: 10px;
 }
 
-@media (max-width: 720px){   
+@media (max-width: 920px){   
 .photosContainer{
   grid-gap: 20px;
 }
 }
 
-@media (max-width: 460px){   
+@media (max-width: 660px){
+
+}
+
+ @media (max-width: 460px){   
   .mainPhotoContainer {
     width: 80vw;
   }  
@@ -118,4 +122,4 @@
   .photosContainer {
     width: 80vw;
   }
-  }
+  } 
