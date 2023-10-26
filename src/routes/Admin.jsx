@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../styless/Admin.css"
+import '../styless/Admin.css'
 
 const Admin = () => {
   const [vehicle, setVehicle] = useState({
@@ -47,72 +47,74 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Register Vehicle</h2>
-      <form onSubmit={handleSubmit}>
-      <label className="label">Name:</label>
-<input
-  className="input-text"
-  type="text"
-  name="name"
-  value={vehicle.name}
-  onChange={handleInputChange}
-  required
-/>
+      <div className="form-content">
+        <form onSubmit={handleSubmit}>
+          <label className="label">Name:</label>
+          <input
+            className="input-text"
+            type="text"
+            name="name"
+            value={vehicle.name}
+            onChange={handleInputChange}
+            required
+          />
 
-<label className="label">Brand:</label>
-<input
-  className="input-text"
-  type="text"
-  name="brand"
-  value={vehicle.brand}
-  onChange={handleInputChange}
-  required
-/>
+          <label className="label">Brand:</label>
+          <input
+            className="input-text"
+            type="text"
+            name="brand"
+            value={vehicle.brand}
+            onChange={handleInputChange}
+            required
+          />
 
-<label className="label">Images (One URL per line):</label>
-<textarea
-  className="textarea"
-  name="images"
-  value={vehicle.images.join('\n')}
-  onChange={handleImageChange}
-  required
-/>
+          <label className="label">Images (One URL per line):</label>
+          <textarea
+            className="textarea"
+            name="images"
+            value={vehicle.images.join('\n')}
+            onChange={handleImageChange}
+            required
+          />
 
-<label className="label">Vehicle Type:</label>
-<input
-  className="input-text"
-  type="text"
-  name="type"
-  value={vehicle.type}
-  onChange={handleInputChange}
-  required
-/>
+          <label className="label">Vehicle Type:</label>
+          <input
+            className="input-text"
+            type="text"
+            name="type"
+            value={vehicle.type}
+            onChange={handleInputChange}
+            required
+          />
 
-<label className="label">Number of Seats:</label>
-<input
-  className="input-number"
-  type="number"
-  name="seats"
-  value={vehicle.seats}
-  onChange={handleInputChange}
-  required
-/>
+          <label className="label">Number of Seats:</label>
+          <input
+            className="input-number"
+            type="number"
+            name="seats"
+            value={vehicle.seats}
+            onChange={handleInputChange}
+            required
+          />
 
-<label className="label">Price:</label>
-<input
-  className="input-number"
-  type="number"
-  name="price"
-  value={vehicle.price}
-  onChange={handleInputChange}
-  required
-/>
+          <label className="label">Price:</label>
+          <input
+            className="input-number"
+            type="number"
+            name="price"
+            value={vehicle.price}
+            onChange={handleInputChange}
+            required
+          />
 
-{error && <p className="error-message">{error}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-<button className="button" type="submit">Submit</button>
-      </form>
+          <button className="button" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };
