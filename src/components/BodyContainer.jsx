@@ -18,6 +18,9 @@ const BodyContainer = () => {
                 <Link to={'/detail/'}>
                 <p>Detalle de producto</p>
                 </Link>
+                <Link to={'/admin'}>
+                    <p>Admin</p>
+                </Link>
             </div>
         
     );
