@@ -35,7 +35,8 @@
     width: 20vw;
     height: 80%;
     background-color: rgba(255, 255, 255, 1);
-    margin-top: 80px;
+    margin-top: 15px;
+    margin-bottom: 1em;
     padding: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -72,3 +73,40 @@
   .rent-button:hover {
     background-color: rgb(78, 54, 120);
   }
+
+  @media (max-width: 860px){
+    .detail-information{
+      font-size: 14px;
+      width: 25vw;
+      padding:10px 15px;
+  }
+  .detail-information h3 {
+    font-size: 18px;
+  }
+  }
+
+  @media (max-width: 660px){
+    .detail-information{
+      font-size: 12px;
+      width: 30vw;
+      padding: 0px 20px 10px 20px;
+      }
+      .detail-information h3 {
+        font-size: 16px;
+      }
+      }
+  
+  @media (max-width: 460px){
+    .detail-div{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+    .detail-information{
+      font-size: 14px;
+      width: 60vw;
+  }
+  }
+  

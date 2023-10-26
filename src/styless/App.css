@@ -67,7 +67,7 @@ header{
     animation: logo-spin infinite 20s linear;
   }
 }
-@media (max-width: 720px){
+/* @media (max-width: 860px){
   .detail-information{
     font-size: 14px;
     width: 30vw;
@@ -89,7 +89,7 @@ header{
     font-size: 14px;
     width: 60vw;
 }
-}
+} */
 
 
 @media (min-width: 1366px){

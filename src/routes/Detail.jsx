@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import CarGallery from '../components/CarGallery'
+import '../styless/App.css'
 import '../styless/Detail.css'
 
 const Detail = () => {
