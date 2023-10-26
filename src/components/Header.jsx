@@ -1,21 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
 
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import { AppBar , Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import PersonIcon from '@mui/icons-material/Person';
-import { Link } from 'react-router-dom';
-// import AdbIcon from '@mui/icons-material/Adb';
-// import { AppBar, Box, Toolbar } from '@mui/material';
-
 // colores #371957 morado #000000 negro #FFFFFF blanco #898989 gris menu
 
 const itemMenu = [
@@ -34,12 +23,16 @@ const itemMenu = [
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
-  console.log(itemMenu)
-
+  /**
+   * Función para abrir el menu responsive
+   */
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
+  /**
+   * Función para cerrar el menu responsive
+   */
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -48,33 +41,12 @@ const Header = () => {
     <AppBar position="sticky" sx={{ backgroundColor: '#371957' }}>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          {/* <img src={LogoImage} alt="Logo" style={{ height: '60px', marginRight: '10px'}} /> */}
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <img src={LogoImage} alt="Logo" style={{ height: '80px', mr: '10px',  display: { xs: 'none', md: 'flex' } }} />
-          </Typography> */}
-
           <Box maxWidth={false} sx={{ mr: 24, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link to={'/'}>
               <img src={LogoImage}
                 alt="Logo"
                 style={{
                   mr: 2,
-                  // display: { xs: 'flex', md: 'none' },
                   width: 180,
                   height: 126.923,
                 }}
@@ -82,9 +54,6 @@ const Header = () => {
               />
             </Link>
           </Box>
-
-          {/* <img src={LogoImage} alt="Logo" style={{ height: '80px', mr: '10px', display: { xs: 'none', md: 'flex' } }} /> */}
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -96,17 +65,6 @@ const Header = () => {
             >
               <MenuIcon />
             </IconButton>
-            {/* Si se colocá acá la imagen queda en el menú hamburguesa */}
-            {/* <img src={LogoImage}
-              alt="Logo"
-              style={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                width: 180,
-                height: 126.923,
-              }}
-              href="#app-bar-with-responsive-menu"
-            /> */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -126,7 +84,7 @@ const Header = () => {
               }}
             >
               {itemMenu.map((page) => (
-                <Link to={page.link} key={page.id} style={{textDecoration: 'none'}}>
+                <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
                   <MenuItem key={page.id} onClick={handleCloseNavMenu}>
                     <Typography
                       textAlign="center"
@@ -139,32 +97,12 @@ const Header = () => {
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <img src={LogoImage} alt="Logo" style={{ height: '60px', marginRight: '10px'}} />
-          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Link to={'/'}>
               <img src={LogoImage}
                 alt="Logo"
                 style={{
                   mr: 2,
-                  // display: { xs: 'flex', md: 'none' },
                   width: 180,
                   height: 126.923,
                 }}
@@ -174,7 +112,7 @@ const Header = () => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'space-evenly' }}>
             {itemMenu.map((page) => (
-              <Link to={page.link} key={page.id} style={{textDecoration: 'none'}}>
+              <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
                 <Button
                   key={page.id}
                   onClick={handleCloseNavMenu}
@@ -206,9 +144,10 @@ const Header = () => {
                   color: '#FFF',
                   textDecoration: 'none',
                   fontSize: 24,
+                  cursor: 'pointer'
                 }}
               >
-                INICIAR SESION
+                Login
               </Typography>
               <Typography
                 variant="h5"
@@ -217,9 +156,10 @@ const Header = () => {
                   fontSize: 24,
                   color: '#FFF',
                   textDecoration: 'none',
+                  cursor: 'pointer'
                 }}
               >
-                CREAR CUENTA
+                Sign Up
               </Typography>
             </Box>
           </Box>
