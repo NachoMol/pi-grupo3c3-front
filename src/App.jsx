@@ -1,8 +1,8 @@
 import './styless/App.css'
 import { Route, Routes } from 'react-router-dom'
 import Detail from "./routes/Detail"
+import Admin from "./routes/Admin"
 import Home from './routes/Home'
-import CarGallery from './routes/CarGallery'
 import Header from './components/Header'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/carGallery" element={<CarGallery />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   )

@@ -5,7 +5,6 @@ import '../styless/App.css';
 
 const BodyContainer = () => {
     return (
-      
             <div className="container">
                 <div className="search-section">
                     <h2>Search</h2>
@@ -18,6 +17,9 @@ const BodyContainer = () => {
                 </div>
                 <Link to={'/detail/'}>
                 <p>Detalle de producto</p>
+                </Link>
+                <Link to={'/admin'}>
+                    <p>Admin</p>
                 </Link>
             </div>
         
