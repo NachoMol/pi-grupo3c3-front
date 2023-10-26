@@ -5,7 +5,10 @@
   align-items: center;
   justify-content: space-between;
 }
-
+.mainPhotoArrowContainer{
+  display: flex;
+  align-items: center;
+}
 .mainPhotoContainer {
   width: 40vw;
   display: flex;
@@ -18,7 +21,7 @@
   width: 40vw;
   height: auto;
   margin-top: 15px; 
-  border: 2px solid #000;
+  border: 2px solid #898989;
 }
 
 .photosContainer {
@@ -40,13 +43,63 @@
   /* Espacio entre las imágenes */
 
 .photo{
-  border: 2px solid #000;
+  border: 2px solid #898989;
 }
 
 .photos img {
   max-width: 100%;
   height: auto;
   object-fit: cover; /* Ajusta la imagen al tamaño del contenedor sin distorsionar */
+}
+.arrowIcons{
+  width: 40px;
+  height: auto;
+}
+
+.zoomed {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.zoomed-photo {
+  flex: 1;
+  object-fit: contain;
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+}
+
+.zoomed-photos-container{
+  display: none;
+}
+.arrow.zoom-arrow {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.close-zoom {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1001;
+}
+.zoomCross{
+  width: 30px;
+  height: auto;
+  padding: 10px;
 }
 
 @media (max-width: 720px){   
