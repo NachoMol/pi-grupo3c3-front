@@ -134,6 +134,7 @@ const BodyContainer = () => {
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {ramdomArray.map((car, index) => (
                     <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
+                        <Link to={'/detail/'} sx={{ textDecoration: 'none' }}>
                         <Card sx={{ maxWidth: 350, background: 'transparent', minWidth: 349 }}>
                             <CardActionArea sx={{ cursor: 'default' }}>
                                 <CardMedia
@@ -149,7 +150,7 @@ const BodyContainer = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions sx={{ justifyContent: 'center' }}>
-                                <Link to={'/detail/'} sx={{ textDecoration: 'none' }}>
+
                                     <Button
                                         size="small"
                                         sx={{
@@ -163,9 +164,10 @@ const BodyContainer = () => {
                                         }}>
                                         Ver mas
                                     </Button>
-                                </Link>
+                                
                             </CardActions>
                         </Card>
+                        </Link>
                     </Grid>
                 ))}
             </Grid>
