@@ -170,23 +170,10 @@ const BodyContainer = () => {
                         </Link>
                     </Grid>
                 ))}
-            </Grid>
-
-
-            <div className="container">
-                <div className="search-section">
-                    <h2>Search</h2>
-                </div>
-                <div className="categories-section">
-                    <h2>Categories</h2>
-                </div>
-                <div className="recommendations-section">
-                    <h2>Recomendations</h2>
-                </div>                
+            </Grid>         
                 <Link to={'/admin'}>
                     <p>Admin</p>
                 </Link>
-            </div>
         </Container >
 
     );
