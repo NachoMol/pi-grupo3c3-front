@@ -118,8 +118,6 @@ const car = [
 ];
 
 const BodyContainer = () => {
-
-
     const [ramdomArray, setRamdonArray] = useState([]);
 
     useEffect(() => {
@@ -162,7 +160,7 @@ const BodyContainer = () => {
                                 />
                                 <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px' , display:'flex',justifyContent: 'space-around', alignItems: 'center' }}>
                                     <Typography variant="body2" color="text.secondary" sx={{whiteSpace: 'normal'}}>
-                                        {car.modelo}  ddsadad asdasdasd asd adaasdasd asdad
+                                        {car.modelo}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
                                         {car.precio}
@@ -170,21 +168,19 @@ const BodyContainer = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions sx={{ justifyContent: 'center' }}>
-
-                                    <Button
-                                        size="small"
-                                        sx={{
-                                            width: 124,
-                                            height: 33,
-                                            background: '#000',
-                                            color: '#FFF',
-                                            '&:hover': {
-                                                background: '#898989'
-                                            }
-                                        }}>
-                                        Ver mas
-                                    </Button>
-                                
+                                <Button
+                                    size="small"
+                                    sx={{
+                                        width: 124,
+                                        height: 33,
+                                        background: '#000',
+                                        color: '#FFF',
+                                        '&:hover': {
+                                            background: '#898989'
+                                        }
+                                    }}>
+                                    Ver mas
+                                </Button>
                             </CardActions>
                         </Card>
                         </Link>
