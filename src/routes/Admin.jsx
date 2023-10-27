@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../styless/Admin.css';
+import api from '../axiosConfig';
 
 const Admin = () => {
   const [vehicle, setVehicle] = useState({
-    name: '',
-    brand: '',
-    images: [],
-    type: '',
-    seats: '',
+    modelid: '',
     price: '',
+    stock: '',
   });
 
-  const [vehiclesList, setVehiclesList] = useState([]);
   const [error, setError] = useState('');
 
   const handleInputChange = (event) => {
@@ -19,30 +17,21 @@ const Admin = () => {
     setVehicle({ ...vehicle, [name]: value });
   };
 
-  const handleImageChange = (event) => {
-    const imageUrls = event.target.value.split('\n');
-    setVehicle({ ...vehicle, images: imageUrls });
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verificar si el nombre ya existe en la lista de vehículos
-    if (vehiclesList.some((v) => v.name === vehicle.name)) {
-      setError('The name is already in use.');
-    } else {
-      setError('');
-      setVehiclesList([...vehiclesList, vehicle]);
+    try {
+      const response = await axios.post(api + 'cars/create', vehicle); // Reemplaza con la URL de tu API y el endpoint correcto
+      // Si la solicitud se realiza con éxito, puedes manejar la respuesta aquí
 
       // Reiniciar el formulario
       setVehicle({
-        name: '',
-        brand: '',
-        images: [],
-        type: '',
-        seats: '',
+        modelid: '',
         price: '',
+        stock: '',
       });
+    } catch (error) {
+      setError('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.'); // Maneja errores de solicitud
     }
   };
 
@@ -51,14 +40,12 @@ const Admin = () => {
       <h2>Register Vehicle</h2>
       <div className="form-content">
         <form onSubmit={handleSubmit}>
-
-          
-        <label className="label">Model Id:</label>
+          <label className="label">Model Id:</label>
           <input
             className="input-number"
             type="number"
-            name="model-id"
-            value={vehicle.idmodel}
+            name="modelid" // Asegúrate de que el nombre sea correcto
+            value={vehicle.modelid} // Asegúrate de que el valor coincida con el estado
             onChange={handleInputChange}
             required
           />
@@ -73,15 +60,6 @@ const Admin = () => {
             required
           />
 
-          {/* <label className="label">Images (One URL per line):</label>
-          <textarea
-            className="textarea"
-            name="images"
-            value={vehicle.images.join('\n')}
-            onChange={handleImageChange}
-            required
-          /> */}
-
           <label className="label">Stock:</label>
           <input
             className="input-text"
@@ -91,7 +69,6 @@ const Admin = () => {
             onChange={handleInputChange}
             required
           />
-
 
           {error && <p className="error-message">{error}</p>}
 
