@@ -17,7 +17,7 @@ const Admin = () => {
     setVehicle({ ...vehicle, [name]: value });
   };
 
-  const url = 'http://localhost:8080/';
+  const url = 'http://localhost:3306/';
 
   const handleSubmit = async (event) => {
     event.preventDefault();
