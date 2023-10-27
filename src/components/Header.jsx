@@ -1,11 +1,24 @@
-import React from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
 
-import { AppBar , Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem } from '@mui/material';
+import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 // colores #371957 morado #000000 negro #FFFFFF blanco #898989 gris menu
+
+const UserIcon = styled(PersonIcon)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    width: 39,
+    height: 31,
+  },
+}));
+
+const UserTitle = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    margin: '0'
+  },
+}));
 
 const itemMenu = [
   {
@@ -21,7 +34,8 @@ const itemMenu = [
 ];
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [admin, setAdmin] = useState(true);
 
   /**
    * Función para abrir el menu responsive
@@ -39,16 +53,17 @@ const Header = () => {
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: '#371957' }}>
-      <Container maxWidth={false}>
-        <Toolbar disableGutters>
-          <Box maxWidth={false} sx={{ mr: 24, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+      <Container maxWidth={false} >
+        <Toolbar disableGutters sx={{ maxHeight: 90 }}>
+          <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
             <Link to={'/'}>
               <img src={LogoImage}
                 alt="Logo"
                 style={{
-                  mr: 2,
-                  width: 180,
-                  height: 126.923,
+                  width: 130,
+                  height: 83,
+                  filter: 'invert(1)',
+                  marginTop: '2%'
                 }}
                 href="#app-bar-with-responsive-menu"
               />
@@ -79,9 +94,7 @@ const Header = () => {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {itemMenu.map((page) => (
                 <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
@@ -102,9 +115,10 @@ const Header = () => {
               <img src={LogoImage}
                 alt="Logo"
                 style={{
-                  mr: 2,
-                  width: 180,
-                  height: 126.923,
+                  width: 105,
+                  height: 65,
+                  filter: 'invert(1)',
+                  marginTop: '3%'
                 }}
                 href="#app-bar-with-responsive-menu"
               />
@@ -117,12 +131,16 @@ const Header = () => {
                   key={page.id}
                   onClick={handleCloseNavMenu}
                   sx={{
-                    my: 2, display: 'block', color: '#898989',
+                    my: 2,
+                    display: 'block',
+                    color: '#d9d9d9',
                     fontFamily: 'Spinnaker, sans-serif',
-                    fontSize: 36,
+                    fontSize: 28,
                     fontWeight: 400,
                     fontStyle: 'normal',
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    margin: 0,
+                    padding: 0
                   }}
                 >
                   {page.name}
@@ -130,37 +148,54 @@ const Header = () => {
               </Link>
             ))}
           </Box>
-          <Box sx={{ display: 'Flex' }}>
-            <PersonIcon sx={{
-              width: 62,
-              height: 60,
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <UserIcon sx={{
+              width: 40,
+              height: 40,
               color: '#000',
             }} />
-            <Box>
-              <Typography
+            <Box >
+              {admin ? <UserTitle
                 variant="h5"
                 sx={{
                   fontFamily: 'Spinnaker, sans-serif',
                   color: '#FFF',
                   textDecoration: 'none',
                   fontSize: 24,
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  alignSelf: 'center',
+                  margin: '7px 0 0 0'
                 }}
               >
-                Login
-              </Typography>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontFamily: 'Spinnaker, sans-serif',
-                  fontSize: 24,
-                  color: '#FFF',
-                  textDecoration: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                Sign Up
-              </Typography>
+                Admin
+              </UserTitle> : (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      fontSize: 24,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Login
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      fontSize: 24,
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Sign Up
+                  </Typography>
+                </div>
+              )}
             </Box>
           </Box>
         </Toolbar>
