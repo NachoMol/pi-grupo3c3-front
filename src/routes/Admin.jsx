@@ -51,51 +51,14 @@ const Admin = () => {
       <h2>Register Vehicle</h2>
       <div className="form-content">
         <form onSubmit={handleSubmit}>
-          <label className="label">Name:</label>
-          <input
-            className="input-text"
-            type="text"
-            name="name"
-            value={vehicle.name}
-            onChange={handleInputChange}
-            required
-          />
 
-          <label className="label">Brand:</label>
-          <input
-            className="input-text"
-            type="text"
-            name="brand"
-            value={vehicle.brand}
-            onChange={handleInputChange}
-            required
-          />
-
-          {/* <label className="label">Images (One URL per line):</label>
-          <textarea
-            className="textarea"
-            name="images"
-            value={vehicle.images.join('\n')}
-            onChange={handleImageChange}
-            required
-          /> */}
-
-          <label className="label">Vehicle Type:</label>
-          <input
-            className="input-text"
-            type="text"
-            name="type"
-            value={vehicle.type}
-            onChange={handleInputChange}
-            required
-          />
-
-          <label className="label">Number of Seats:</label>
+          
+        <label className="label">Model Id:</label>
           <input
             className="input-number"
             type="number"
-            name="seats"
-            value={vehicle.seats}
+            name="model-id"
+            value={vehicle.idmodel}
             onChange={handleInputChange}
             required
           />
@@ -109,6 +72,26 @@ const Admin = () => {
             onChange={handleInputChange}
             required
           />
+
+          {/* <label className="label">Images (One URL per line):</label>
+          <textarea
+            className="textarea"
+            name="images"
+            value={vehicle.images.join('\n')}
+            onChange={handleImageChange}
+            required
+          /> */}
+
+          <label className="label">Stock:</label>
+          <input
+            className="input-text"
+            type="number"
+            name="stock"
+            value={vehicle.stock}
+            onChange={handleInputChange}
+            required
+          />
+
 
           {error && <p className="error-message">{error}</p>}
 
