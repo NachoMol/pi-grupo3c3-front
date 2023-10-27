@@ -17,11 +17,13 @@ const Admin = () => {
     setVehicle({ ...vehicle, [name]: value });
   };
 
+  const url = 'http://localhost:8080/';
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(api + 'cars/create', vehicle);
+      const response = await axios.post(url + 'cars/create', vehicle);
       // Si la solicitud se realiza con éxito, respuesta acá --> por definir
 
       setVehicle({
@@ -43,7 +45,7 @@ const Admin = () => {
           <input
             className="input-number"
             type="number"
-            name="modelid" // Asegúrate de que el nombre sea correcto
+            name="model" // Asegúrate de que el nombre sea correcto
             value={vehicle.modelid} // Asegúrate de que el valor coincida con el estado
             onChange={handleInputChange}
             required
