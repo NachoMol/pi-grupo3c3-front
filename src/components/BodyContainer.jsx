@@ -11,94 +11,95 @@ import { shuffleArray } from '../helpers/shuffleArray';
 const car = [
     {
         id: 1,
-        marca: "Carro 1",
-        modelo: "Chevrolet Cruze II 1.4 LTZ 153CV Hatchback 2016",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Peugeot",
+        modelo: "3008",
+        año: 2020,
+        imagenURL: "https://images.coches.com/_vo_/fotos/usados/2023/10/23/c/24405926360767122-767122_1.JPG?p=cc_vo_high"
+        
     },
     {
         id: 2,
-        marca: "Carro 2",
-        modelo: "Modelo 2",
-        año: 2021,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Volkswagen",
+        modelo: "Polo 1.6",
+        año: 2020,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_763126-MLA72005410208_102023-F.webp"
     },
     {
         id: 3,
-        marca: "Carro 3",
-        modelo: "Modelo 3",
+        marca: "Toyota",
+        modelo: "Corolla",
         año: 2020,
-        imagenURL: "https://via.placeholder.com/300"
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_763602-MLA72486253515_102023-F.webp"
     },
     {
         id: 4,
-        marca: "Carro 4",
-        modelo: "Modelo 4",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Nissan",
+        modelo: "Kicks 1.6",
+        año: 2021,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_827752-MLA71519788842_092023-F.webp"
     },
     {
         id: 5,
-        marca: "Carro 5",
-        modelo: "Modelo 5",
-        año: 2021,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Toyota",
+        modelo: "Corolla",
+        año: 2022,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_626203-MLA72266204706_102023-F.webp"
     },
     {
         id: 6,
-        marca: "Carro 6",
-        modelo: "Modelo 6",
+        marca: "Toyota",
+        modelo: "Hilux 2.8 Srx",
         año: 2021,
-        imagenURL: "https://via.placeholder.com/300"
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_861217-MLA71523331207_092023-F.webp"
     },
     {
         id: 7,
-        marca: "Carro 7",
-        modelo: "Modelo 7",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Toyota",
+        modelo: "Hilux 2.8 Srv",
+        año: 2021,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_886436-MLA71782239281_092023-F.webp"
     },
     {
         id: 8,
-        marca: "Carro 8",
-        modelo: "Modelo 8",
-        año: 2020,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Nissan",
+        modelo: "Note 1.6 Sense",
+        año: 2019,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_800784-MLA72529678829_102023-F.webp"
     },
     {
         id: 9,
-        marca: "Carro 9",
-        modelo: "Modelo 9",
+        marca: "Chevrolet",
+        modelo: "Onix 1.0 turbo",
         año: 2021,
-        imagenURL: "https://via.placeholder.com/300"
+        imagenURL: "https://http2.mlstatic.com/D_809852-MLA72478813147_102023-O.jpg"
     },
     {
         id: 10,
-        marca: "Carro 10",
-        modelo: "Modelo 10",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Chevrolet",
+        modelo: "Onix 1.4",
+        año: 2021,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_829487-MLA72160004323_102023-F.webp"
     },
     {
         id: 11,
-        marca: "Carro 11",
-        modelo: "Modelo 11",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        marca: "Chevrolet",
+        modelo: "Spin",
+        año: 2020,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_960326-MLA71908103486_092023-W.webp"
     },
     {
-        id: 10,
-        marca: "Carro 12",
-        modelo: "Modelo 12",
-        año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        id: 12,
+        marca: "Renault",
+        modelo: "Stepway",
+        año: 2021,
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_920544-MLA72365752073_102023-F.webp"
     },
     {
         id: 13,
-        marca: "Carro 13",
-        modelo: "Modelo 13",
+        marca: "Renault",
+        modelo: "Stepway",
         año: 2022,
-        imagenURL: "https://via.placeholder.com/300"
+        imagenURL: "https://http2.mlstatic.com/D_NQ_NP_2X_849940-MLA72104822759_102023-F.webp"
     }
 ];
 
