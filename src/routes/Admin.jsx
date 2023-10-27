@@ -21,17 +21,16 @@ const Admin = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(api + 'cars/create', vehicle); // Reemplaza con la URL de tu API y el endpoint correcto
-      // Si la solicitud se realiza con éxito, puedes manejar la respuesta aquí
+      const response = await axios.post(api + 'cars/create', vehicle);
+      // Si la solicitud se realiza con éxito, respuesta acá --> por definir
 
-      // Reiniciar el formulario
       setVehicle({
         modelid: '',
         price: '',
         stock: '',
       });
     } catch (error) {
-      setError('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.'); // Maneja errores de solicitud
+      setError('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.');
     }
   };
 

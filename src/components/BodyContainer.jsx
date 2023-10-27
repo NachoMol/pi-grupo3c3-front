@@ -187,9 +187,6 @@ const BodyContainer = () => {
                     </Grid>
                 ))}
             </Grid>         
-                <Link to={'/admin'}>
-                    <p>Admin</p>
-                </Link>
         </Container >
 
     );
