@@ -7,6 +7,7 @@ import '../styless/App.css';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { shuffleArray } from '../helpers/shuffleArray';
+import { useCarStates } from '../context/Context';
 
 const car = [
     {
@@ -104,6 +105,8 @@ const car = [
 ];
 
 const BodyContainer = () => {
+
+
     const [ramdomArray, setRamdonArray] = useState([]);
 
     useEffect(() => {
