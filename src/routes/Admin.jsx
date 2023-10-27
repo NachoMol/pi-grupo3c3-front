@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styless/Admin.css'
+import '../styless/Admin.css';
 
 const Admin = () => {
   const [vehicle, setVehicle] = useState({
