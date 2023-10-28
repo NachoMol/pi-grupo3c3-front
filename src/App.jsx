@@ -4,6 +4,7 @@ import Detail from "./routes/Detail"
 import Admin from "./routes/Admin"
 import Home from './routes/Home'
 import Header from './components/Header'
+import ShowCars from './routes/ShowCars'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/show" element={<ShowCars />} />
       </Routes>
     </>
   )
