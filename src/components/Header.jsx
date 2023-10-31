@@ -143,7 +143,7 @@ const Header = () => {
                     padding: 0
                   }}
                 >
-                  {page.name}
+                  {/* {page.name} */}
                 </Button>
               </Link>
             ))}
