@@ -52,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#371957' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B' }}>
       <Container maxWidth={false} >
         <Toolbar disableGutters sx={{ maxHeight: 90 }}>
           <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
