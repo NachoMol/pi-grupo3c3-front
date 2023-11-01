@@ -5,6 +5,7 @@ import Admin from "./routes/Admin"
 import Home from './routes/Home'
 import Header from './components/Header'
 import ShowCars from './routes/ShowCars'
+import Register from './routes/Register'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/show" element={<ShowCars />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
     </>
   )

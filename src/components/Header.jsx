@@ -194,7 +194,9 @@ const Header = () => {
                       cursor: 'pointer'
                     }}
                   >
+                    <Link to={'/register/' }>
                     Sign Up
+                    </Link>
                   </Typography>
                 </div>
               )}
