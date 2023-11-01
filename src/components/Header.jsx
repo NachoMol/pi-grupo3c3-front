@@ -35,7 +35,7 @@ const itemMenu = [
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
   /**
    * Función para abrir el menu responsive
