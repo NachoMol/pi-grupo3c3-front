@@ -12,9 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Copyright } from '@mui/icons-material';
 
+
+//template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 
 const Register = () => {
 
@@ -101,7 +102,9 @@ return (
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: '#302253','&:hover': {
+                bgcolor: '#5e2b96',
+              }, }}
             >
               Sign Up
             </Button>
