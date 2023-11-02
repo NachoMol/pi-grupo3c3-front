@@ -6,7 +6,7 @@ const InsertVehicle = () => {
     const [vehicle, setVehicle] = useState({
         modelid: '',
         price: '',
-        stock: '',
+        category_id: '',
       });
     
       const [error, setError] = useState('');
@@ -23,12 +23,13 @@ const InsertVehicle = () => {
     
         try {
           const response = await axios.post(url + 'products/create', vehicle);
-          // Si la solicitud se realiza con éxito, respuesta acá --> por definir
+          // Si la solicitud se realiza con éxito, respuesta acá --> por definir el mensaje de success
     
           setVehicle({
             name: '',
             price: '',
-            stock: '',
+            category_id: '',
+            // Faltan imagenes y detalles.
           });
         } catch (error) {
           setError('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.');
@@ -60,12 +61,12 @@ const InsertVehicle = () => {
                 required
               />
     
-              <label className="label">Stock:</label>
+              <label className="label">Category id:</label>
               <input
                 className="input-number"
                 type="number"
-                name="stock"
-                value={vehicle.stock}
+                name="category_id"
+                value={vehicle.category_id}
                 onChange={handleInputChange}
                 required
               />
