@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { shuffleArray } from '../helpers/shuffleArray';
 import { useCarStates } from '../context/Context';
+import CategoryList from '../routes/CategoryList';
 
 const car = [
     {
@@ -147,6 +148,7 @@ const BodyContainer = () => {
                 }}
                 sx={{ width: '51vw', minWidth: 350, mt: '1.5rem' }}
             />
+            <CategoryList />
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {ramdomArray.map((car, index) => (
                     <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
