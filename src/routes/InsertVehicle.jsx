@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import styles from '../styless/InsertVehicle.css'
+import '../styless/InsertVehicle.css'
 
 const InsertVehicle = () => {
     const [vehicle, setVehicle] = useState({
@@ -16,17 +16,17 @@ const InsertVehicle = () => {
         setVehicle({ ...vehicle, [name]: value });
       };
     
-      const url = 'http://localhost:3306/';
+      const url = 'http://localhost:8080/';
     
       const handleSubmit = async (event) => {
         event.preventDefault();
     
         try {
-          const response = await axios.post(url + 'cars/create', vehicle);
+          const response = await axios.post(url + 'products/create', vehicle);
           // Si la solicitud se realiza con éxito, respuesta acá --> por definir
     
           setVehicle({
-            modelid: '',
+            name: '',
             price: '',
             stock: '',
           });
@@ -40,12 +40,12 @@ const InsertVehicle = () => {
           <h2>Register Vehicle</h2>
           <div className="form-content">
             <form onSubmit={handleSubmit}>
-              <label className="label">Model Id:</label>
+              <label className="label">Name:</label>
               <input
                 className="input-number"
-                type="number"
-                name="model" // Asegúrate de que el nombre sea correcto
-                value={vehicle.modelid} // Asegúrate de que el valor coincida con el estado
+                type="text"
+                name="name" // Asegúrate de que el nombre sea correcto
+                value={vehicle.name} // Asegúrate de que el valor coincida con el estado
                 onChange={handleInputChange}
                 required
               />
@@ -62,7 +62,7 @@ const InsertVehicle = () => {
     
               <label className="label">Stock:</label>
               <input
-                className="input-text"
+                className="input-number"
                 type="number"
                 name="stock"
                 value={vehicle.stock}

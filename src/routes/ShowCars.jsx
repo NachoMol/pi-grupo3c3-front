@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import api from '../axiosConfig'
+
 
 const ShowCars = () => {
 
   const [car, setCar] = useState([])
 
   const fetchData = () => {
-    return axios.get("http://localhost:8080/cars")
+    return axios.get("http://localhost:8080/products")
     .then((response) => setCar(response.data))
   }
 
@@ -22,9 +22,7 @@ const ShowCars = () => {
         {car && car.length > 0 && car.map(
           (carObj, index) => (
             <li className="detail-information" key={carObj.id}>
-              <p>Car Name: {carObj.model.name}</p>
-              <p>Brand: {carObj.model.brand.name}</p>
-              <p>Car Type: {carObj.model.carType.name}</p>
+              <p>Car Name: {carObj.name}</p>
               <p>Price: {carObj.price}</p>
               <p>Stock: {carObj.stock}</p>
             </li>
