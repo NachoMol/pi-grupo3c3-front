@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import styles from '../styless/InsertVehicle.css'
 
 const InsertVehicle = () => {
     const [vehicle, setVehicle] = useState({
