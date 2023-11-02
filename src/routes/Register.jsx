@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,21 +14,68 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
 
-
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 
 const Register = () => {
 
-const defaultTheme = createTheme();
+  const defaultTheme = createTheme();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+const validateForm = () => {
+  let valid = true;
+
+  if (!firstName) {
+    setFirstNameError('First Name is required');
+    valid = false;
+  } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+    setFirstNameError('First Name should not contain numbers');
+    valid = false;
+  } else {
+    setFirstNameError('');
+  }
+
+  if (!lastName) {
+    setLastNameError('Last Name is required');
+    valid = false;
+  } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+    setLastNameError('Last Name should not contain numbers');
+    valid = false;
+  } else {
+    setLastNameError('');
+  }
+
+  if (password.length < 5) {
+    setPasswordError('Password should be at least 5 characters long');
+    valid = false;
+  } else {
+    setPasswordError('');
+  }
+
+  return valid;
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  if (validateForm()) {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
-}
+  }
+};
+
+
+
+
 return (
     <div style={{ backgroundColor: '#D9D9D9', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
     <ThemeProvider theme={defaultTheme}>
@@ -59,6 +106,10 @@ return (
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={!!firstNameError}
+                  helperText={firstNameError}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -69,6 +120,10 @@ return (
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={!!lastNameError}
+                  helperText={lastNameError}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -90,6 +145,10 @@ return (
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={!!passwordError}
+                  helperText={passwordError}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>

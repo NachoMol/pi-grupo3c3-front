@@ -62,6 +62,7 @@ const InsertVehicle = () => {
               />
     
               <label className="label">Category id:</label>
+              {/* Cambiar esto a multi-select con mapeo de listado de categories*/}
               <input
                 className="input-number"
                 type="number"
