@@ -30,6 +30,7 @@ const defaultTheme = createTheme();
     });
 }
 return (
+    <div style={{ backgroundColor: '#D9D9D9', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -114,6 +115,7 @@ return (
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+    </div>
   );
 }
 export default Register
