@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
+import axios from 'axios';
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 
@@ -83,15 +84,58 @@ const validateForm = () => {
   return valid;
 };
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
   if (validateForm()) {
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user = {
+      name: data.get('firstName'),
+      lastname: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
 
+    try {
+      const response = await axios.post('http://localhost:8080/users/create', user);
+
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+
+      if (response.status === 200) {
+        setSuccessMessage('¡Registro exitoso!');
+        // Acciones adicionales después de un registro exitoso
+      } else {
+        setSuccessMessage('Verifica tu información');
+      }
+    } catch (error) {
+      console.error("Error de registro:", error.response?.data || error.message);
+      setSuccessMessage('Error durante el registro');
+    }
+  }
+
+  if (validateForm()) {
+    try {
+      const response = await axios.post('http://localhost:8080/users/create', user);
+
+      setUser({
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
+      })
+
+      if (response.status === 200) {
+        setSuccessMessage('Registration successful!');
+        // Puedes hacer más cosas después de un registro exitoso, como redirigir al usuario o realizar otras acciones.
+      } else {
+        setSuccessMessage('Verify you information');
+      }
+    } catch (error) {
+      console.error("Registration error:", error.response?.data || error.message)
+      setSuccessMessage('Error during registration');
+    }
   }
 };
 

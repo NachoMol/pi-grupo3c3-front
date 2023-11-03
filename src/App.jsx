@@ -7,6 +7,7 @@ import Header from './components/Header'
 import ShowCars from './routes/ShowCars'
 import Register from './routes/Register'
 import InsertVehicle from './routes/InsertVehicle'
+import UsersList from './routes/UsersList'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/products" element={<ShowCars />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
       </Routes>
     </>
