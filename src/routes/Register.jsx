@@ -18,6 +18,7 @@ import { Copyright } from '@mui/icons-material';
 
 const Register = () => {
 
+  const emailRegex = (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i);
   const defaultTheme = createTheme();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -52,13 +53,26 @@ const validateForm = () => {
     setLastNameError('');
   }
 
-  if (password.length < 5) {
+  if (!password) {
+    setPasswordError('Password is required');
+    valid = false;
+  }else if (password.length < 5) {
     setPasswordError('Password should be at least 5 characters long');
     valid = false;
   } else {
     setPasswordError('');
   }
 
+  if (!email) {
+    setEmailError('Email is required');
+    valid = false;
+  } else if (!emailRegex.test(email)) {
+    setEmailError('Invalid email address');
+    valid = false;
+  } else {
+    setEmailError('');
+  }
+  
   return valid;
 };
 
@@ -134,6 +148,10 @@ return (
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={!!emailError}
+                  helperText={emailError}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
