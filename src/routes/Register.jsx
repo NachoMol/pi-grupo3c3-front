@@ -29,6 +29,7 @@ const Register = () => {
   const [lastNameError, setLastNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
 const validateForm = () => {
   let valid = true;
@@ -72,7 +73,13 @@ const validateForm = () => {
   } else {
     setEmailError('');
   }
-  
+
+  if (valid) {
+    setSuccessMessage('Registration successful!'); // Mensaje de éxito
+  } else {
+    setSuccessMessage(''); // Reinicia el mensaje de éxito si hay errores
+  }
+
   return valid;
 };
 
@@ -84,6 +91,7 @@ const handleSubmit = (event) => {
       email: data.get('email'),
       password: data.get('password'),
     });
+
   }
 };
 
@@ -169,6 +177,11 @@ return (
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
+              {successMessage && (
+              <Typography variant="body2" style={{ color: 'green', textAlign: 'center' }}>
+              {successMessage}
+              </Typography>
+              )}
             </Grid>
             <Button
               type="submit"
@@ -182,7 +195,7 @@ return (
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to={'/login'} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
