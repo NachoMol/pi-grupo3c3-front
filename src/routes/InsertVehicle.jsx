@@ -1,13 +1,29 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import CategoryList from './CategoryList';
+import { Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
 import '../styless/InsertVehicle.css'
 
 const InsertVehicle = () => {
     const [vehicle, setVehicle] = useState({
-        modelid: '',
+        name: '',
         price: '',
-        category_id: '',
+        category: '',
       });
+
+      const [categories, setCategories] = useState([])
+
+      useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await axios.get('http://localhost:8080/categories')
+            setCategories(response.data)
+          } catch (error) {
+            console.error("Error fetching categories", error)
+          }
+        }
+        fetchCategories()
+      },[])
     
       const [error, setError] = useState('');
     
@@ -28,7 +44,7 @@ const InsertVehicle = () => {
           setVehicle({
             name: '',
             price: '',
-            category_id: '',
+            category: '',
             // Faltan imagenes y detalles.
           });
         } catch (error) {
@@ -38,46 +54,58 @@ const InsertVehicle = () => {
     
       return (
         <div className="form-container">
-          <h2>Register Vehicle</h2>
-          <div className="form-content">
-            <form onSubmit={handleSubmit}>
-              <label className="label">Name:</label>
-              <input
-                className="input-number"
-                type="text"
-                name="name" // Asegúrate de que el nombre sea correcto
-                value={vehicle.name} // Asegúrate de que el valor coincida con el estado
+        <h2>Register Vehicle</h2>
+        <div className="form-content">
+          <form onSubmit={handleSubmit}>
+            <label className="label">Name:</label>
+            <input
+              className="input-text"
+              type="text"
+              name="name"
+              value={vehicle.name}
+              onChange={handleInputChange}
+              required
+            />
+
+            <label className="label">Price:</label>
+            <input
+              className="input-number"
+              type="number"
+              name="price"
+              value={vehicle.price}
+              onChange={handleInputChange}
+              required
+            />
+
+            <FormControl className="input-text">
+              <InputLabel htmlFor="category">Category:</InputLabel>
+              <Select
+                className="input-text"
+                id="category"
+                name="category"
+                value={vehicle.category}
                 onChange={handleInputChange}
-                required
-              />
-    
-              <label className="label">Price:</label>
-              <input
-                className="input-number"
-                type="number"
-                name="price"
-                value={vehicle.price}
-                onChange={handleInputChange}
-                required
-              />
-    
-              <label className="label">Category id:</label>
-              {/* Cambiar esto a multi-select con mapeo de listado de categories*/}
-              <input
-                className="input-number"
-                type="number"
-                name="category_id"
-                value={vehicle.category_id}
-                onChange={handleInputChange}
-                required
-              />
-    
-              {error && <p className="error-message">{error}</p>}
-    
-              <button className="button" type="submit">Submit</button>
-            </form>
-          </div>
+                label="Category"
+              >
+                <MenuItem value="" disabled>
+                  Select category
+                </MenuItem>
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            {error && <p className="error-message">{error}</p>}
+
+            <Button className="button" type="submit" variant="contained">
+              Submit
+            </Button>
+          </form>
         </div>
+    </div>
       );
 }
 
