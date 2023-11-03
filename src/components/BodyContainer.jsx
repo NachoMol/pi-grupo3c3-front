@@ -146,7 +146,7 @@ const BodyContainer = () => {
     }, [])
 
     console.log('initialArray', cars);
-    console.table('ramdomArray', randomArray);
+    console.table('randomArray', randomArray);
 
     return (
         <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;' }} >
