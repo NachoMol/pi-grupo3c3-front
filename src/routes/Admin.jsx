@@ -72,9 +72,11 @@ const Admin = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <Link to={'/admin/users'}>
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253','&:hover': {bgcolor: '#5e2b96',}, }}>
                   List Users
                 </Button>
+                </Link>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253','&:hover': {bgcolor: '#5e2b96',}, }}>
