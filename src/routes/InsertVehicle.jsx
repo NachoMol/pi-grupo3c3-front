@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import CategoryList from './CategoryList';
 import { Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
 import '../styless/InsertVehicle.css'
 
@@ -9,9 +8,13 @@ const InsertVehicle = () => {
         name: '',
         price: '',
         category: '',
+        locations: [],
       });
 
       const [categories, setCategories] = useState([])
+      const [locations, setLocations] = useState([])
+      const [selectedLocations, setSelectedLocations] = useState([])
+      const [images, setImages] = useState([])
 
       useEffect(() => {
         const fetchCategories = async () => {
@@ -22,33 +25,73 @@ const InsertVehicle = () => {
             console.error("Error fetching categories", error)
           }
         }
+
+        const fetchLocations = async () => {
+          try {
+            const response = await axios.get('http://localhost:8080/locations')
+            setLocations(response.data)
+          } catch (error) {
+            console.error("Error fetching locations". error)
+          }
+        }
+
         fetchCategories()
+        fetchLocations()
       },[])
     
       const [error, setError] = useState('');
     
       const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setVehicle({ ...vehicle, [name]: value });
+        const categoryObject = name === 'category' ? categories.find(cat => cat.id === value) : null;
+        setVehicle({ ...vehicle, [name]: categoryObject || value });
       };
-    
-      const url = 'http://localhost:8080/';
+
+      const handleLocationChange = (event) => {
+        const selectedLocationsArray = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
+        setSelectedLocations(selectedLocationsArray);
+
+        const selectedLocationObjects = selectedLocationsArray.map((locationId) =>
+          locations.find((location) => location.id === locationId)
+        );
+
+        setVehicle({ ...vehicle, locations: selectedLocationObjects });
+      }
+
+      const handleImageChange = (event) => {
+        const files = event.target.files
+        setImages(files)
+      }
     
       const handleSubmit = async (event) => {
         event.preventDefault();
     
         try {
-          const response = await axios.post(url + 'products/create', vehicle);
+          const response = await axios.post('http://localhost:8080/products/create', {
+            ...vehicle,
+            locations: vehicle.locations.map(({ id }) => id),});
           // Si la solicitud se realiza con éxito, respuesta acá --> por definir el mensaje de success
+
+          const vehicleID = response.data.id
+
+          const formData = new FormData()
+          for (let i = 0; i < images.length; i++) {
+            formData.append('file', images[i]);
+          }
+
+          await axios.post('http://localhost:8080/media/upload', formData)
     
           setVehicle({
             name: '',
             price: '',
             category: '',
+            locations: []
             // Faltan imagenes y detalles.
           });
+          setSelectedLocations([])
+          setImages([])
         } catch (error) {
-          setError('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.');
+          setError('Error to sending data, try now!');
         }
       };
     
@@ -83,7 +126,7 @@ const InsertVehicle = () => {
                 className="input-text"
                 id="category"
                 name="category"
-                value={vehicle.category}
+                value={vehicle.category ? vehicle.category.id : ''}
                 onChange={handleInputChange}
                 label="Category"
               >
@@ -97,6 +140,31 @@ const InsertVehicle = () => {
                 ))}
               </Select>
             </FormControl>
+
+            <FormControl className="input-text">
+              <InputLabel htmlFor="locations">Location:</InputLabel>
+              <Select
+                className="input-text"
+                id="locations"
+                name="locations"
+                value={selectedLocations}
+                onChange={handleLocationChange}
+                label="Location"
+              >
+                <MenuItem value="" disabled>
+                  Select location
+                </MenuItem>
+                {locations.map((location) => (
+                  <MenuItem key={location.id} value={location.id}>
+                    {location.city},
+                    {location.province},
+                    {location.country}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <input type="file" accept="image/*" onChange={handleImageChange} multiple />
 
             {error && <p className="error-message">{error}</p>}
 

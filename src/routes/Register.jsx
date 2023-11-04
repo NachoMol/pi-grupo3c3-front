@@ -14,7 +14,7 @@ import { Copyright } from '@mui/icons-material';
 import axios from 'axios';
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
-export const Register = () => {
+const Register = () => {
 
   const emailRegex = (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i);
   const defaultTheme = createTheme();
@@ -22,6 +22,7 @@ export const Register = () => {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [serverError, setServerError] = useState('')
 
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
@@ -108,12 +109,12 @@ export const Register = () => {
           setSuccessMessage('Please, check your information');
         }
       } catch (error) {
-        if (response.status === 409) {
-          setSuccessMessage('The email already exists');
+        if (error.response && error.response.status === 409) {
+          setServerError(error.response.data);
         }
         else
           console.error("Registration error:", error.response?.data || error.message);
-        setSuccessMessage('Error during registration');
+          setServerError("Error during registration: " + error.response.data);
       }
     }
 
@@ -223,11 +224,17 @@ export const Register = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} />
                 </Grid>
-                {successMessage && (
+                {serverError && (
+                <Typography variant="body2" style={{ color: 'red', textAlign: 'center' }}>
+                  {serverError}
+                </Typography>
+                )}
+                {!serverError && successMessage && (
                   <Typography variant="body2" style={{ color: 'green', textAlign: 'center' }}>
                     {successMessage}
                   </Typography>
                 )}
+                
               </Grid>
               <Button
                 type="submit"
@@ -256,3 +263,5 @@ export const Register = () => {
     </div>
   );
 };
+
+export default Register;
