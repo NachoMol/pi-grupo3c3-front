@@ -86,7 +86,7 @@ const BodyContainer = () => {
                                                 background: '#898989'
                                             }
                                         }}>
-                                        Ver mas
+                                        Cars Details
                                     </Button>
                                 </CardActions>
                             </Card>
