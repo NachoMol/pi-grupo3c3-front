@@ -31,6 +31,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [successMessageError, setSuccessMessageError] = useState('');
 
 const validateForm = () => {
   let valid = true;
@@ -103,38 +104,21 @@ const handleSubmit = async (event) => {
       setEmail('');
       setPassword('');
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         setSuccessMessage('¡Registro exitoso!');
         // Acciones adicionales después de un registro exitoso
       } else {
         setSuccessMessage('Verifica tu información');
       }
-    } catch (error) {
+    } 
+    
+    catch (error) {
       console.error("Error de registro:", error.response?.data || error.message);
-      setSuccessMessage('Error durante el registro');
-    }
-  }
-
-  if (validateForm()) {
-    try {
-      const response = await axios.post('http://localhost:8080/users/create', user);
-
-      setUser({
-        name: '',
-        lastName: '',
-        email: '',
-        password: '',
-      })
-
-      if (response.status === 200) {
-        setSuccessMessage('Registration successful!');
-        // Puedes hacer más cosas después de un registro exitoso, como redirigir al usuario o realizar otras acciones.
+      if (error.response && error.response.status === 409) {
+        setSuccessMessage('The email already exists');
       } else {
-        setSuccessMessage('Verify you information');
+        setSuccessMessage('Error durante el registro');
       }
-    } catch (error) {
-      console.error("Registration error:", error.response?.data || error.message)
-      setSuccessMessage('Error during registration');
     }
   }
 };
