@@ -101,34 +101,11 @@ export const Register = () => {
         setEmail('');
         setPassword('');
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           setSuccessMessage('¡Registro exitoso!');
           // Acciones adicionales después de un registro exitoso
         } else {
           setSuccessMessage('Please, check your information');
-        }
-      } catch (error) {
-        console.error("Error de registro:", error.response?.data || error.message);
-        setSuccessMessage('Error durante el registro');
-      }
-    }
-
-    if (validateForm()) {
-      try {
-        const response = await axios.post('http://localhost:8080/users/create', user);
-
-        setUser({
-          name: '',
-          lastName: '',
-          email: '',
-          password: '',
-        });
-
-        if (response.status === 201) {
-          setSuccessMessage('Registration successful!');
-          // Puedes hacer más cosas después de un registro exitoso, como redirigir al usuario o realizar otras acciones.
-        } else {
-          setSuccessMessage('Verify you information');
         }
       } catch (error) {
         if (response.status === 409) {
@@ -139,6 +116,33 @@ export const Register = () => {
         setSuccessMessage('Error during registration');
       }
     }
+
+    // if (validateForm()) {
+    //   try {
+    //     const response = await axios.post('http://localhost:8080/users/create', user);
+
+    //     setUser({
+    //       name: '',
+    //       lastName: '',
+    //       email: '',
+    //       password: '',
+    //     });
+
+    //     if (response.status === 201) {
+    //       setSuccessMessage('Registration successful!');
+    //       // Puedes hacer más cosas después de un registro exitoso, como redirigir al usuario o realizar otras acciones.
+    //     } else {
+    //       setSuccessMessage('Verify you information');
+    //     }
+    //   } catch (error) {
+    //     if (response.status === 409) {
+    //       setSuccessMessage('The email already exists');
+    //     }
+    //     else
+    //       console.error("Registration error:", error.response?.data || error.message);
+    //     setSuccessMessage('Error during registration');
+    //   }
+    // }
   };
 
 
