@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material';
+import { Select, MenuItem, InputLabel, FormControl, FormGroup, FormControlLabel, Button, Checkbox } from '@mui/material';
 import '../styless/InsertVehicle.css'
 
 const InsertVehicle = () => {
@@ -9,24 +9,31 @@ const InsertVehicle = () => {
         price: '',
         category: '',
         locations: [],
+        details: []
       });
 
       const [categories, setCategories] = useState([])
       const [locations, setLocations] = useState([])
-      const [selectedLocations, setSelectedLocations] = useState([])
+      const [details, setDetails] = useState([])
+      const [selectedDetails, setSelectedDetails] = useState([])
       const [images, setImages] = useState([])
 
       useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchData = async () => {
           try {
-            const response = await axios.get('http://localhost:8080/categories')
-            setCategories(response.data)
+            const categoriesResponse = await axios.get('http://localhost:8080/categories');
+            const locationsResponse = await axios.get('http://localhost:8080/locations');
+            const detailsResponse = await axios.get('http://localhost:8080/details');
+    
+            setCategories(categoriesResponse.data);
+            setLocations(locationsResponse.data);
+            setDetails(detailsResponse.data);
           } catch (error) {
-            console.error("Error fetching categories", error)
+            console.error('Error fetching data', error);
           }
         }
 
-        const fetchLocations = async () => {
+        /*const fetchLocations = async () => {
           try {
             const response = await axios.get('http://localhost:8080/locations')
             setLocations(response.data)
@@ -36,7 +43,9 @@ const InsertVehicle = () => {
         }
 
         fetchCategories()
-        fetchLocations()
+        fetchLocations()*/
+
+        fetchData()
       },[])
     
       const [error, setError] = useState('');
@@ -53,6 +62,12 @@ const InsertVehicle = () => {
         setVehicle({ ...vehicle, [name]: locationObject || value });
       }
 
+      const handleDetailsChange = (event) => {
+        const { value } = event.target;
+        setSelectedDetails(value);
+        setVehicle({ ...vehicle, details: value });
+      };
+
       const handleImageChange = (event) => {
         const files = event.target.files
         setImages(files)
@@ -64,7 +79,7 @@ const InsertVehicle = () => {
         try {
           const response = await axios.post('http://localhost:8080/products/create', {
             ...vehicle,
-            locations: vehicle.locations.map(({ id }) => id),});
+            details: vehicle.details.map(({ id }) => id),});
           // Si la solicitud se realiza con éxito, respuesta acá --> por definir el mensaje de success
 
           const vehicleID = response.data.id
@@ -80,10 +95,11 @@ const InsertVehicle = () => {
             name: '',
             price: '',
             category: '',
-            location: ''
+            location: '',
+            details: []
             // Faltan imagenes y detalles.
           });
-          setSelectedLocations([])
+          setSelectedDetails([]);
           setImages([])
         } catch (error) {
           setError('Error to sending data, try now!');
@@ -158,6 +174,25 @@ const InsertVehicle = () => {
                 ))}
               </Select>
             </FormControl>
+
+            <FormControl component="fieldset">
+            <InputLabel>Details:</InputLabel>
+            <FormGroup>
+              {details.map((detail) => (
+                <FormControlLabel
+                  key={detail.id}
+                  control={
+                    <Checkbox
+                      checked={selectedDetails.includes(detail.id)}
+                      onChange={handleDetailsChange}
+                      value={detail.id.toString()}
+                    />
+                  }
+                  label={detail.name}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
 
             <input type="file" accept="image/*" onChange={handleImageChange} multiple />
 
