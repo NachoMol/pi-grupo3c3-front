@@ -48,14 +48,9 @@ const InsertVehicle = () => {
       };
 
       const handleLocationChange = (event) => {
-        const selectedLocationsArray = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
-        setSelectedLocations(selectedLocationsArray);
-
-        const selectedLocationObjects = selectedLocationsArray.map((locationId) =>
-          locations.find((location) => location.id === locationId)
-        );
-
-        setVehicle({ ...vehicle, locations: selectedLocationObjects });
+        const {name, value} = event.target
+        const locationObject = name === 'location' ? locations.find(loc => loc.id == value) : null;
+        setVehicle({ ...vehicle, [name]: locationObject || value });
       }
 
       const handleImageChange = (event) => {
@@ -85,7 +80,7 @@ const InsertVehicle = () => {
             name: '',
             price: '',
             category: '',
-            locations: []
+            location: ''
             // Faltan imagenes y detalles.
           });
           setSelectedLocations([])
@@ -142,12 +137,12 @@ const InsertVehicle = () => {
             </FormControl>
 
             <FormControl className="input-text">
-              <InputLabel htmlFor="locations">Location:</InputLabel>
+              <InputLabel htmlFor="location">Location:</InputLabel>
               <Select
                 className="input-text"
-                id="locations"
-                name="locations"
-                value={selectedLocations}
+                id="location"
+                name="location"
+                value={vehicle.location ? vehicle.location.id : ''}
                 onChange={handleLocationChange}
                 label="Location"
               >
