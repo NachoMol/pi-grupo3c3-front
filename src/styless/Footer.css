@@ -25,6 +25,11 @@
     margin: 2px;
 }
 
+.imgCopyright{
+    height: 40px;
+    width: 40px;
+}
+
 .redes1 {
     padding-right: 30px;
 }
@@ -40,6 +45,11 @@
     .imgCopyright {
         height: 20px;
         width: 20px;
+    }
+
+    .imgCopyright{
+        height: 30px;
+        width: 30px;
     }
 
     .izqFooter {
