@@ -8,6 +8,8 @@ import ShowCars from './routes/ShowCars'
 import Register from './routes/Register'
 import InsertVehicle from './routes/InsertVehicle'
 import UsersList from './routes/UsersList'
+import Footer from './components/Footer'
+
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
       </Routes>
+      <Footer/>
     </>
   )
 }
