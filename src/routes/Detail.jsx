@@ -17,21 +17,31 @@ const Detail = () => {
   const params = useParams()
 
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchCar = async () => {
-    try{
-        const response = await axios.get('http://localhost:8080/products/' + params.id)
-        setCar(response.data)
-
-    }catch(error){
-        console.error("Error fetching cars", error)
-        }
+      try {
+        const response = await axios.get('http://localhost:8080/products/' + params.id);
+        setCar(response.data);
+        setLoading(false); // Indicar que los datos se cargaron
+      } catch (error) {
+        console.error("Error fetching cars", error);
+        setLoading(false); // También manejar errores
+      }
     }
     fetchCar();
-
-},[])
+  }, [params.id]);
 
 console.log('initialArray', car);
+
+if (loading) {
+  return <p>Loading...</p>;
+}
+
+if (!car) {
+  return <p>No car data available.</p>;
+}
 
   return (
     <ThemeProvider theme={theme}> {/* Proporciona el tema de Material-UI */}
@@ -58,7 +68,7 @@ console.log('initialArray', car);
               Price: {car.price}
             </Typography>
             <Typography variant="subtitle1">
-              Category: {car.category.name}
+            Category: {car.category?.name}
             </Typography>
             <Typography variant="subtitle1">
               Location: {car.location_id}
