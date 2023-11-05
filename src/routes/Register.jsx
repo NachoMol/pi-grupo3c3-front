@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
 import axios from 'axios';
+import DefaultButton from '../components/DefaultButton';
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 const Register = () => {
@@ -114,7 +115,7 @@ const Register = () => {
         }
         else
           console.error("Registration error:", error.response?.data || error.message);
-          setServerError("Error during registration: " + error.response.data);
+        setServerError("Error during registration: " + error.response.data);
       }
     }
 
@@ -225,29 +226,17 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)} />
                 </Grid>
                 {serverError && (
-                <Typography variant="body2" style={{ color: 'red', textAlign: 'center' }}>
-                  {serverError}
-                </Typography>
+                  <Typography variant="body2" style={{ color: 'red', textAlign: 'center' }}>
+                    {serverError}
+                  </Typography>
                 )}
                 {!serverError && successMessage && (
                   <Typography variant="body2" style={{ color: 'green', textAlign: 'center' }}>
                     {successMessage}
                   </Typography>
                 )}
-                
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3, mb: 2, bgcolor: '#302253', '&:hover': {
-                    bgcolor: '#5e2b96',
-                  },
-                }}
-              >
-                Sign Up
-              </Button>
+              <DefaultButton name="Sign Up" />
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link to={'/login'} variant="body2">

@@ -167,22 +167,32 @@ const Header = () => {
                   margin: '7px 0 0 0'
                 }}
               >
-                                <Link to={'/admin'}>
-                    <p>Admin</p>
+                <Link to={'/admin'}>
+                  <p>Admin</p>
                 </Link>
               </UserTitle> : (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography
                     variant="h5"
                     sx={{
-                      fontFamily: 'Spinnaker, sans-serif',
-                      color: '#FFF',
-                      textDecoration: 'none',
-                      fontSize: 24,
+                      // fontFamily: 'Spinnaker, sans-serif',
+                      // color: '#FFF',
+                      // textDecoration: 'none',
+                      // fontSize: 24,
                       cursor: 'pointer'
                     }}
                   >
-                    Login
+                    <Link
+                      to={'/login'}
+                      style={{
+                        fontFamily: 'Spinnaker, sans-serif',
+                        color: '#FFF',
+                        textDecoration: 'none',
+                        fontSize: 24
+                      }}
+                    >
+                      Sign In
+                    </Link>
                   </Typography>
                   <Typography
                     variant="h5"
@@ -194,8 +204,8 @@ const Header = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    <Link to={'/register/' }>
-                    Sign Up
+                    <Link to={'/register/'}>
+                      Sign Up
                     </Link>
                   </Typography>
                 </div>

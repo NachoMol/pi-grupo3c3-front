@@ -1,0 +1,1 @@
+export const urlBackground = 'https://images.unsplash.com/photo-1578859695220-856a4f5edd39';
