@@ -13,6 +13,7 @@ const theme = createTheme(); // Configura el tema de Material-UI
 const Detail = () => {
 
   const[car, setCar] = useState([]);
+  const [category, setCategory] = useState([]);
   const params = useParams()
 
 
@@ -21,15 +22,16 @@ const Detail = () => {
     try{
         const response = await axios.get('http://localhost:8080/products/' + params.id)
         setCar(response.data)
+
     }catch(error){
         console.error("Error fetching cars", error)
         }
     }
     fetchCar();
 
-
-
 },[])
+
+console.log('initialArray', car);
 
   return (
     <ThemeProvider theme={theme}> {/* Proporciona el tema de Material-UI */}
@@ -56,7 +58,7 @@ const Detail = () => {
               Price: {car.price}
             </Typography>
             <Typography variant="subtitle1">
-              Category: {car.category_id}
+              Category: {car.category.name}
             </Typography>
             <Typography variant="subtitle1">
               Location: {car.location_id}
@@ -79,6 +81,7 @@ const Detail = () => {
           </Container>
         </div>
       </div>
+      
     </ThemeProvider>
   );
 }
