@@ -56,7 +56,7 @@ const BodyContainer = () => {
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {cars.map((cars, index) => (
                     <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
-                        <Link to={'/detail/'} style={{ textDecoration: 'none' }}>
+                        <Link to={'/detail/' + cars.id} style={{ textDecoration: 'none' }}>
                             <Card sx={{ maxWidth: 350, background: 'transparent', minWidth: 349 }}>
                                 <CardActionArea>
                                     <CardMedia

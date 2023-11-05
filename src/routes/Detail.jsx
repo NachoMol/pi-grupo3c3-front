@@ -1,11 +1,12 @@
 import { Button, CssBaseline, Grid, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importa ThemeProvider y createTheme
 import {Container} from '@mui/material' 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import CarGallery from '../components/CarGallery';
 import '../styless/App.css';
 import '../styless/Detail.css';
+import axios from 'axios';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
@@ -17,13 +18,32 @@ const Detail = () => {
     specs: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...',
   };
 
+  const[car, setCar] = useState([]);
+  const params = useParams()
+
+
+  useEffect(() => {
+    const fetchCar = async () => {
+    try{
+        const response = await axios.get('http://localhost:8080/products/' + params.id)
+        setCar(response.data)
+    }catch(error){
+        console.error("Error fetching cars", error)
+        }
+    }
+    fetchCar();
+
+
+
+},[])
+
   return (
     <ThemeProvider theme={theme}> {/* Proporciona el tema de Material-UI */}
       <header className='detail_header'>
         <Link to={'/'} className='back-logo-container'>
           <img className='back-logo' src="https://www.iconpacks.net/icons/3/free-icon-left-arrow-7252.png" alt="" />
         </Link>
-        <h2 className='detail_title'>Chevrolet Cruze II 1.4 LTZ 153CV Hatchback 2016</h2>
+        <h2 className='detail_title'>{car.name}</h2>
       </header>
 
       <div className='detail-div'>
@@ -39,13 +59,13 @@ const Detail = () => {
 
             {/* Detalles del coche */}
             <Typography variant="subtitle1">
-              Price: {carDetails.price}
+              Price: {car.price}
             </Typography>
             <Typography variant="subtitle1">
-              Category: {carDetails.categoryId}
+              Category: {car.categoryId}
             </Typography>
             <Typography variant="subtitle1">
-              Location: {carDetails.location}
+              Location: {car.location}
             </Typography>
 
             {/* Sección de detalles */}
