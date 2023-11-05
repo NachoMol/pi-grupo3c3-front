@@ -11,12 +11,6 @@ import axios from 'axios';
 const theme = createTheme(); // Configura el tema de Material-UI
 
 const Detail = () => {
-  const carDetails = {
-    price: '$20,000',
-    categoryId: 'Sedan',
-    location: 'Los Angeles, CA',
-    specs: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...',
-  };
 
   const[car, setCar] = useState([]);
   const params = useParams()
@@ -62,10 +56,10 @@ const Detail = () => {
               Price: {car.price}
             </Typography>
             <Typography variant="subtitle1">
-              Category: {car.categoryId}
+              Category: {car.category_id}
             </Typography>
             <Typography variant="subtitle1">
-              Location: {car.location}
+              Location: {car.location_id}
             </Typography>
 
             {/* Sección de detalles */}
@@ -73,7 +67,7 @@ const Detail = () => {
               Specifications
             </Typography>
             <Typography variant="body1">
-              {carDetails.specs}
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...</p>
             </Typography>
 
             {/* Botón de reserva */}
