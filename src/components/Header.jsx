@@ -204,7 +204,13 @@ const Header = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    <Link to={'/register/'}>
+                    <Link to={'/register/'}
+                    style={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      fontSize: 24
+                    }}>
                       Sign Up
                     </Link>
                   </Typography>
