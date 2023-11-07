@@ -23,14 +23,14 @@ const UserTitle = styled(Typography)(({ theme }) => ({
 const itemMenu = [
   {
     id: 1,
-    name: "Home",
-    link: "/"
-  },
-  {
-    id: 2,
-    name: "Galery",
-    link: "/carGallery"
+    name: "Admin",
+    link: "/admin"
   }
+  // {
+  //   id: 2,
+  //   name: "Galery",
+  //   link: "/carGallery"
+  // }
 ];
 
 const Header = () => {
@@ -130,20 +130,22 @@ const Header = () => {
                 <Button
                   key={page.id}
                   onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    display: 'block',
-                    color: '#d9d9d9',
-                    fontFamily: 'Spinnaker, sans-serif',
-                    fontSize: 28,
-                    fontWeight: 400,
-                    fontStyle: 'normal',
-                    textDecoration: 'none',
-                    margin: 0,
-                    padding: 0
-                  }}
+            
+                   sx={{
+                     my: 2,
+                     display: 'block',
+                     color: '#d9d9d9',
+                     fontFamily: 'Spinnaker, sans-serif',
+                     fontSize: 28,
+                     fontWeight: 400,
+                     fontStyle: 'normal',
+                     textDecoration: 'none',
+                     margin: 0,
+                     padding: 0
+                   }}
+                
                 >
-                  {/* {page.name} */}
+                   {page.name} 
                 </Button>
               </Link>
             ))}
@@ -175,10 +177,10 @@ const Header = () => {
                   <Typography
                     variant="h5"
                     sx={{
-                      // fontFamily: 'Spinnaker, sans-serif',
-                      // color: '#FFF',
-                      // textDecoration: 'none',
-                      // fontSize: 24,
+                       fontFamily: 'Spinnaker, sans-serif',
+                       color: '#FFF',
+                       textDecoration: 'none',
+                       fontSize: 24,
                       cursor: 'pointer'
                     }}
                   >
