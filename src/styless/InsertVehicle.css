@@ -38,11 +38,10 @@
 .textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
+  margin-top: 15px; /* Agrega más margen superior */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  /* Elimina display: flex; ya que no es necesario */
 }
 
 /* Estilos para el área de texto (textarea) */
@@ -71,4 +70,26 @@
 .error-message {
   color: #ff0000;
   margin-top: 10px;
+}
+
+/* Estilos para el título "Details:" */
+.details-label {
+  margin-bottom: 15px; /* Ajusta según tus preferencias */
+}
+
+/* Estilos para el campo Details */
+.details-label .MuiFormGroup-root {
+  margin-top: 10px; /* Ajusta según tus preferencias */
+}
+
+
+/* Estilos para el campo Category */
+.category-label {
+  margin-top: 20px; /* Agrega un margen superior mayor */
+  max-width: 300px; /* Establece un ancho máximo deseado en píxeles */
+}
+
+/* Estilos para el campo Details */
+.details-label {
+  margin-top: 20px; /* Agrega un margen superior mayor */
 }
