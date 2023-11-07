@@ -1,116 +1,145 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Select, MenuItem, InputLabel, FormControl, FormGroup, FormControlLabel, Button, Checkbox } from '@mui/material';
-import '../styless/InsertVehicle.css'
+import React, { useEffect, useState } from 'react';
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Button,
+  Checkbox,
+} from '@mui/material';
+import '../styless/InsertVehicle.css';
 
 const InsertVehicle = () => {
-    const [vehicle, setVehicle] = useState({
+  const [vehicle, setVehicle] = useState({
+    name: '',
+    price: '',
+    category: '',
+    location: '',
+    details: [], // Aquí almacenaremos los detalles seleccionados
+  });
+
+  const [categories, setCategories] = useState([]);
+  //const [locations, setLocations] = useState([]);
+  const [details, setDetails] = useState([]);
+  const [selectedDetails, setSelectedDetails] = useState([]);
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await axios.get('http://localhost:8080/categories');
+        //const locationsResponse = await axios.get('http://localhost:8080/locations');
+        const detailsResponse = await axios.get('http://localhost:8080/details');
+
+        setCategories(categoriesResponse.data);
+        //setLocations(locationsResponse.data);
+        setDetails(detailsResponse.data);
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setVehicle({ ...vehicle, [name]: value });
+  };
+
+  const handleDetailsChange = (event) => {
+    const { value } = event.target;
+  
+    // Copia el estado actual de selectedDetails
+    const updatedSelectedDetails = [...selectedDetails];
+  
+    // Si el detalle ya está en selectedDetails, quítalo; de lo contrario, agrégalo
+    if (updatedSelectedDetails.includes(value)) {
+      // El detalle ya está seleccionado, quítalo
+      const index = updatedSelectedDetails.indexOf(value);
+      updatedSelectedDetails.splice(index, 1);
+    } else {
+      // El detalle no está seleccionado, agrégalo
+      updatedSelectedDetails.push(value);
+    }
+  
+    setSelectedDetails(updatedSelectedDetails);
+  };
+
+  const handleImageChange = (event) => {
+    const files = event.target.files;
+    setImages(files);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      // Enviar la solicitud para crear el producto
+      const productResponse = await axios.post('http://localhost:8080/products/create', {
+        ...vehicle,
+        details: [], // Vacío por ahora
+      });
+
+      const vehicleID = productResponse.data.id;
+
+      if (selectedDetails.length > 0) {
+  
+      // Agregar detalles al producto
+      await addDetailsToProduct(vehicleID, selectedDetails);
+  
+      }
+      
+
+      // Limpia los detalles seleccionados y otros campos
+      setSelectedDetails([]);
+      setImages([]);
+  
+      const formData = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        formData.append('file', images[i]);
+      }
+  
+      await axios.post('http://localhost:8080/media/upload', formData);
+  
+      setVehicle({
         name: '',
         price: '',
         category: '',
-        locations: [],
-        details: []
+        //location: '',
+        details: [],
       });
+      setImages([]);
+    } catch (error) {
+      setError('Error al enviar los datos. Intente nuevamente.');
+    }
+  };
+  
+  // Función para agregar detalles al producto
+  const addDetailsToProduct = async (productId, detailIds) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/products/${productId}/add-details`,
+        detailIds
+      );
 
-      const [categories, setCategories] = useState([])
-      const [locations, setLocations] = useState([])
-      const [details, setDetails] = useState([])
-      const [selectedDetails, setSelectedDetails] = useState([])
-      const [images, setImages] = useState([])
+      // Realiza las acciones necesarias después de agregar los detalles
+      console.log('Detalles agregados con éxito', response.data);
+    } catch (error) {
+      console.error('Error al agregar detalles', error);
+    }
+  };
 
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const categoriesResponse = await axios.get('http://localhost:8080/categories');
-            const locationsResponse = await axios.get('http://localhost:8080/locations');
-            const detailsResponse = await axios.get('http://localhost:8080/details');
-    
-            setCategories(categoriesResponse.data);
-            setLocations(locationsResponse.data);
-            setDetails(detailsResponse.data);
-          } catch (error) {
-            console.error('Error fetching data', error);
-          }
-        }
-
-        /*const fetchLocations = async () => {
-          try {
-            const response = await axios.get('http://localhost:8080/locations')
-            setLocations(response.data)
-          } catch (error) {
-            console.error("Error fetching locations". error)
-          }
-        }
-
-        fetchCategories()
-        fetchLocations()*/
-
-        fetchData()
-      },[])
-    
-      const [error, setError] = useState('');
-    
-      const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        const categoryObject = name === 'category' ? categories.find(cat => cat.id === value) : null;
-        setVehicle({ ...vehicle, [name]: categoryObject || value });
-      };
-
-      const handleLocationChange = (event) => {
-        const {name, value} = event.target
-        const locationObject = name === 'location' ? locations.find(loc => loc.id == value) : null;
-        setVehicle({ ...vehicle, [name]: locationObject || value });
-      }
-
-      const handleDetailsChange = (event) => {
-        const { value } = event.target;
-        setSelectedDetails(value);
-        setVehicle({ ...vehicle, details: value });
-      };
-
-      const handleImageChange = (event) => {
-        const files = event.target.files
-        setImages(files)
-      }
-    
-      const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        try {
-          const response = await axios.post('http://localhost:8080/products/create', {
-            ...vehicle,
-            details: vehicle.details.map(({ id }) => id),});
-          // Si la solicitud se realiza con éxito, respuesta acá --> por definir el mensaje de success
-
-          const vehicleID = response.data.id
-
-          const formData = new FormData()
-          for (let i = 0; i < images.length; i++) {
-            formData.append('file', images[i]);
-          }
-
-          await axios.post('http://localhost:8080/media/upload', formData)
-    
-          setVehicle({
-            name: '',
-            price: '',
-            category: '',
-            location: '',
-            details: []
-            // Faltan imagenes y detalles.
-          });
-          setSelectedDetails([]);
-          setImages([])
-        } catch (error) {
-          setError('Error to sending data, try now!');
-        }
-      };
     
       return (
         <div className="form-container">
-        <h2>Register Vehicle</h2>
-        <div className="form-content">
-          <form onSubmit={handleSubmit}>
+          <h2>Register Vehicle</h2>
+          <div className="form-content">
+            <form onSubmit={handleSubmit}>
             <label className="label">Name:</label>
             <input
               className="input-text"
@@ -152,14 +181,14 @@ const InsertVehicle = () => {
               </Select>
             </FormControl>
 
-            <FormControl className="input-text">
+            {/* <FormControl className="input-text">
               <InputLabel htmlFor="location">Location:</InputLabel>
               <Select
                 className="input-text"
                 id="location"
                 name="location"
                 value={vehicle.location ? vehicle.location.id : ''}
-                onChange={handleLocationChange}
+                //onChange={handleLocationChange}
                 label="Location"
               >
                 <MenuItem value="" disabled>
@@ -173,7 +202,7 @@ const InsertVehicle = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl> */}
 
             <FormControl component="fieldset">
             <InputLabel>Details:</InputLabel>
@@ -199,12 +228,12 @@ const InsertVehicle = () => {
             {error && <p className="error-message">{error}</p>}
 
             <Button className="button" type="submit" variant="contained">
-              Submit
-            </Button>
-          </form>
-        </div>
+            Submit
+          </Button>
+        </form>
+      </div>
     </div>
-      );
-}
+  );
+};
 
-export default InsertVehicle
+export default InsertVehicle;
