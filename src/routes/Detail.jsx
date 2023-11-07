@@ -7,6 +7,7 @@ import CarGallery from '../components/CarGallery';
 import '../styless/App.css';
 import '../styless/Detail.css';
 import axios from 'axios';
+import Feature from './Feature';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
@@ -79,7 +80,8 @@ if (!car) {
               Specifications
             </Typography>
             <Typography variant="body1">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...</p>
+              <Feature />
+              {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...</p> */}
             </Typography>
 
             {/* Botón de reserva */}

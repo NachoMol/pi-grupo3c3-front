@@ -10,6 +10,7 @@ import InsertVehicle from './routes/InsertVehicle'
 import UsersList from './routes/UsersList'
 import Footer from './components/Footer'
 import Login from './routes/Login'
+import Feature from './routes/Feature'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/feature' element={<Feature />} />
       </Routes>
       <Footer/>
     </>
