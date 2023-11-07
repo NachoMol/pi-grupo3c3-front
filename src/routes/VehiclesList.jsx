@@ -19,7 +19,14 @@ const VehiclesList = () => {
         fetchVehicles();
      }, [])
 
-    
+     const handleDelete = async (id) => {
+      try {
+        await axios.delete(`http://localhost:8080/products/delete/${id}`);
+        setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
+      } catch (error) {
+        console.error('Error deleting vehicle:', error);
+      }
+    }
 
     return (
         <Container>
@@ -41,6 +48,11 @@ const VehiclesList = () => {
                 <TableCell>{vehicle.id}</TableCell>
                 <TableCell>{vehicle.name}</TableCell>
                 <TableCell>
+                <Button sx={{
+                    color: 'red',
+                    textTransform: 'none',
+                    textAlign: 'left',
+                  }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
