@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { Link } from 'react-router-dom'
-
 import CssBaseline from '@mui/material/CssBaseline';
 import { Alert, Avatar, TextField, Paper, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 import CopyrigthLogin from '../components/_Login/CopyrigthLogin';
 import { urlBackground } from '../config/config';
 import DefaultButton from '../components/DefaultButton';
@@ -27,7 +25,7 @@ const Login = () => {
     console.log('errors', errors);
 
     return (
-        <Grid container component="main" sx={{ height: '100vh', overflow: 'hidden' }}>
+        <Grid container component="main" sx={{ height: '90vh', overflow: 'hidden'}}>
             <CssBaseline />
             <Grid
                 item
@@ -41,14 +39,14 @@ const Login = () => {
                     backgroundPosition: 'bottom',
                 }}
             />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{backgroundColor: '#D9D9D9'}}>
                 <Box
                     sx={{
                         my: '2rem',
                         mx: 4,
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
+                        alignItems: 'center'
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: '#5C4D6B' }}>

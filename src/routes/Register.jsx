@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
 import axios from 'axios';
 import DefaultButton from '../components/DefaultButton';
+import { Link } from 'react-router-dom'
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 const Register = () => {
@@ -38,7 +38,7 @@ const Register = () => {
     if (!firstName) {
       setFirstNameError('First Name is required');
       valid = false;
-    } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+    } else if (!/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(firstName)) {
       setFirstNameError('First Name should not contain numbers');
       valid = false;
     } else {
@@ -48,7 +48,7 @@ const Register = () => {
     if (!lastName) {
       setLastNameError('Last Name is required');
       valid = false;
-    } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+    } else if (!/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(lastName)) {
       setLastNameError('Last Name should not contain numbers');
       valid = false;
     } else {
@@ -151,7 +151,7 @@ const Register = () => {
 
 
   return (
-    <div style={{ backgroundColor: '#D9D9D9', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+    <div style={{ backgroundColor: '#D9D9D9', minHeight: '70vh', display: 'flex', alignItems: 'center' }}>
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -237,11 +237,9 @@ const Register = () => {
                 )}
               </Grid>
               <DefaultButton name="Sign Up" />
-              <Grid container justifyContent="flex-end">
+              <Grid container justifyContent="center">
                 <Grid item>
-                  <Link to={'/login'} variant="body2">
-                    Already have an account? Sign in
-                  </Link>
+                <Link to={'/login/'} style={{cursor: 'pointer'}}>{`Already have an account? Sign in`}</Link>
                 </Grid>
               </Grid>
             </Box>

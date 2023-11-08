@@ -60,8 +60,7 @@ const Header = () => {
               <img src={LogoImage}
                 alt="Logo"
                 style={{
-                  width: 130,
-                  height: 83,
+                  height: 65,
                   filter: 'invert(1)',
                   marginTop: '2%'
                 }}
@@ -169,9 +168,7 @@ const Header = () => {
                   margin: '7px 0 0 0'
                 }}
               >
-                <Link to={'/admin'}>
-                  <p>Admin</p>
-                </Link>
+                
               </UserTitle> : (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography
@@ -190,7 +187,8 @@ const Header = () => {
                         fontFamily: 'Spinnaker, sans-serif',
                         color: '#FFF',
                         textDecoration: 'none',
-                        fontSize: 24
+                        fontSize: 18,
+                        
                       }}
                     >
                       Sign In
@@ -211,7 +209,8 @@ const Header = () => {
                       fontFamily: 'Spinnaker, sans-serif',
                       color: '#FFF',
                       textDecoration: 'none',
-                      fontSize: 24
+                      fontSize: 18,
+                      
                     }}>
                       Sign Up
                     </Link>

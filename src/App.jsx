@@ -13,7 +13,6 @@ import Login from './routes/Login'
 import Feature from './routes/Feature'
 import VehiclesList from './routes/VehiclesList'
 
-
 function App() {
 
   
@@ -28,7 +27,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
-        <Route path='/login' element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path='/feature' element={<Feature />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
       </Routes>

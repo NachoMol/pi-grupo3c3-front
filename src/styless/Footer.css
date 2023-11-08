@@ -1,13 +1,16 @@
 @import url("https://use.fontawesome.com/releases/v6.1.1/css/all.css");
 
+
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: black;
     width: 100%;
-    height: 50px;
+    height: 58px;
+    position: absolute;
     bottom: 0;
+    box-sizing: content-box;
 }
 
 .footer p {
@@ -21,11 +24,6 @@
     padding: 6px;
     border-radius: 10px;
     margin: 2px;
-}
-
-.imgCopyright{
-    height: 40px;
-    width: 40px;
 }
 
 .redes1 {
@@ -45,7 +43,7 @@
         width: 20px;
     }
 
-    .imgCopyright{
+    .imgCopyright {
         height: 30px;
         width: 30px;
     }
@@ -57,4 +55,16 @@
     .redes1 {
         padding-right: 10px;
     }
+}
+
+/* Asegura que el pie de página esté al fondo de la página cuando no hay scroll */
+body {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Añade espacio para el pie de página cuando no hay scroll */
+body::before {
+    height: 50px; /* Altura del pie de página */
+    display: block;
 }
