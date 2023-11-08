@@ -6,6 +6,7 @@ import {
   RadioGroup,
   Radio,
   Checkbox,
+  FormLabel,
 } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -161,17 +162,17 @@ const InsertVehicle = () => {
           />
 
           <div className="category-label">
-            <p>Category:</p>
-            <FormControl component="fieldset">
-              <RadioGroup
-                value={vehicle.category}
-                onChange={handleCategoryChange}
-              >
+            <FormControl component="fieldset" className="category-label">
+            <FormLabel id="demo-radio-buttons-group-label">Category</FormLabel>
+              <RadioGroup 
+              value={vehicle.category.id} onChange={handleCategoryChange} aria-labelledby="demo-radio-buttons-group-label">
                 {categories.map((category) => (
                   <FormControlLabel
                     key={category.id}
-                    value={category.id}  // Asegúrate de que esto coincida con el valor de la categoría
-                    control={<Radio checked={vehicle.category === category.id} />} // Verifica si es igual al valor de la categoría actual
+                    value={category.id}
+                    control={
+                      <Radio/>
+                    }
                     label={category.name}
                   />
                 ))}
