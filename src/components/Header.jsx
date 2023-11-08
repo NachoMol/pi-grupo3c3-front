@@ -168,7 +168,9 @@ const Header = () => {
                   margin: '7px 0 0 0'
                 }}
               >
-                
+                <Link to={'/admin'}>
+                  <p>Admin</p>
+                </Link>
               </UserTitle> : (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography
