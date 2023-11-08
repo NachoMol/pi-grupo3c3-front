@@ -109,16 +109,10 @@ const InsertVehicle = () => {
         price: vehicle.price,
         category: { id: selectedCategoryId },
       });
-
-
       
       const vehicleID = productResponse.data.id;
-
       console.log('Product ID:', vehicleID);
-
-
       const selectedDetailsAsNumbers = selectedDetails.map(Number);
-
       const requestBody = {
         selectedDetails: selectedDetailsAsNumbers
       };
@@ -143,12 +137,17 @@ const InsertVehicle = () => {
   
       // Establecer el mensaje de éxito
       setSuccessMessage('Product signed up successfully');
+      setError(''); // Restablecer el mensaje de error
     } catch (error) {
-      setError('Error al enviar los datos. Intente nuevamente.');
+      if (error.response && error.response.status === 500) {
+      setError('This name already exists');
+      }
+      else setError('Error al enviar los datos. Intente nuevamente.');
     } finally {
       setLoading(false); // Indicar que la solicitud ha finalizado
     }
   };
+
 
   return (
     <div className="form-container">
