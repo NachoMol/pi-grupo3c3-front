@@ -29,10 +29,6 @@ const InsertVehicle = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const clearSuccessMessage = () => {
-    setSuccessMessage('');
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,21 +73,22 @@ const InsertVehicle = () => {
 
   const handleDetailsChange = (event) => {
     const { name, checked } = event.target;
-
-    // Verificar si el detalle ya está en la lista de seleccionados
-    const detailIndex = selectedDetails.indexOf(name);
-
-    if (checked && detailIndex === -1) {
-      // Si está marcado y no está en la lista, agrégalo
-      setSelectedDetails([...selectedDetails, name]);
-    } else if (!checked && detailIndex !== -1) {
-      // Si no está marcado y está en la lista, elimínalo
-      const updatedDetails = [...selectedDetails];
-      updatedDetails.splice(detailIndex, 1);
-      setSelectedDetails(updatedDetails);
+    
+    // Crea una copia local del array de detalles seleccionados
+    let updatedSelectedDetails = [...selectedDetails];
+  
+    if (checked) {
+      // Si está marcado, agrégalo al array local
+      updatedSelectedDetails.push(name);
+    } else {
+      // Si se desmarca, elimínalo del array local
+      updatedSelectedDetails = updatedSelectedDetails.filter((detail) => detail !== name);
     }
-
-    console.log('Selected Details:', selectedDetails);
+  
+    // Actualiza el estado con la copia local del array
+    setSelectedDetails(updatedSelectedDetails);
+  
+    console.log('Selected Details:', updatedSelectedDetails);
   };
 
   const handleImageChange = (event) => {
@@ -102,7 +99,7 @@ const InsertVehicle = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true); // Indicar que la solicitud está en progreso
-  
+    console.log('Selected Details in handleSubmit:', selectedDetails);
     try {
       const selectedCategoryId = vehicle.category.id;
   
@@ -111,10 +108,27 @@ const InsertVehicle = () => {
         name: vehicle.name,
         price: vehicle.price,
         category: { id: selectedCategoryId },
-        details: selectedDetails,
       });
-  
+
+
+      
       const vehicleID = productResponse.data.id;
+
+      console.log('Product ID:', vehicleID);
+
+
+      const selectedDetailsAsNumbers = selectedDetails.map(Number);
+
+      const requestBody = {
+        selectedDetails: selectedDetailsAsNumbers
+      };
+
+      // Enviar la solicitud para crear el detail asociado al producto
+      axios.post('http://localhost:8080/products/' + vehicleID + '/add-details', requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
   
       // Limpia los detalles seleccionados y otros campos
       setSelectedDetails([]);
@@ -181,14 +195,13 @@ const InsertVehicle = () => {
           </div>
 
           <FormControl component="fieldset" className="details-label">
-            <p>Details:</p>
+            <FormLabel>Details</FormLabel>
             <FormGroup>
               {details.map((detail) => (
                 <FormControlLabel
                   key={detail.id}
                   control={
                     <Checkbox
-                      checked={selectedDetails.includes(detail.id)}
                       onChange={handleDetailsChange}
                       name={detail.id.toString()}
                       color="primary"
