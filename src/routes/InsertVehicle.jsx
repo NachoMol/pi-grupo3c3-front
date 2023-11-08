@@ -23,8 +23,14 @@ const InsertVehicle = () => {
   const [categories, setCategories] = useState([]);
   const [details, setDetails] = useState([]);
   const [selectedDetails, setSelectedDetails] = useState([]);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(null);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const clearSuccessMessage = () => {
+    setSuccessMessage('');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,43 +100,38 @@ const InsertVehicle = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Indicar que la solicitud está en progreso
   
     try {
-      // Obtén el ID de la categoría seleccionada
       const selectedCategoryId = vehicle.category.id;
   
       // Enviar la solicitud para crear el producto
       const productResponse = await axios.post('http://localhost:8080/products/create', {
         name: vehicle.name,
         price: vehicle.price,
-        category: { id: selectedCategoryId }, // Envía el ID de la categoría
+        category: { id: selectedCategoryId },
         details: selectedDetails,
       });
   
       const vehicleID = productResponse.data.id;
   
-      console.log('Selected Details:', selectedDetails);
-  
       // Limpia los detalles seleccionados y otros campos
       setSelectedDetails([]);
       setImages([]);
-  
-      const formData = new FormData();
-      for (let i = 0; i < images.length; i++) {
-        formData.append('file', images[i]);
-      }
-  
-      await axios.post('http://localhost:8080/media/upload', formData);
-  
       setVehicle({
         name: '',
         price: '',
-        category: '', // También puedes eliminar esto ya que no se usa
+        category: { id: '' },
         location: '',
         details: [],
       });
+  
+      // Establecer el mensaje de éxito
+      setSuccessMessage('Product signed up successfully');
     } catch (error) {
       setError('Error al enviar los datos. Intente nuevamente.');
+    } finally {
+      setLoading(false); // Indicar que la solicitud ha finalizado
     }
   };
 
@@ -206,6 +207,10 @@ const InsertVehicle = () => {
             Submit
           </Button>
         </form>
+        {loading && <p>Loading...</p>}
+        {successMessage && (
+          <p className="success-message">{successMessage}</p>
+        )}
       </div>
     </div>
   );
