@@ -93,3 +93,7 @@
 .details-label {
   margin-top: 20px; /* Agrega un margen superior mayor */
 }
+
+.success-message {
+  color: green;
+}

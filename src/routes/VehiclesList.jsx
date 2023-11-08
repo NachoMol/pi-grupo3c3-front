@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material'
+import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from '@mui/material'
 import axios from 'axios'
-
+import Swal from 'sweetalert2'
 
 const VehiclesList = () => {
 
@@ -19,13 +19,30 @@ const VehiclesList = () => {
         fetchVehicles();
      }, [])
 
-     const handleDelete = async (id) => {
-      try {
-        await axios.delete(`http://localhost:8080/products/delete/${id}`);
-        setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
-      } catch (error) {
-        console.error('Error deleting vehicle:', error);
-      }
+     const handleDelete = (id) => {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, bórralo!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await axios.delete(`http://localhost:8080/products/delete/${id}`);
+            setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
+            Swal.fire(
+              '¡Eliminado!',
+              'El producto ha sido eliminado.',
+              'success'
+            )
+          } catch (error) {
+            console.error('Error deleting vehicle:', error);
+          }
+        }
+      })
     }
 
     return (
@@ -49,9 +66,17 @@ const VehiclesList = () => {
                 <TableCell>{vehicle.name}</TableCell>
                 <TableCell>
                 <Button sx={{
-                    color: 'red',
-                    textTransform: 'none',
-                    textAlign: 'left',
+                    color: 'white',
+                    backgroundColor: 'red',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    padding: '10px',
+                    marginRight: '5px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: 'darkred',
+                    },
                   }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
