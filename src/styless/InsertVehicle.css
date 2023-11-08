@@ -5,7 +5,8 @@
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
+  margin-top: 25px;
+  padding: 0 50px 0 30px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -50,20 +51,13 @@
 }
 
 /* Estilos para el botón de envío */
-.button {
-  background-color: #302253;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  display: block;
-  margin: 20px auto; /* Alinea el botón al centro del contenedor */
-}
 
-.button:hover {
-  background-color: #5e2b96;
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 20px;
 }
 
 /* Estilos para el mensaje de error */

@@ -47,7 +47,7 @@ const VehiclesList = () => {
 
     return (
         <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{marginTop: 3}}>
         Vehicle List
       </Typography>
       <TableContainer component={Paper}>

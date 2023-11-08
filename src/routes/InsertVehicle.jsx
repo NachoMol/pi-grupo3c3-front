@@ -212,13 +212,13 @@ const InsertVehicle = () => {
             </FormGroup>
           </FormControl>
 
+        <div className="button-container">
           <input type="file" accept="image/*" onChange={handleImageChange} multiple />
-
           {error && <p className="error-message">{error}</p>}
-
-          <Button className="button" type="submit" variant="contained">
+          <Button className="button" type="submit" variant="contained" sx={{marginTop: 3}}>
             Submit
           </Button>
+        </div>
         </form>
         {loading && <p>Loading...</p>}
         {successMessage && (

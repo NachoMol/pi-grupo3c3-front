@@ -23,7 +23,7 @@ const UsersList = () => {
 
     return (
         <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{marginTop: 3}}>
         User List
       </Typography>
       <TableContainer component={Paper}>

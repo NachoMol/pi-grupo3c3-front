@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Admin = () => {
   const styles = {
     backgroundColor: '#D9D9D9',
-    minHeight: '100vh',
+    minHeight: '50vh',
     display: 'flex',
     alignItems: 'center',
   };
