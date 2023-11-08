@@ -66,9 +66,17 @@ const VehiclesList = () => {
                 <TableCell>{vehicle.name}</TableCell>
                 <TableCell>
                 <Button sx={{
-                    color: 'red',
-                    textTransform: 'none',
-                    textAlign: 'left',
+                    color: 'white',
+                    backgroundColor: 'red',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    padding: '10px',
+                    marginRight: '5px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: 'darkred',
+                    },
                   }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
