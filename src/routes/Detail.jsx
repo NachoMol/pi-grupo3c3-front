@@ -80,8 +80,7 @@ if (!car) {
               Specifications
             </Typography>
             <Typography variant="body1">
-              <Feature />
-              {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula...</p> */}
+              <Feature carId={params.id} />
             </Typography>
 
             {/* Botón de reserva */}

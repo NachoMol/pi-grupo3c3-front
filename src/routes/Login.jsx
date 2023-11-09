@@ -116,8 +116,8 @@ const Login = () => {
                             rules={{
                                 required: 'Password is required.',
                                 minLength: {
-                                    value: 6,
-                                    message: 'Password must be at least 6 characters.',
+                                    value: 5,
+                                    message: 'Password must be at least 5 characters.',
                                 },
                             }}
                             style={{ padding: '12.5px 10px', marginTop: 15, backgroundColor: 'blue' }}
