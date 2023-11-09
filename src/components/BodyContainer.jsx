@@ -33,9 +33,9 @@ const BodyContainer = () => {
     console.log('initialArray', cars);
 
     return (
-        <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;' }} >
+        <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;'}} >
             {/* <Box sx={{ minHeight: 107, background: '#000' }} /> */}
-            <Box sx={{ minHeight: 7, background: '#000' }} />
+            <Box/>
             <TextField
                 id="outlined-search"
                 label="Search"
