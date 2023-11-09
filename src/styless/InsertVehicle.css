@@ -83,6 +83,12 @@
   max-width: 300px; /* Establece un ancho máximo deseado en píxeles */
 }
 
+/* Estilos para el campo Category */
+.city-label {
+  margin-top: 20px; /* Agrega un margen superior mayor */
+  max-width: 300px; /* Establece un ancho máximo deseado en píxeles */
+}
+
 /* Estilos para el campo Details */
 .details-label {
   margin-top: 20px; /* Agrega un margen superior mayor */

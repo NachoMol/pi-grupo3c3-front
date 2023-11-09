@@ -17,11 +17,12 @@ const InsertVehicle = () => {
     name: '',
     price: '',
     category: { id: '' }, // Cambiado para almacenar la categoría como un objeto
-    location: '',
+    city: { id: '' },
     details: [],
   });
 
   const [categories, setCategories] = useState([]);
+  const [cities, setCities] = useState([]);
   const [details, setDetails] = useState([]);
   const [selectedDetails, setSelectedDetails] = useState([]);
   const [images, setImages] = useState(null);
@@ -34,9 +35,10 @@ const InsertVehicle = () => {
       try {
         const categoriesResponse = await axios.get('http://localhost:8080/categories');
         const detailsResponse = await axios.get('http://localhost:8080/details');
-
+        const citiesResponse = await axios.get('http://localhost:8080/cities');
         setCategories(categoriesResponse.data);
         setDetails(detailsResponse.data);
+        setCities(citiesResponse.data);
       } catch (error) {
         console.error('Error fetching data', error);
       }
@@ -70,6 +72,22 @@ const InsertVehicle = () => {
     console.log('Selected Category ID:', categoryId);
   };
 
+  const handleCitiesChange = (event) => {
+    const cityId = event.target.value; // Obten el ID de la categoría seleccionada
+  
+    // Encuentra la categoría correspondiente en la lista de categorías
+    
+  
+    if (cityId) {
+      // Si se encuentra una categoría correspondiente, establece el objeto de categoría en el estado
+      setVehicle({ ...vehicle, city: { id: cityId } }); // Establece el ID de la categoría en un objeto
+      console.log('Ciudad válida:', cityId);
+    } else {
+      // Si el ID no es válido, puedes manejarlo aquí (por ejemplo, mostrar un mensaje de error)
+      console.log('City no válida. Valor no válido:', cityId);
+    }
+  };
+
 
   const handleDetailsChange = (event) => {
     const { name, checked } = event.target;
@@ -100,25 +118,27 @@ const InsertVehicle = () => {
     event.preventDefault();
     setLoading(true); // Indicar que la solicitud está en progreso
     console.log('Selected Details in handleSubmit:', selectedDetails);
+
+
     try {
       const selectedCategoryId = vehicle.category.id;
+      const selectedCityId = vehicle.city.id;
   
       // Enviar la solicitud para crear el producto
       const productResponse = await axios.post('http://localhost:8080/products/create', {
         name: vehicle.name,
         price: vehicle.price,
         category: { id: selectedCategoryId },
+        city: { id: selectedCityId },
       });
       
-      const vehicleID = productResponse.data.id;
-      console.log('Product ID:', vehicleID);
+      const vehicleID = productResponse.data.id; // Obtén el ID del producto creado
+      console.log("Product response: ", productResponse )
+
       const selectedDetailsAsNumbers = selectedDetails.map(Number);
-      const requestBody = {
-        selectedDetails: selectedDetailsAsNumbers
-      };
 
       // Enviar la solicitud para crear el detail asociado al producto
-      axios.post('http://localhost:8080/products/' + vehicleID + '/add-details', requestBody, {
+      await axios.post(`http://localhost:8080/products/${vehicleID}/add-details`, selectedDetailsAsNumbers, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -131,7 +151,7 @@ const InsertVehicle = () => {
         name: '',
         price: '',
         category: { id: '' },
-        location: '',
+        city: { id: '' },
         details: [],
       });
   
@@ -193,6 +213,25 @@ const InsertVehicle = () => {
             </FormControl>
           </div>
 
+          <div className="city-label">
+            <FormControl component="fieldset" className="city-label">
+            <FormLabel id="demo-radio-buttons-group-label">City</FormLabel>
+              <RadioGroup 
+              value={vehicle.city.id} onChange={handleCitiesChange} aria-labelledby="demo-radio-buttons-group-label">
+                {cities.map((city) => (
+                  <FormControlLabel
+                    key={city.id}
+                    value={city.id}
+                    control={
+                      <Radio/>
+                    }
+                    label={city.city}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </div>
+
           <FormControl component="fieldset" className="details-label">
             <FormLabel>Details</FormLabel>
             <FormGroup>
@@ -211,6 +250,7 @@ const InsertVehicle = () => {
               ))}
             </FormGroup>
           </FormControl>
+
 
         <div className="button-container">
           <input type="file" accept="image/*" onChange={handleImageChange} multiple />
