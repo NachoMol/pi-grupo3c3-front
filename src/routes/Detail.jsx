@@ -14,7 +14,6 @@ const theme = createTheme(); // Configura el tema de Material-UI
 const Detail = () => {
 
   const[car, setCar] = useState([]);
-  const [category, setCategory] = useState([]);
   const params = useParams()
 
 
@@ -72,7 +71,7 @@ if (!car) {
             Category: {car.category?.name}
             </Typography>
             <Typography variant="subtitle1">
-              Location: {car.location_id}
+              City: {car.city?.city}
             </Typography>
 
             {/* Sección de detalles */}
