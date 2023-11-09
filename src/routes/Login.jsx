@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline';
 import { Alert, Avatar, TextField, Paper, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import CopyrigthLogin from '../components/_Login/CopyrigthLogin';
 import { urlBackground } from '../config/config';
 import DefaultButton from '../components/DefaultButton';
+import axios from 'axios';
 
 
 const Login = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-            user: '',
-            password: '',
+    const { control, handleSubmit, formState: { errors } } = useForm();
+    const [isLoggedIn, setLoggedIn] = useState(false); // Estado para controlar la redirección
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post("http://localhost:8080/login", {
+                email: data.user,
+                password: data.password,
+            });
+
+            console.log('Login successful:', response.data);
+            localStorage.setItem('token', response.data.token);
+            setLoggedIn(true); // Establece el estado de isLoggedIn a true para activar la redirección
+        } catch (error) {
+            console.error('Login error:', error.response?.data || error.message);
         }
-    });
+    };
 
-    const onSubmit = (data) => console.log(data);
-    console.log('control', control)
-    console.log('onSubmit', onSubmit)
-
-    console.log('errors', errors);
+    // Si el usuario está autenticado, redirige a la página de inicio
+    if (isLoggedIn) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <Grid container component="main" sx={{ height: '90vh', overflow: 'hidden'}}>
