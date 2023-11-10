@@ -55,7 +55,7 @@ const BodyContainer = () => {
             <CategoryList />
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {cars.map((cars, index) => (
-                    <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
+                    <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px'}}>
                         <Link to={'/detail/' + cars.id} style={{ textDecoration: 'none' }}>
                             <Card sx={{ maxWidth: 350, background: 'transparent', minWidth: 349 }}>
                                 <CardActionArea>
@@ -63,12 +63,12 @@ const BodyContainer = () => {
                                         component="img"
                                         height="149"
                                         image={cars.imagenURL}
-                                        alt={cars.name}
+                                        alt={"image " + cars.name}
                                     />
-                                    <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal' }}>
-                                            {cars.modelo}
-                                        </Typography>
+                                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize:'20px', fontWeight:'800'}}>
+                                            {cars.name}
+                                    </Typography>
+                                    <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                         <Typography variant="body2" color="text.secondary">
                                             {cars.price}
                                         </Typography>
