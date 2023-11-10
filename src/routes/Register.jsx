@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
 import axios from 'axios';
 import DefaultButton from '../components/DefaultButton';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 const Register = () => {
@@ -30,6 +30,8 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const navigate = useNavigate()
 
 
   const validateForm = () => {
@@ -105,6 +107,7 @@ const Register = () => {
 
         if (response.status === 201) {
           setSuccessMessage('¡Registro exitoso!');
+          navigate('/login')
           // Acciones adicionales después de un registro exitoso
         } else {
           setSuccessMessage('Please, check your information');
