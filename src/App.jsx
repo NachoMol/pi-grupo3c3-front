@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import Login from './routes/Login'
 import Feature from './routes/Feature'
 import VehiclesList from './routes/VehiclesList'
+import UpdateVehicle from './routes/UpdateVehicle'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/feature' element={<Feature />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
+        <Route path='/admin/update-vehicle/:id' element={<UpdateVehicle />} />
       </Routes>
       <Footer/>
     </>

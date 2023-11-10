@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from '@mui/material'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom'
 
 const VehiclesList = () => {
 
     const[vehicles, setVehicles] = useState([])
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         const fetchVehicles = async () => {
@@ -18,6 +20,8 @@ const VehiclesList = () => {
         };
         fetchVehicles();
      }, [])
+
+     console.log("Vehicles: ",vehicles);
 
      const handleDelete = (id) => {
       Swal.fire({
@@ -56,7 +60,8 @@ const VehiclesList = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -64,6 +69,7 @@ const VehiclesList = () => {
               <TableRow key={vehicle.id}>
                 <TableCell>{vehicle.id}</TableCell>
                 <TableCell>{vehicle.name}</TableCell>
+                <TableCell>{vehicle.category.name}</TableCell>
                 <TableCell>
                 <Button sx={{
                     color: 'white',
@@ -78,6 +84,21 @@ const VehiclesList = () => {
                       backgroundColor: 'darkred',
                     },
                   }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
+                  <Link to={'/admin/update-vehicle/'+ vehicle.id}>
+                  <Button sx={{
+                    color: 'white',
+                    backgroundColor: 'blue',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    padding: '10px',
+                    marginRight: '5px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: 'darkblue',
+                    },
+                  }}>Update</Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

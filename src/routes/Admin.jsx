@@ -58,11 +58,6 @@ const Admin = () => {
                 </Grid>
               <Grid item xs={12} sm={6}>
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253','&:hover': {bgcolor: '#5e2b96',}, }}>
-                  Update Vehicle
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253','&:hover': {bgcolor: '#5e2b96',}, }}>
                   Delete Vehicle
                 </Button>
               </Grid>
