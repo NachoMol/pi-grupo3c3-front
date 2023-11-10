@@ -81,6 +81,7 @@
   .rent-button:hover {
     background-color: rgb(78, 54, 120);
   }
+  
 
   @media (max-width: 1060px){
     .detail-information{
@@ -119,6 +120,7 @@
       .detail-information{
         font-size: 12px;
       }
+      
     }
    @media (max-width: 460px){
     .detail-div{
@@ -136,4 +138,5 @@
     font-size: 16px;
   }
   } 
+ 
   

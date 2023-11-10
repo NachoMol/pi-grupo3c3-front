@@ -28,6 +28,11 @@ export default function Feature({ car }) {
         width: '100%',
         maxWidth: 360,
         bgcolor: 'background.paper',
+        overflow: 'auto',
+
+        '@media (max-width: 800px)': {
+          maxWidth: '100%',  
+        },
       }}
     >
       {car.details.map((detail) => (
