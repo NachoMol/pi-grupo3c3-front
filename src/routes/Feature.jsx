@@ -14,25 +14,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export default function Feature({ carId }) {
+export default function Feature({ car }) {
 
 
   const[details, setDetails] = useState([]);
 
-  useEffect(() => {
-      const fetchDetails = async () => {
-      try{
-          const response = await axios.get(`http://localhost:8080/products/${carId}/get-details`)
-          setDetails(response.data)
-      }catch(error){
-          console.error("Error fetching cars", error)
-          }
-      }
-      fetchDetails();
-  },[carId])
-
-
-  const selectedDetailsAsNumbers = details.map(Number);
+  console.log("Car: ",car)
 
   return (
     <List
@@ -42,7 +29,7 @@ export default function Feature({ carId }) {
         bgcolor: 'background.paper',
       }}
     >
-      {selectedDetailsAsNumbers.map((detail) => (
+      {car.details.map((detail) => (
         <div key={detail.id}>
           <ListItem>
             <ListItemAvatar>
