@@ -4,6 +4,7 @@
   width: 50vw;
   align-items: center;
   justify-content: space-between;
+  z-index: 20;
 }
 .mainPhotoArrowContainer{
   display: flex;
@@ -97,7 +98,7 @@
   z-index: 1001;
 }
 .zoomCross{
-  width: 30px;
+  width: 60px;
   height: auto;
   padding: 10px;
 }

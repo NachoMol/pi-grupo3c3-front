@@ -44,7 +44,7 @@ const BodyContainer = () => {
                     endAdornment: (
                         <>
                             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                            <IconButton type="button" sx={{ p: '10px', zIndex:0 }} aria-label="search">
                                 <SearchIcon />
                             </IconButton>
                         </>
@@ -65,7 +65,7 @@ const BodyContainer = () => {
                                         image={cars.imagenURL}
                                         alt={cars.name}
                                     />
-                                    <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                                    <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal' }}>
                                             {cars.modelo}
                                         </Typography>

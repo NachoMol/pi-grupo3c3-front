@@ -11,7 +11,7 @@
     background-color: rgba(55, 25, 87, 1);
     color: rgba(217, 217, 217, 1);
     align-items: center;
-    height: 90px;
+    height: 65px;
   }
   
   .detail_title{
@@ -40,9 +40,8 @@
     font-size: 16px;
     display: inline-grid;
     width: 20vw;
-    height: auto;
     background-color: rgba(255, 255, 255, 1);
-    margin-top: 15px;
+    margin-top: 35px;
     margin-bottom: 1em;
     padding: 20px;
     -webkit-border-radius: 20px;
@@ -51,6 +50,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
     -moz-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
+    height: 400px;
+    
   }
   
   .detail-information h3 {

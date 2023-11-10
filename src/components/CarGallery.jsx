@@ -23,7 +23,7 @@ const CarGallery = () => {
     "https://images.coches.com/_vo_/fotos/usados/2023/10/23/c/24405926360767122-767122_1.JPG?p=cc_vo_high",
     "https://images.coches.com/_vo_/fotos/usados/2023/10/23/0/2405926360767122-767122_3.JPG?p=cc_vo_high",
     "https://images.coches.com/_vo_/fotos/usados/2023/10/23/8/3405926360767122-767122_4.JPG?p=cc_vo_high",
-    "https://images.coches.com/_vo_/fotos/usados/2023/10/23/a/6405926360767122-767122_7.JPG?p=cc_vo_high",
+    "https://images.coches.com/_vo_/fotos/usados/2023/11/09/5/7407777706721784-774622_7.JPG?p=cc_vo_high",
   ];
 
   return (
