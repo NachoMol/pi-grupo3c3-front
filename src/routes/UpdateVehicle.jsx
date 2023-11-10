@@ -107,7 +107,7 @@ const handleCategoryChange = (event) => {
     {car.name}
     </Typography>
     <FormControl component="fieldset" className="category-label" sx={{marginTop: 10, padding: 10 , bgcolor: 'white'}}>
-            <FormLabel id="demo-radio-buttons-group-label" sx={{display: 'flex', justifyContent: 'center' , paddingBottom: 5}}>Category</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label" sx={{display: 'flex', justifyContent: 'center' , paddingBottom: 5, fontSize: 25}}>Category</FormLabel>
               <RadioGroup 
               value={car.category.id} onChange={handleCategoryChange} aria-labelledby="demo-radio-buttons-group-label">
                 {categories.map((category) => (
