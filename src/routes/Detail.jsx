@@ -1,23 +1,46 @@
-import { Button, CssBaseline, Grid, Typography } from '@mui/material';
+import { Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importa ThemeProvider y createTheme
-import {Container} from '@mui/material' 
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Container } from '@mui/material'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import CarGallery from '../components/CarGallery';
 import '../styless/App.css';
 import '../styless/Detail.css';
 import axios from 'axios';
 import Feature from './Feature';
+import { useContextGlobal } from '../context/Context';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
 const Detail = () => {
 
-  const[car, setCar] = useState([]);
+  const [car, setCar] = useState([]);
+  const [open, setOpen] = useState(false);
   const params = useParams()
+
+  const { authUser } = useContextGlobal();
+  const { isLogged } = authUser.auth;
+  const navigate = useNavigate();
 
 
   const [loading, setLoading] = useState(true);
+
+  const handleReservation = () => {
+    if (!isLogged) {
+      setOpen(true);
+    } else {
+      alert('Make a Reservation')
+      console.log('Listo para reservar!');
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  const handleDialogRedirect = () => {
+    navigate('/login');
+  }
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -33,15 +56,15 @@ const Detail = () => {
     fetchCar();
   }, [params.id]);
 
-console.log('initialArray', car);
+  console.log('initialArray', car);
 
-if (loading) {
-  return <p>Loading...</p>;
-}
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-if (!car) {
-  return <p>No car data available.</p>;
-}
+  if (!car) {
+    return <p>No car data available.</p>;
+  }
 
   return (
     <ThemeProvider theme={theme}> {/* Proporciona el tema de Material-UI */}
@@ -68,7 +91,7 @@ if (!car) {
               Price: {car.price}
             </Typography>
             <Typography variant="subtitle1">
-            Category: {car.category?.name}
+              Category: {car.category?.name}
             </Typography>
             <Typography variant="subtitle1">
               City: {car.city?.city}
@@ -84,14 +107,35 @@ if (!car) {
 
             {/* Botón de reserva */}
             <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
-              <Button variant="contained" onClick={() => alert('Make a Reservation')} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+              <Button variant="contained" onClick={handleReservation} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
                 Make a Reservation
               </Button>
             </Grid>
           </Container>
         </div>
       </div>
-      
+      {/* Modal para redirigir, si el usuario que reserva no esta logueado */}
+      <Dialog
+        open={open}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"You can't make a reservation!!!"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            You must be logged in, to make a reservation. You want to sign in?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+          <Button onClick={handleDialogRedirect} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }

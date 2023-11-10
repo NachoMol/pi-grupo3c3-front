@@ -1,42 +1,78 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import { Alert, Avatar, TextField, Paper, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import { urlBackground, urlLogin } from '../config/config';
 import CopyrigthLogin from '../components/_Login/CopyrigthLogin';
-import { urlBackground } from '../config/config';
 import DefaultButton from '../components/DefaultButton';
-import axios from 'axios';
+import { useContextGlobal } from '../context/Context';
+import { types } from '../types/types';
+import { dispacthAction } from '../helpers/dispatchAction';
+import { toastMessage } from '../helpers/toastMessage';
 
 
 const Login = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
-    const [isLoggedIn, setLoggedIn] = useState(false); // Estado para controlar la redirección
+    // const [loading, setLoading] = useState(false); // Para un ajuste futuro el loading, no borrar.
 
-    const onSubmit = async (data) => {
+    const { authUser, dispatchAuthUser } = useContextGlobal();
+    const { isLogged } = authUser.auth;
+    const navigate = useNavigate();
+
+    /**
+     * Submits the provided data to the server.
+     *
+     * @param {Object} data - The data to be submitted.
+     */
+    const onSubmit = (data) => {
+        const body = {
+            email: data.user,
+            password: data.password
+        }
+        loginRequest(urlLogin, body);
+    }
+
+    /**
+     * Logs in the user by sending a login request to the specified URL with the given postData.
+     *
+     * @param {string} url - The URL to send the login request to.
+     * @param {object} postData - The data to be sent with the login request.
+     * @return {Promise} A Promise that resolves with the response data if the login request is successful.
+     */
+    const loginRequest = async (url, postData) => {
+        // debugger;
         try {
-            const response = await axios.post("http://localhost:8080/login", {
-                email: data.user,
-                password: data.password,
-            });
+            // setLoading(true);
+            // toastMessage('success', 'Welcome!!', 'sdsadsadsakdsdj')
+            const response = await axios.post(url, postData);
+            const htppCode = response.status !== 200;
 
-            console.log('Login successful:', response.data);
-            localStorage.setItem('token', response.data.token);
-            setLoggedIn(true); // Establece el estado de isLoggedIn a true para activar la redirección
-        } catch (error) {
-            console.error('Login error:', error.response?.data || error.message);
+            if (!htppCode) {
+                dispacthAction(dispatchAuthUser, types.GET_AUTHENTICATE_USER, response.data)
+                toastMessage('success', 'Welcome!!', response.data.message)
+            } 
+        } catch (err) {
+            console.error(err)
+            toastMessage('error', `Can't sign in!!`, 'Please contact to support.')
+        } finally {
+            // setLoading(false);
         }
     };
 
-    // Si el usuario está autenticado, redirige a la página de inicio
-    if (isLoggedIn) {
-        return <Navigate to="/" />;
-    }
+
+    useEffect(() => {
+        if (isLogged) setTimeout(() => { navigate('/') }, 2500);
+    }, [isLogged, navigate])
+
 
     return (
-        <Grid container component="main" sx={{ height: '90vh', overflow: 'hidden'}}>
+        <Grid container component="main" sx={{ height: '87vh', overflow: 'hidden' }}>
             <CssBaseline />
             <Grid
                 item
@@ -50,7 +86,7 @@ const Login = () => {
                     backgroundPosition: 'bottom',
                 }}
             />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{backgroundColor: '#D9D9D9'}}>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ backgroundColor: '#D9D9D9', height: '87vh' }}>
                 <Box
                     sx={{
                         my: '2rem',
@@ -93,17 +129,18 @@ const Login = () => {
                                     <TextField
                                         {...field}
                                         label="Email"
+                                        autoFocus
                                         variant="outlined"
                                         fullWidth
                                         error={errors.user ? true : false}
-                                        sx={{ width:350}}
+                                        sx={{ width: 350 }}
                                         InputLabelProps={{ style: { color: '#5E2B96' } }}
                                     />
                                     <ErrorMessage
                                         errors={errors}
                                         name="user"
                                         render={({ message }) => (
-                                            <Alert variant='filled' severity="error" sx={{p:'4px 16px', fontSize: '0.84rem', opacity: 0.94}}>{message}</Alert>
+                                            <Alert variant='filled' severity="error" sx={{ p: '4px 16px', fontSize: '0.84rem', opacity: 0.94 }}>{message}</Alert>
                                         )}
                                     />
                                 </div>
@@ -122,7 +159,7 @@ const Login = () => {
                             }}
                             style={{ padding: '12.5px 10px', marginTop: 15, backgroundColor: 'blue' }}
                             render={({ field }) => (
-                                <div style={{ marginTop: '1.5rem'}}>
+                                <div style={{ marginTop: '1.5rem' }}>
                                     <TextField
                                         {...field}
                                         type="password"
@@ -130,7 +167,7 @@ const Login = () => {
                                         variant="outlined"
                                         fullWidth
                                         error={errors.password ? true : false}
-                                        sx={{ width:350}}
+                                        sx={{ width: 350 }}
                                         InputLabelProps={{ style: { color: '#5E2B96' } }}
                                         className='inputForm'
                                     />
@@ -138,7 +175,7 @@ const Login = () => {
                                         errors={errors}
                                         name="password"
                                         render={({ message }) => (
-                                            <Alert variant='filled' severity="error" sx={{p:'4px 16px', fontSize: '0.84rem', opacity: 0.94}}>{message}</Alert>
+                                            <Alert variant='filled' severity="error" sx={{ p: '4px 16px', fontSize: '0.84rem', opacity: 0.94 }}>{message}</Alert>
                                         )}
                                     />
                                 </div>
@@ -148,7 +185,7 @@ const Login = () => {
                     </Box>
                     <Grid container display='flex' justifyContent="center">
                         <Grid item>
-                            <Link to={'/register/'} style={{cursor: 'pointer'}}>{`Don't have an account? Sign Up`}</Link>
+                            <Link to={'/register/'} style={{ cursor: 'pointer' }}>{`Don't have an account? Sign Up`}</Link>
                         </Grid>
                     </Grid>
                     <CopyrigthLogin sx={{ mt: 5 }} />

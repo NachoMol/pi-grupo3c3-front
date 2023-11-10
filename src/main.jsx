@@ -9,8 +9,8 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={theme}>
-  <BrowserRouter>
-    <App />
+    <BrowserRouter>
+      <App />
     </BrowserRouter>
-    </ThemeProvider>
+  </ThemeProvider>
 )

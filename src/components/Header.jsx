@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
 
-import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled } from '@mui/material';
+import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled, Avatar  } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
+import getInitialStrings from '../helpers/getInitialStrings';
+import { useContextGlobal } from '../context/Context';
 // colores #371957 morado #000000 negro #FFFFFF blanco #898989 gris menu
 
 const UserIcon = styled(PersonIcon)(({ theme }) => ({
@@ -35,7 +37,11 @@ const itemMenu = [
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [admin, setAdmin] = useState(false);
+  
+  const { userData, authUser } = useContextGlobal();
+  const { name, lastname } = userData.user;
+  const { isLogged } = authUser.auth;
+  const avatar = getInitialStrings(name, lastname);
 
   /**
    * Función para abrir el menu responsive
@@ -51,8 +57,13 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
+  //Pendiente Redirección a la vista user
+  // const handleUser = () => {
+  //   //logica para direccionar a la vista de user con useNavigate
+  // }
+
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex:10}}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex: 10 }}>
       <Container maxWidth={false} >
         <Toolbar disableGutters sx={{ maxHeight: 90 }}>
           <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
@@ -109,7 +120,7 @@ const Header = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none' } }}>
             <Link to={'/'}>
               <img src={LogoImage}
                 alt="Logo"
@@ -129,96 +140,102 @@ const Header = () => {
                 <Button
                   key={page.id}
                   onClick={handleCloseNavMenu}
-            
-                   sx={{
-                     my: 2,
-                     display: 'block',
-                     color: '#d9d9d9',
-                     fontFamily: 'Spinnaker, sans-serif',
-                     fontSize: 28,
-                     fontWeight: 400,
-                     fontStyle: 'normal',
-                     textDecoration: 'none',
-                     margin: 0,
-                     padding: 0
-                   }}
-                
+
+                  sx={{
+                    my: 2,
+                    display: 'block',
+                    color: '#d9d9d9',
+                    fontFamily: 'Spinnaker, sans-serif',
+                    fontSize: 28,
+                    fontWeight: 400,
+                    fontStyle: 'normal',
+                    textDecoration: 'none',
+                    margin: 0,
+                    padding: 0
+                  }}
+
                 >
-                   {page.name} 
+                  {page.name}
                 </Button>
               </Link>
             ))}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <UserIcon sx={{
-              width: 40,
-              height: 40,
-              color: '#000',
-            }} />
             <Box >
-              {admin ? <UserTitle
-                variant="h5"
-                sx={{
-                  fontFamily: 'Spinnaker, sans-serif',
-                  color: '#FFF',
-                  textDecoration: 'none',
-                  fontSize: 24,
-                  cursor: 'pointer',
-                  alignSelf: 'center',
-                  margin: '7px 0 0 0'
-                }}
-              >
-                <Link to={'/admin'}>
-                  <p>Admin</p>
-                </Link>
-              </UserTitle> : (
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                       fontFamily: 'Spinnaker, sans-serif',
-                       color: '#FFF',
-                       textDecoration: 'none',
-                       fontSize: 24,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <Link
-                      to={'/login'}
-                      style={{
+              {isLogged ?<div style={{ display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent:'flex-end', maxWidth: 240 }}>
+                <UserIcon sx={{
+                  width: 40,
+                  height: 40,
+                  color: '#000',
+                }} />
+                <UserTitle
+                  variant="h5"
+                  sx={{
+                    fontFamily: 'Spinnaker, sans-serif',
+                    color: '#FFF',
+                    textDecoration: 'none',
+                    fontSize: 24,
+                    cursor: 'pointer',
+                    alignSelf: 'center',
+                    margin: '7px 0 0 0'
+                  }}
+                >
+                  {/* <Link to={'/admin'}>
+                    <p>Admin</p>
+                  </Link> */}
+                </UserTitle>
+                {/* <span>{`${name} ${lastname}`}</span> */}
+                <span style={{display:'flex', alignItems:'center', padding: '0 12px' }}>{`${name} ${lastname}`}</span>
+                <Avatar sx={{ bgcolor: '#D9D9D9', mb:'6px' }} /* onClick={handleAdmin} */>{avatar}</Avatar>
+              </div>
+                 : (
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography
+                      variant="h5"
+                      sx={{
                         fontFamily: 'Spinnaker, sans-serif',
                         color: '#FFF',
                         textDecoration: 'none',
-                        fontSize: 18,
-                        
+                        fontSize: 24,
+                        cursor: 'pointer'
                       }}
                     >
-                      Sign In
-                    </Link>
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontFamily: 'Spinnaker, sans-serif',
-                      fontSize: 24,
-                      color: '#FFF',
-                      textDecoration: 'none',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <Link to={'/register/'}
-                    style={{
-                      fontFamily: 'Spinnaker, sans-serif',
-                      color: '#FFF',
-                      textDecoration: 'none',
-                      fontSize: 18,
-                      
-                    }}>
-                      Sign Up
-                    </Link>
-                  </Typography>
-                </div>
-              )}
+                      <Link
+                        to={'/login'}
+                        style={{
+                          fontFamily: 'Spinnaker, sans-serif',
+                          color: '#FFF',
+                          textDecoration: 'none',
+                          fontSize: 18,
+
+                        }}
+                      >
+                        Sign In
+                      </Link>
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontFamily: 'Spinnaker, sans-serif',
+                        fontSize: 24,
+                        color: '#FFF',
+                        textDecoration: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <Link to={'/register/'}
+                        style={{
+                          fontFamily: 'Spinnaker, sans-serif',
+                          color: '#FFF',
+                          textDecoration: 'none',
+                          fontSize: 18,
+
+                        }}>
+                        Sign Up
+                      </Link>
+                    </Typography>
+                  </div>
+                )}
             </Box>
           </Box>
         </Toolbar>

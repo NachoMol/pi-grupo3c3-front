@@ -1,0 +1,11 @@
+export const types = {
+    //[Login]
+    GET_AUTHENTICATE_USER: 'GET_AUTHENTICATE_USER',
+    GET_USER: 'GET_USER',
+    AUTHENTICATE_MESSAGE: 'AUTHENTICATE_MESSAGE',
+    GET_LOGOUT_USER: 'GET_LOGOUT_USER'
+
+    
+    //[Register]
+
+  };
