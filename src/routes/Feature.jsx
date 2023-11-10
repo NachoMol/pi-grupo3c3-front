@@ -20,6 +20,7 @@ export default function Feature({ car }) {
   const[details, setDetails] = useState([]);
 
   console.log("Car: ",car)
+  console.log("Details: ",details)
 
   return (
     <List
@@ -37,9 +38,10 @@ export default function Feature({ car }) {
                 {/* Aquí puedes renderizar el icono adecuado para cada detalle */}
                 {/* Por ejemplo, si 'detail.icon' contiene el nombre del icono, podrías usar un switch o un objeto de mapeo para seleccionar el icono adecuado. */}
                 {/* Ejemplo de uso de un objeto de mapeo: */}
-                {detail.icon === 'usb' && <UsbIcon />}
-                {detail.icon === 'automode' && <AutoModeIcon />}
-                {detail.icon === 'bluetooth' && <BluetoothIcon />}
+                {detail.feature === 'USB' && <UsbIcon />}
+                {detail.feature === 'Manual Transmission' && <AutoModeIcon />}
+                {detail.feature === 'Automatic Transmission' && <AutoModeIcon />}
+                {detail.feature === 'Bluetooth' && <BluetoothIcon />}
                 {/* Añade más casos según los iconos que necesites */}
               </Avatar>
             </ListItemAvatar>
