@@ -34,6 +34,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/feature' element={<Feature />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
+        <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
       </Routes>
       <Footer />
     </Context>
