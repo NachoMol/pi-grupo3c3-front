@@ -14,7 +14,7 @@ import Feature from './routes/Feature'
 import VehiclesList from './routes/VehiclesList'
 import UpdateVehicle from './routes/UpdateVehicle'
 import Context from './context/Context'
-
+import UserProfile from './routes/UserProfile'
 
 function App() {
 
@@ -35,6 +35,7 @@ function App() {
         <Route path='/feature' element={<Feature />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
+        <Route path="/userProfile" element={<UserProfile />} />
       </Routes>
       <Footer />
     </Context>

@@ -186,7 +186,7 @@ const Header = () => {
                     open={Boolean(anchorElAvatar)}
                     onClose={handleCloseAvatarMenu}
                   >
-                    <Link to={'/UserInfo'} style={{textDecoration: 'none'}}>
+                    <Link to={'/UserProfile'} style={{textDecoration: 'none'}}>
                       <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
                     </Link>
                     <Link to={''} style={{textDecoration: 'none'}}>
