@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
 
 import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled, Avatar  } from '@mui/material';
@@ -44,6 +44,8 @@ const Header = () => {
   const { isLogged } = authUser.auth;
   const avatar = getInitialStrings(name, lastname);
 
+  const {handleLogout} = useContextGlobal()
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
     if (window.innerWidth <= 960) {
@@ -60,9 +62,11 @@ const Header = () => {
     setAnchorElAvatar(event.currentTarget);
   };
 
-  const handleCloseAvatarMenu = () => {
-    setAnchorElAvatar(null);
+  const handleCloseAvatarMenu = (event) => {
+    handleLogout()
+    setAnchorElAvatar(event.currentTarget)
   };
+
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex: 10 }}>

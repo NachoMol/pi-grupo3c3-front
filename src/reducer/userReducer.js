@@ -25,7 +25,17 @@ const userReducer = (state, action) => {
     case types.GET_LOGOUT_USER:
       return {
         ...state,
-        isLogged: false
+        auth: {
+          isLogged: false,
+          username: null,
+          token: null
+        },
+        user: {
+          email: null,
+          lastname: null,
+          name: null
+        }
+        
       }
     default:
       return state

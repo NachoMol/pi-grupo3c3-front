@@ -8,6 +8,7 @@ import userReducer from '../reducer/userReducer';
 import { dispacthAction } from '../helpers/dispatchAction';
 import { types } from '../types/types';
 import { ulrUser } from '../config/config';
+import { useNavigate } from 'react-router-dom';
 
 
 const getAuthenticate = JSON.parse(localStorage.getItem('auth'));
@@ -38,9 +39,19 @@ const Context = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
     const [userData, dispatchUserData] = useReducer(userReducer, initialState)
     const [authUser, dispatchAuthUser] = useReducer(userReducer, initialState)
+    const navigate = useNavigate()
 
+    
     console.log('user', userData);
     console.log('auth', authUser);
+
+    const handleLogout = () => {
+        localStorage.removeItem('auth')
+        localStorage.removeItem('user')
+        
+        dispacthAction(dispatchAuthUser, types.GET_LOGOUT_USER, null)
+        navigate('/login')
+    };
 
     // useEffect(() => {
     //     axios(api)
@@ -80,7 +91,7 @@ const Context = ({ children }) => {
     return (
         <ContextGlobal.Provider value={{
             userData, dispatchUserData,
-            authUser, dispatchAuthUser
+            authUser, dispatchAuthUser, handleLogout
         }}>
             <CarStates.Provider value={{ state, dispatch }}>
                 {children}
