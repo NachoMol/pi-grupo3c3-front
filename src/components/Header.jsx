@@ -81,44 +81,6 @@ const Header = () => {
               />
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-              {itemMenu.map((page) => (
-                <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
-                  <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center" color={'#898989'}>
-                      {page.name}
-                    </Typography>
-                  </MenuItem>
-                </Link>
-              ))}
-            </Menu>
-          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none' } }}>
             <Link to={'/'}>
               <img
