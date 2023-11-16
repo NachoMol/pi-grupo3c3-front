@@ -18,16 +18,16 @@ const UserIcon = styled(PersonIcon)(({ theme }) => ({
 
 const UserTitle = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0'
+    margin: '0',
   },
 }));
 
 const itemMenu = [
   {
     id: 1,
-    name: "Admin",
-    link: "/admin"
-  }
+    name: 'Admin',
+    link: '/admin',
+  },
   // {
   //   id: 2,
   //   name: "Galery",
@@ -37,43 +37,46 @@ const itemMenu = [
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  
+  const [anchorElAvatar, setAnchorElAvatar] = useState(null);
+
   const { userData, authUser } = useContextGlobal();
   const { name, lastname } = userData.user;
   const { isLogged } = authUser.auth;
   const avatar = getInitialStrings(name, lastname);
 
-  /**
-   * Función para abrir el menu responsive
-   */
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    if (window.innerWidth <= 960) {
+      document.body.style.overflowY = 'hidden';
+    }
   };
 
-  /**
-   * Función para cerrar el menu responsive
-   */
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    document.body.style.overflowY = 'auto';
   };
 
-  //Pendiente Redirección a la vista user
-  // const handleUser = () => {
-  //   //logica para direccionar a la vista de user con useNavigate
-  // }
+  const handleClickAvatar = (event) => {
+    setAnchorElAvatar(event.currentTarget);
+  };
+
+  const handleCloseAvatarMenu = () => {
+    setAnchorElAvatar(null);
+  };
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex: 10 }}>
-      <Container maxWidth={false} >
+      <Container maxWidth={false}>
         <Toolbar disableGutters sx={{ maxHeight: 90 }}>
           <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
             <Link to={'/'}>
-              <img src={LogoImage}
+              <img
+                src={LogoImage}
                 alt="Logo"
                 style={{
                   height: 65,
                   filter: 'invert(1)',
-                  marginTop: '2%'
+                  marginTop: '2%',
                 }}
                 href="#app-bar-with-responsive-menu"
               />
@@ -109,10 +112,7 @@ const Header = () => {
               {itemMenu.map((page) => (
                 <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
                   <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                    <Typography
-                      textAlign="center"
-                      color={'#898989'}
-                    >
+                    <Typography textAlign="center" color={'#898989'}>
                       {page.name}
                     </Typography>
                   </MenuItem>
@@ -122,13 +122,14 @@ const Header = () => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none' } }}>
             <Link to={'/'}>
-              <img src={LogoImage}
+              <img
+                src={LogoImage}
                 alt="Logo"
                 style={{
                   width: 105,
                   height: 65,
                   filter: 'invert(1)',
-                  marginTop: '3%'
+                  marginTop: '3%',
                 }}
                 href="#app-bar-with-responsive-menu"
               />
@@ -140,7 +141,6 @@ const Header = () => {
                 <Button
                   key={page.id}
                   onClick={handleCloseNavMenu}
-
                   sx={{
                     my: 2,
                     display: 'block',
@@ -151,9 +151,8 @@ const Header = () => {
                     fontStyle: 'normal',
                     textDecoration: 'none',
                     margin: 0,
-                    padding: 0
+                    padding: 0,
                   }}
-
                 >
                   {page.name}
                 </Button>
@@ -161,87 +160,84 @@ const Header = () => {
             ))}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box >
-              {isLogged ?<div style={{ display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent:'flex-end', maxWidth: 240 }}>
-                <UserIcon sx={{
-                  width: 40,
-                  height: 40,
-                  color: '#000',
-                }} />
-                <UserTitle
-                  variant="h5"
-                  sx={{
-                    fontFamily: 'Spinnaker, sans-serif',
-                    color: '#FFF',
-                    textDecoration: 'none',
-                    fontSize: 24,
-                    cursor: 'pointer',
-                    alignSelf: 'center',
-                    margin: '7px 0 0 0'
-                  }}
-                >
-                  {/* <Link to={'/admin'}>
-                    <p>Admin</p>
-                  </Link> */}
-                </UserTitle>
-                {/* <span>{`${name} ${lastname}`}</span> */}
-                <span style={{display:'flex', alignItems:'center', padding: '0 12px' }}>{`${name} ${lastname}`}</span>
-                <Avatar sx={{ bgcolor: '#D9D9D9', mb:'6px' }} /* onClick={handleAdmin} */>{avatar}</Avatar>
-              </div>
-                 : (
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography
-                      variant="h5"
-                      sx={{
+            <Box>
+              {isLogged ? (
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', maxWidth: 240 }}>
+                  <UserTitle
+                    variant="h5"
+                    sx={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      fontSize: 24,
+                      cursor: 'pointer',
+                      alignSelf: 'center',
+                      margin: '7px 0 0 0',
+                    }}
+                  >
+                    {/* Add user name here */}
+                  </UserTitle>
+                  <Avatar sx={{ bgcolor: '#A3A3A3', mb: '6px', '&:hover':{cursor: 'pointer'} }} onClick={handleClickAvatar}>
+                    {avatar}
+                  </Avatar>
+                  <Menu
+                    id="avatar-menu"
+                    anchorEl={anchorElAvatar}
+                    open={Boolean(anchorElAvatar)}
+                    onClose={handleCloseAvatarMenu}
+                  >
+                    <Link to={'/UserInfo'} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>My Profile</MenuItem></Link>
+                    <Link to={''} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Favorites</MenuItem></Link>
+                    <Link to={'/admin'} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem></Link>
+                    <Link to={''} style={{ fontFamily: 'Spinnaker, sans-serif',color:'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Logout</MenuItem></Link>
+                  </Menu>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      fontSize: 24,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link
+                      to={'/login'}
+                      style={{
                         fontFamily: 'Spinnaker, sans-serif',
                         color: '#FFF',
                         textDecoration: 'none',
-                        fontSize: 24,
-                        cursor: 'pointer'
+                        fontSize: 18,
                       }}
                     >
-                      <Link
-                        to={'/login'}
-                        style={{
-                          fontFamily: 'Spinnaker, sans-serif',
-                          color: '#FFF',
-                          textDecoration: 'none',
-                          fontSize: 18,
-
-                        }}
-                      >
-                        Sign In
-                      </Link>
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontFamily: 'Spinnaker, sans-serif',
-                        fontSize: 24,
-                        color: '#FFF',
-                        textDecoration: 'none',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <Link to={'/register/'}
-                        style={{
-                          fontFamily: 'Spinnaker, sans-serif',
-                          color: '#FFF',
-                          textDecoration: 'none',
-                          fontSize: 18,
-
-                        }}>
-                        Sign Up
-                      </Link>
-                    </Typography>
-                  </div>
-                )}
+                      Sign In
+                    </Link>
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: 'Spinnaker, sans-serif',
+                      fontSize: 24,
+                      color: '#FFF',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link to={'/register/'} style={{ fontFamily: 'Spinnaker, sans-serif', color: '#FFF', textDecoration: 'none', fontSize: 18 }}>
+                      Sign Up
+                    </Link>
+                  </Typography>
+                </div>
+              )}
             </Box>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 
-export default Header
+export default Header;
