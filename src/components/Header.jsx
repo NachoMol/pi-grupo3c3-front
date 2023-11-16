@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
 
-import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled, Avatar  } from '@mui/material';
+import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import getInitialStrings from '../helpers/getInitialStrings';
@@ -27,12 +27,7 @@ const itemMenu = [
     id: 1,
     name: 'Admin',
     link: '/admin',
-  },
-  // {
-  //   id: 2,
-  //   name: "Galery",
-  //   link: "/carGallery"
-  // }
+  }
 ];
 
 const Header = () => {
@@ -44,27 +39,27 @@ const Header = () => {
   const { isLogged } = authUser.auth;
   const avatar = getInitialStrings(name, lastname);
 
-  const {handleLogout} = useContextGlobal()
+  const { handleLogout } = useContextGlobal()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-    if (window.innerWidth <= 960) {
-      document.body.style.overflowY = 'hidden';
-    }
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    document.body.style.overflowY = 'auto';
   };
 
   const handleClickAvatar = (event) => {
     setAnchorElAvatar(event.currentTarget);
   };
 
-  const handleCloseAvatarMenu = (event) => {
-    handleLogout()
-    setAnchorElAvatar(event.currentTarget)
+  const handleCloseAvatarMenu = () => {
+    setAnchorElAvatar(null); // Cierra el menú antes de realizar otras acciones
+  };
+
+  const handleLogoutClick = () => {
+    handleLogout(); // Desloguea al hacer clic en el elemento "Logout" del menú del avatar
+    handleCloseAvatarMenu(); // Cierra el menú después del deslogueo
   };
 
 
@@ -181,19 +176,26 @@ const Header = () => {
                   >
                     {/* Add user name here */}
                   </UserTitle>
-                  <Avatar sx={{ bgcolor: '#A3A3A3', mb: '6px', '&:hover':{cursor: 'pointer'} }} onClick={handleClickAvatar}>
+                  <Avatar sx={{ bgcolor: '#A3A3A3', mb: '6px', '&:hover': { cursor: 'pointer' } }} onClick={handleClickAvatar}>
                     {avatar}
                   </Avatar>
+
                   <Menu
                     id="avatar-menu"
                     anchorEl={anchorElAvatar}
                     open={Boolean(anchorElAvatar)}
                     onClose={handleCloseAvatarMenu}
                   >
-                    <Link to={'/UserInfo'} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>My Profile</MenuItem></Link>
-                    <Link to={''} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Favorites</MenuItem></Link>
-                    <Link to={'/admin'} style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem></Link>
-                    <Link to={''} style={{ fontFamily: 'Spinnaker, sans-serif',color:'black', textDecoration: 'none', fontSize: 18 }}><MenuItem onClick={handleCloseAvatarMenu}>Logout</MenuItem></Link>
+                    <Link to={'/UserInfo'} style={{textDecoration: 'none'}}>
+                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
+                    </Link>
+                    <Link to={''} style={{textDecoration: 'none'}}>
+                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
+                    </Link>
+                    <Link to={'/admin'} style={{textDecoration: 'none'}}>
+                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black',fontSize: 15 }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
+                    </Link>
+                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleLogoutClick}>Logout</MenuItem>
                   </Menu>
                 </div>
               ) : (

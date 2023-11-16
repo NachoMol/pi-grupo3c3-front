@@ -50,7 +50,6 @@ const Context = ({ children }) => {
         localStorage.removeItem('user')
         
         dispacthAction(dispatchAuthUser, types.GET_LOGOUT_USER, null)
-        navigate('/login')
     };
 
     // useEffect(() => {
