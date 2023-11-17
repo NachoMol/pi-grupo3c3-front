@@ -12,7 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '@mui/icons-material';
 import axios from 'axios';
 import DefaultButton from '../components/DefaultButton';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 const Register = () => {
@@ -107,6 +108,26 @@ const Register = () => {
 
         if (response.status === 201) {
           setSuccessMessage('¡Registro exitoso!');
+          Swal.fire({
+            title: '¡Te has registrado con éxito!',
+            text: ' Por favor, revisa tu correo electrónico para confirmar tu registro. Si no has recibido el correo electrónico de confirmación, puedes hacer clic aquí para reenviarlo.',
+            icon: 'success',
+            confirmButtonText: 'Reenviar correo',
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Aquí puedes hacer la petición para reenviar el correo
+              fetch(`http://localhost:8080/users/forwardmail/${email}`, {
+                method: 'POST',
+                // Aquí puedes agregar más configuraciones para tu petición si es necesario
+              }).then(response => {
+                // Maneja la respuesta de tu petición
+              }).catch(error => {
+                console.error('Error:', error);
+              });
+            }
+          });
           navigate('/login')
           // Acciones adicionales después de un registro exitoso
         } else {
@@ -122,34 +143,7 @@ const Register = () => {
       }
     }
 
-    // if (validateForm()) {
-    //   try {
-    //     const response = await axios.post('http://localhost:8080/users/create', user);
-
-    //     setUser({
-    //       name: '',
-    //       lastName: '',
-    //       email: '',
-    //       password: '',
-    //     });
-
-    //     if (response.status === 201) {
-    //       setSuccessMessage('Registration successful!');
-    //       // Puedes hacer más cosas después de un registro exitoso, como redirigir al usuario o realizar otras acciones.
-    //     } else {
-    //       setSuccessMessage('Verify you information');
-    //     }
-    //   } catch (error) {
-    //     if (response.status === 409) {
-    //       setSuccessMessage('The email already exists');
-    //     }
-    //     else
-    //       console.error("Registration error:", error.response?.data || error.message);
-    //     setSuccessMessage('Error during registration');
-    //   }
-    // }
   };
-
 
 
 
