@@ -64,6 +64,12 @@ const UserProfile = () => {
             </StyledTableCell>
             <StyledTableCell align="center">{userData.user.email}</StyledTableCell>
           </StyledTableRow>
+          <StyledTableRow>
+            <StyledTableCell component="th" scope="row">
+              Admin
+            </StyledTableCell>
+            <StyledTableCell align="center">{userData.user.admin ? 'Yes' : 'No'}</StyledTableCell>
+          </StyledTableRow>
         </TableBody>
       </Table>
     </TableContainer>

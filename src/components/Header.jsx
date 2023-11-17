@@ -22,14 +22,6 @@ const UserTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const itemMenu = [
-  {
-    id: 1,
-    name: 'Admin',
-    link: '/admin',
-  }
-];
-
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElAvatar, setAnchorElAvatar] = useState(null);
@@ -66,7 +58,7 @@ const Header = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex: 10 }}>
       <Container maxWidth={false}>
-        <Toolbar disableGutters sx={{ maxHeight: 90 }}>
+        <Toolbar disableGutters sx={{ maxHeight: 90, justifyContent:'space-between'}}>
           <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
             <Link to={'/'}>
               <img
@@ -81,46 +73,7 @@ const Header = () => {
               />
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'none' } }}>
-            <Link to={'/'}>
-              <img
-                src={LogoImage}
-                alt="Logo"
-                style={{
-                  width: 105,
-                  height: 65,
-                  filter: 'invert(1)',
-                  marginTop: '3%',
-                }}
-                href="#app-bar-with-responsive-menu"
-              />
-            </Link>
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'space-evenly' }}>
-            {itemMenu.map((page) => (
-              <Link to={page.link} key={page.id} style={{ textDecoration: 'none' }}>
-                <Button
-                  key={page.id}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    display: 'block',
-                    color: '#d9d9d9',
-                    fontFamily: 'Spinnaker, sans-serif',
-                    fontSize: 28,
-                    fontWeight: 400,
-                    fontStyle: 'normal',
-                    textDecoration: 'none',
-                    margin: 0,
-                    padding: 0,
-                  }}
-                >
-                  {page.name}
-                </Button>
-              </Link>
-            ))}
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center'}}>
             <Box>
               {isLogged ? (
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', maxWidth: 240 }}>
@@ -149,15 +102,20 @@ const Header = () => {
                     onClose={handleCloseAvatarMenu}
                   >
                     <Link to={'/UserProfile'} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
                     </Link>
                     <Link to={''} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
                     </Link>
-                    <Link to={'/admin'} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black',fontSize: 15 }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
-                    </Link>
-                      <MenuItem style={{ fontFamily: 'Spinnaker, sans-serif', color: 'black', fontSize: 15 }} onClick={handleLogoutClick}>Logout</MenuItem>
+                    <Link to={'/admin'} style={{ textDecoration: 'none' }}>
+                        <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
+                      </Link>
+                    {userData.user.admin && (  // Verifica si el usuario es administrador
+                      <Link to={'/admin'} style={{ textDecoration: 'none' }}>
+                        <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
+                      </Link>
+                    )}
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleLogoutClick}>Logout</MenuItem>
                   </Menu>
                 </div>
               ) : (
