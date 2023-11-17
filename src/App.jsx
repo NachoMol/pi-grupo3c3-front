@@ -15,6 +15,7 @@ import VehiclesList from './routes/VehiclesList'
 import UpdateVehicle from './routes/UpdateVehicle'
 import Context from './context/Context'
 import UserProfile from './routes/UserProfile'
+import InsertCategory from './routes/InsertCategory'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path='/admin/vehicles' element={<VehiclesList />} />
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />
+        <Route path='/admin/insert-category' element={<InsertCategory/>} />
       </Routes>
       <Footer />
     </Context>
