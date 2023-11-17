@@ -11,15 +11,18 @@ const BodyContainer = () => {
     const [page, setPage] = useState(1); // comienza en la página 1
     const [size, setSize] = useState(10); // 10 productos por página
     const [hasNextPage, setHasNextPage] = useState(true); // nuevo estado para verificar si hay una próxima página
+    const handleFirstPageClick = () => {
+        setPage(1);
+      };
 
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/products/random?page=${page - 1}&size=${size}`);
-                setCars(response.data); // los productos están en la propiedad 'content'
+                const response = await axios.get(`http://localhost:8080/products/paginationramdom?page=${page - 1}&size=${size}`);
+                setCars(response.data.content); // los productos están en la propiedad 'content'
                 // Verifica si hay una próxima página
-                const nextPageResponse = await axios.get(`http://localhost:8080/products/random?page=${page}&size=${size}`);
-                setHasNextPage(nextPageResponse.data.length > 0);
+                //const nextPageResponse = await axios.get(`http://localhost:8080/products/paginationramdom?page=${page}&size=${size}`);
+                setHasNextPage(!response.data.last);
 
             } catch (error) {
                 console.error("Error fetching cars", error);
@@ -93,21 +96,36 @@ const BodyContainer = () => {
                 ))}
             </Grid>
             {/* Manejar paginación */}
-            <div className='pagination' style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                {page > 1 && <button style={{
-                    margin: '0 10px',
-                }} onClick={() => setPage(page - 1)}>Anterior</button>}
-                <p style={{
-                    margin: '0 10px',
-                }}>{page}</p>
-                {hasNextPage && <button style={{
-                    margin: '0 10px',
-                }} onClick={() => setPage(page + 1)}>Siguiente</button>}
-            </div>
+                <div className='pagination' style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                <button
+                    style={{ margin: '0 10px' }}
+                    onClick={handleFirstPageClick}
+                >
+                    Inicio
+                </button>
+                {page > 1 && (
+                    <button
+                    style={{ margin: '0 10px' }}
+                    onClick={() => setPage(page - 1)}
+                    >
+                    Anterior
+                    </button>
+                )}
+                <p style={{ margin: '0 10px' }}>{page}</p>
+                {hasNextPage && (
+                    <button
+                    style={{ margin: '0 10px' }}
+                    onClick={() => setPage(page + 1)}
+                    >
+                    Siguiente
+                    </button>
+                )}
+                </div>
+
         </Container >
 
     );
