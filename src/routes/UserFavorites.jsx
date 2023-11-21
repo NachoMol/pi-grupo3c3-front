@@ -8,7 +8,7 @@ const UserFavorites = () => {
 
     return (
         <div>
-        <h2>Tus favoritos</h2>
+        <h2>Your favorites</h2>
         <Grid container spacing={2}>
             {favorites.fav.map((cars, index) => (
                 <Grid item xs={12} sm={6} key={cars.id}>
