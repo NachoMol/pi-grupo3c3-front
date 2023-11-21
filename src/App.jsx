@@ -16,6 +16,7 @@ import UpdateVehicle from './routes/UpdateVehicle'
 import Context from './context/Context'
 import UserProfile from './routes/UserProfile'
 import InsertCategory from './routes/InsertCategory'
+import UserFavorites from './routes/UserFavorites'
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path='/admin/insert-category' element={<InsertCategory/>} />
+        <Route path="/userFavorites" element={<UserFavorites />} />
       </Routes>
       <Footer />
     </Context>

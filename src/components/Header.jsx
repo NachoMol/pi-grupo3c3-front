@@ -104,7 +104,7 @@ const Header = () => {
                     <Link to={'/UserProfile'} style={{textDecoration: 'none'}}>
                       <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
                     </Link>
-                    <Link to={''} style={{textDecoration: 'none'}}>
+                    <Link to={'/UserFavorites'} style={{textDecoration: 'none'}}>
                       <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
                     </Link>
                     <Link to={'/admin'} style={{ textDecoration: 'none' }}>
