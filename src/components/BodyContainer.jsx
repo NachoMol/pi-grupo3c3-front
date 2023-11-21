@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Grid, Box, TextField, IconButton, Divider, Card, CardActionArea, CardMedia, Typography, CardContent, CardActions, Button } from '@mui/material';
+import { Container, Grid, Box, TextField, IconButton, Divider } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
 import CategoryList from '../routes/CategoryList';
+import RenderCars from './RenderCars';
 
 const BodyContainer = () => {
 
     const [cars, setCars] = useState([]);
     const size = 10; // 10 productos
+
 
     useEffect(() => {
         const fetchCars = async () => {
@@ -47,41 +48,9 @@ const BodyContainer = () => {
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {cars.map((cars, index) => (
                     <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
-                        <Link to={'/detail/' + cars.id} style={{ textDecoration: 'none' }}>
-                            <Card sx={{ maxWidth: 350, background: 'transparent', minWidth: 349 }}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="149"
-                                        image={cars.imagenURL}
-                                        alt={"image " + cars.name}
-                                    />
-                                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '20px', fontWeight: '800' }}>
-                                        {cars.name}
-                                    </Typography>
-                                    <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {cars.price}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions sx={{ justifyContent: 'center' }}>
-                                    <Button
-                                        size="small"
-                                        sx={{
-                                            width: 124,
-                                            height: 33,
-                                            background: '#000',
-                                            color: '#FFF',
-                                            '&:hover': {
-                                                background: '#898989'
-                                            }
-                                        }}>
-                                        Cars Details
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Link>
+                       
+                       <RenderCars cars={cars}/>
+
                     </Grid>
                 ))}
             </Grid>
