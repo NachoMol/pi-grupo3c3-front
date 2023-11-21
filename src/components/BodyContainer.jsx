@@ -7,7 +7,7 @@ import RenderCars from './RenderCars';
 
 const BodyContainer = () => {
 
-    const [cars, setCars] = useState([]);
+    const [car, setCar] = useState([]);
     const size = 10; // 10 productos
 
 
@@ -15,7 +15,7 @@ const BodyContainer = () => {
         const fetchCars = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/products/random?size=${size}`);
-                setCars(response.data); // los productos están en la propiedad 'data'           
+                setCar(response.data); // los productos están en la propiedad 'data'           
             } catch (error) {
                 console.error("Error fetching cars", error);
             }
@@ -23,7 +23,7 @@ const BodyContainer = () => {
         fetchCars();
     }, []); // se vuelve a ejecutar cuando cambian 'page' o 'size'
 
-    console.log('initialArray', cars);
+    console.log('initialArray', car);
 
     return (
         <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;' }} >
@@ -46,10 +46,10 @@ const BodyContainer = () => {
             />
             <CategoryList />
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
-                {cars.map((cars, index) => (
+                {car.map((car, index) => (
                     <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
                        
-                       <RenderCars cars={cars}/>
+                       <RenderCars car={car} key={car.id}/>
 
                     </Grid>
                 ))}

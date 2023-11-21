@@ -1,11 +1,11 @@
 import React from 'react'
 import { IconButton, Card, CardActionArea, CardMedia, Typography, CardContent, CardActions, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useCarStates } from '../context/Context';
 
-const RenderCars = () => {
-    const [cars, setCars] = useState([]);
+const RenderCars = ({car}) => {
+    //  const [cars, setCars] = useState([]);
     const { favorites, dispatchFavorites } = useCarStates();
 
     const addFavorite = (car) => {
@@ -22,15 +22,15 @@ const RenderCars = () => {
                                 <CardMedia
                                     component="img"
                                     height="149"
-                                    image={cars.imagenURL}
-                                    alt={"image " + cars.name}
+                                    image={car.imagenURL}
+                                    alt={"image " + car.name}
                                 />
                                 <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '20px', fontWeight: '800' }}>
-                                    {cars.name}
+                                    {car.name}
                                 </Typography>
                                 <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Typography variant="body2" color="text.secondary">
-                                        {cars.price}
+                                        {car.price}
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
@@ -38,12 +38,12 @@ const RenderCars = () => {
                             {/* favorites */}
 
                             <CardActions sx={{ justifyContent: 'center' }}>
-                                {favorites.fav.includes(cars) ? (
-                                    <IconButton onClick={() => removeFavorite(cars.id)} sx={{ position: 'absolute', top: 0, right: 0 }}>
+                                {favorites.fav.includes(car) ? (
+                                    <IconButton onClick={() => removeFavorite(car.id)} sx={{ position: 'absolute', top: 0, right: 0 }}>
                                         ❤️
                                     </IconButton>
                                 ) : (
-                                    <IconButton onClick={() => addFavorite(cars)} sx={{ position: 'absolute', top: 0, right: 0 }}>
+                                    <IconButton onClick={() => addFavorite(car)} sx={{ position: 'absolute', top: 0, right: 0 }}>
                                         🤍
                                     </IconButton>
                                 )}
@@ -51,7 +51,7 @@ const RenderCars = () => {
 
 
                             <CardActions sx={{ justifyContent: 'center' }}>
-                                <Link to={'/detail/' + cars.id} style={{ textDecoration: 'none' }}>
+                                <Link to={'/detail/' + car.id} style={{ textDecoration: 'none' }}>
                                     <Button
                                         size="small"
                                         sx={{

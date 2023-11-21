@@ -8,12 +8,12 @@ const UserFavorites = () => {
 
     return (
         <div>
-        <h2>Your favorites</h2>
+        <h2>Tus favoritos</h2>
         <Grid container spacing={2}>
-            {favorites.fav.map((cars, index) => (
-                <Grid item xs={12} sm={6} key={cars.id}>
+            {favorites.fav.map((car, index) => (
+                <Grid item xs={12} sm={6} key={car.id}>
                     <Box display="flex" justifyContent="center">
-                        <RenderCars cars={cars} />
+                        <RenderCars car={car} />
                     </Box>
                 </Grid>
             ))}
