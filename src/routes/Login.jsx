@@ -54,12 +54,11 @@ const Login = () => {
             const htppCode = response.status !== 200;
 
             if (!htppCode) {
-                dispacthAction(dispatchAuthUser, types.GET_AUTHENTICATE_USER, response.data)
-                toastMessage('success', 'Welcome!!', response.data.message)
+                dispacthAction(dispatchAuthUser, types.GET_AUTHENTICATE_USER, response.data)     
             } 
         } catch (err) {
             console.error(err)
-            toastMessage('error', `Can't sign in!!`, 'Please contact to support.')
+            toastMessage('error', `Can't sign in!!`, 'Check your email and your password.')
         } finally {
             // setLoading(false);
         }

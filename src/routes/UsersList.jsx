@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import axios from 'axios';
+import { useContextGlobal } from '../context/Context'; // Ajusta la ruta según la estructura de tu proyecto
 
 const UsersList = () => {
+  const { userData } = useContextGlobal(); // Obtenemos userData del contexto
   const [users, setUsers] = useState([]);
   const [adminChanges, setAdminChanges] = useState({});
 
@@ -19,10 +21,15 @@ const UsersList = () => {
   }, []);
 
   const handleAdminChange = async (userId, makeAdmin) => {
+    // Obtenemos el token JWT directamente desde el contexto
+    const userToken = userData.auth.token;
+
     // Enviar la solicitud al backend para cambiar el estado de administrador
     try {
-      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
-      console.log(response.data); // Puedes manejar la respuesta del backend según tus necesidades
+      await axios.put(`http://localhost:8080/users/updateAdmin/${userId}`, null, {
+        params: { makeAdmin },
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       setAdminChanges(prevState => ({ ...prevState, [userId]: makeAdmin }));
     } catch (error) {
       console.error('Error updating admin status:', error);
