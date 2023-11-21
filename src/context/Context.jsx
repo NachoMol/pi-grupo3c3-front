@@ -78,6 +78,19 @@ const Context = ({ children }) => {
         //Falta hacer que el response se setee en el estado de cars para renderizarlo en el componente
     }, [carFilter.filter])
 
+    // Al cambiar el estado de favorites valida si el fav es dif de null y lo setea en el ls
+    useEffect(() => {
+        if (favorites.fav.length === 0) return;
+        localStorage.setItem("favorites", JSON.stringify(favorites.fav));
+    }, [favorites.fav])
+
+    // Cargar los favoritos desde localStorage cuando se monta el componente
+    useEffect(() => {
+        const favs = localStorage.getItem('favorites');
+        if (favs) {
+            dispatchFavorites({ type: 'SET_FAVORITES', payload: JSON.parse(favs) });
+        }
+    }, []);
 
     return (
         <ContextGlobal.Provider value={{
