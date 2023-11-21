@@ -2,6 +2,7 @@ import { Button, Container, CssBaseline, FormControl, FormControlLabel, FormLabe
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { useContextGlobal } from '../context/Context';
 
 const UpdateVehicle = () => {
 
@@ -67,7 +68,37 @@ const handleCategoryChange = (event) => {
   
     console.log('Selected Category ID:', categoryId);
   };
-
+                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN UPDATEAR AUTOS
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setLoading(true);
+  
+  //   try {
+  //     if (userData.user.admin === false) {
+  //       setError('Permission denied. Only admins can update categories.');
+  //       return;
+  //     }
+  
+  //     const selectedCategoryId = car.category.id;
+  //     const updateResponse = await axios.put('http://localhost:8080/products/update/' + car.id, {
+  //       name: car.name,
+  //       price: car.price,
+  //       category: { id: selectedCategoryId },
+  //       city: { id: car.id },
+  //     });
+  
+  //     console.log('Product response: ', updateResponse);
+  
+  //     setSuccessMessage('Product updated successfully');
+  //     setError('');
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 500) {
+  //       setError('Unknown error');
+  //     } else setError('Error al enviar los datos. Intente nuevamente.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();

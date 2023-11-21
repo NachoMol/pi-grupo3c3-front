@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import axios from 'axios';
-import { useContextGlobal } from '../context/Context'; // Ajusta la ruta según la estructura de tu proyecto
+import { useContextGlobal } from '../context/Context';
 
 const UsersList = () => {
-  const { userData } = useContextGlobal(); // Obtenemos userData del contexto
+  const { userData } = useContextGlobal();
   const [users, setUsers] = useState([]);
   const [adminChanges, setAdminChanges] = useState({});
 
@@ -19,17 +19,27 @@ const UsersList = () => {
     };
     fetchUsers();
   }, []);
+                                              //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN HACER Y DESHACER ADMINS
+  // const handleAdminChange = async (userId, makeAdmin) => {
+  //   // Verificar si el usuario actual es un administrador antes de permitir el cambio
+  //   if (!userData.user.admin) {
+  //     console.error('Permission denied. Only admins can change admin status.');
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
+  //     console.log(response.data);
+  //     setAdminChanges(prevState => ({ ...prevState, [userId]: makeAdmin }));
+  //   } catch (error) {
+  //     console.error('Error updating admin status:', error);
+  //   }
+  // };
 
   const handleAdminChange = async (userId, makeAdmin) => {
-    // Obtenemos el token JWT directamente desde el contexto
-    const userToken = userData.auth.token;
-
-    // Enviar la solicitud al backend para cambiar el estado de administrador
     try {
-      await axios.put(`http://localhost:8080/users/updateAdmin/${userId}`, null, {
-        params: { makeAdmin },
-        headers: { Authorization: `Bearer ${userToken}` },
-      });
+      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
+      console.log(response.data);
       setAdminChanges(prevState => ({ ...prevState, [userId]: makeAdmin }));
     } catch (error) {
       console.error('Error updating admin status:', error);
@@ -62,10 +72,14 @@ const UsersList = () => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    color={adminChanges[user.id] ? 'secondary' : 'primary'}
+                    style={{
+                      width: '120px', // Tamaño deseado
+                      backgroundColor: user.admin ? 'red' : 'blue', // Color según el estado de admin
+                      color: 'white', // Texto en color blanco para mayor contraste
+                    }}
                     onClick={() => handleAdminChange(user.id, !adminChanges[user.id])}
                   >
-                    {adminChanges[user.id] ? 'Remove Admin' : 'Make Admin'}
+                    {user.admin ? 'Remove Admin' : 'Make Admin'}
                   </Button>
                 </TableCell>
               </TableRow>

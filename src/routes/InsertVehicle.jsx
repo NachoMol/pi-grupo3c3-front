@@ -11,6 +11,7 @@ import {
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import '../styless/InsertVehicle.css';
+import { useContextGlobal } from '../context/Context';
 
 const InsertVehicle = () => {
   const [vehicle, setVehicle] = useState({
@@ -113,6 +114,64 @@ const InsertVehicle = () => {
     const files = event.target.files;
     setImages(files);
   };
+                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN AGREGAR AUTOS
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setLoading(true);
+  
+  //   // Verificar si el usuario es un administrador
+  //   if (userData.user.admin === true) {
+  //     try {
+  //       const selectedCategoryId = vehicle.category.id;
+  //       const selectedCityId = vehicle.city.id;
+  
+  //       // Enviar la solicitud para crear el producto
+  //       const productResponse = await axios.post('http://localhost:8080/products/create', {
+  //         name: vehicle.name,
+  //         price: vehicle.price,
+  //         category: { id: selectedCategoryId },
+  //         city: { id: selectedCityId },
+  //       });
+        
+  //       const vehicleID = productResponse.data.id;
+  
+  //       const selectedDetailsAsNumbers = selectedDetails.map(Number);
+  
+  //       // Enviar la solicitud para crear el detalle asociado al producto
+  //       await axios.post(`http://localhost:8080/products/${vehicleID}/add-details`, selectedDetailsAsNumbers, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         }
+  //       });
+  
+  //       // Limpiar los detalles seleccionados y otros campos
+  //       setSelectedDetails([]);
+  //       setImages([]);
+  //       setVehicle({
+  //         name: '',
+  //         price: '',
+  //         category: { id: '' },
+  //         city: { id: '' },
+  //         details: [],
+  //       });
+  
+  //       // Establecer el mensaje de éxito
+  //       setSuccessMessage('Producto registrado exitosamente');
+  //       setError(''); // Restablecer el mensaje de error
+  //     } catch (error) {
+  //       if (error.response && error.response.status === 500) {
+  //         setError('Este nombre ya existe');
+  //       } else {
+  //         setError('Error al enviar los datos. Intente nuevamente.');
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //     setError('No tienes permiso para agregar vehículos.');
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();

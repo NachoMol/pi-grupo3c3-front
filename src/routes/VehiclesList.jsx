@@ -3,6 +3,7 @@ import { Container, Typography, Box, Table, TableBody, TableCell, TableContainer
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import { useContextGlobal } from '../context/Context';
 
 const VehiclesList = () => {
 
@@ -32,6 +33,36 @@ const VehiclesList = () => {
   }, [page])
 
   console.log("Vehicles: ", vehicles);
+                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN ELIMINAR AUTOS
+  // const handleDelete = (id) => {
+  //   if (userData.user.admin === true) {
+  //     Swal.fire({
+  //       title: '¿Estás seguro?',
+  //       text: '¡No podrás revertir esto!',
+  //       icon: 'warning',
+  //       showCancelButton: true,
+  //       confirmButtonColor: '#3085d6',
+  //       cancelButtonColor: '#d33',
+  //       confirmButtonText: '¡Sí, bórralo!',
+  //     }).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         try {
+  //           await axios.delete(`http://localhost:8080/products/delete/${id}`);
+  //           setVehicles(vehicles.filter((vehicle) => vehicle.id !== id));
+  //           Swal.fire('¡Eliminado!', 'El producto ha sido eliminado.', 'success');
+  //         } catch (error) {
+  //           console.error('Error deleting vehicle:', error);
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     Swal.fire({
+  //       title: 'Permiso denegado',
+  //       text: 'No tienes permisos para eliminar vehículos.',
+  //       icon: 'error',
+  //     });
+  //   }
+  // };
 
   const handleDelete = (id) => {
     Swal.fire({
