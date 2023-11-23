@@ -13,7 +13,7 @@ const UserFavorites = () => {
             {favorites.fav.map((car, index) => (
                 <Grid item xs={12} sm={6} key={car.id}>
                     <Box display="flex" justifyContent="center">
-                        <RenderCars car={car} />
+                        <RenderCars key={car.id} car={car} />
                     </Box>
                 </Grid>
             ))}

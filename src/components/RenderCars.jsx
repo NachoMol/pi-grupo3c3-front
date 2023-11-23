@@ -17,12 +17,12 @@ const RenderCars = ({car}) => {
     };
   return (
     <div>
-      <Card sx={{ maxWidth: 350, background: 'transparent', minWidth: 349, position: 'relative' }}>
+      <Card key={car.id} sx={{ maxWidth: 350, background: 'transparent', minWidth: 349, position: 'relative' }}>
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
                                     height="149"
-                                    image={car.images.length > 0 ? car.images[0].url : 'default_image_url'}
+                                    image={car.images && car.images.length > 0 ? car.images[0].url : 'default_image_url'}
                                     alt={`image ${car.name}`}
                                 />
                                 <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '20px', fontWeight: '800' }}>
