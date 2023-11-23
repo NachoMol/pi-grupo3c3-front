@@ -78,7 +78,7 @@ const Detail = () => {
 
       <div className='detail-div'>
         <div>
-          <CarGallery />
+          <CarGallery productImages={car.images}/>
         </div>
         <div className='detail-information'>
           <Container component="main" maxWidth="xs">

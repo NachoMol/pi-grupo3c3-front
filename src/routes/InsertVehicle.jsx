@@ -108,10 +108,12 @@ const InsertVehicle = () => {
     setSelectedDetails(updatedSelectedDetails);
   
     console.log('Selected Details:', updatedSelectedDetails);
+    console.log('Images: ' , images);
   };
 
   const handleImageChange = (event) => {
     const files = event.target.files;
+    console.log('Files:', files);
     setImages(files);
   };
                                             //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN AGREGAR AUTOS
@@ -184,15 +186,26 @@ const InsertVehicle = () => {
     try {
       const selectedCategoryId = vehicle.category.id;
       const selectedCityId = vehicle.city.id;
+
+      const formData = new FormData();
+
+      // Agregar imágenes al FormData
+      for(let i = 0; i < images.length; i++) {
+        formData.append('files', images[i]);
+      }
   
-      // Enviar la solicitud para crear el producto
-      const productResponse = await axios.post('http://localhost:8080/products/create', {
-        name: vehicle.name,
-        price: vehicle.price,
-        category: { id: selectedCategoryId },
-        city: { id: selectedCityId },
-      });
+      // Agregar datos del vehículo al FormData
+      formData.append('product', JSON.stringify({
+      name: vehicle.name,
+      price: vehicle.price,
+      category: { id: selectedCategoryId },
+      city: { id: selectedCityId },
+      }));
       
+      // Enviar la solicitud para crear el producto y las imágenes
+      console.log('FormData:', formData);
+      const productResponse = await axios.post('http://localhost:8080/products/add', formData);
+
       const vehicleID = productResponse.data.id; // Obtén el ID del producto creado
       console.log("Product response: ", productResponse )
 
@@ -221,7 +234,8 @@ const InsertVehicle = () => {
       setError(''); // Restablecer el mensaje de error
     } catch (error) {
       if (error.response && error.response.status === 500) {
-      setError('This name already exists');
+        console.log('Error response:', error)
+        setError('This name already exists');
       }
       else setError('Error al enviar los datos. Intente nuevamente.');
     } finally {
