@@ -11,6 +11,7 @@ import {
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import '../styless/InsertVehicle.css';
+import InputFileUpload from '../components/InputFileUpload';
 import { useContextGlobal } from '../context/Context';
 
 const InsertVehicle = () => {
@@ -328,7 +329,7 @@ const InsertVehicle = () => {
 
 
         <div className="button-container">
-          <input type="file" accept="image/*" onChange={handleImageChange} multiple />
+          <InputFileUpload onChange={handleImageChange} />
           {error && <p className="error-message">{error}</p>}
           <Button className="button" type="submit" variant="contained" sx={{marginTop: 3}}>
             Submit
