@@ -17,8 +17,10 @@ import Context from './context/Context'
 import UserProfile from './routes/UserProfile'
 import InsertCategory from './routes/InsertCategory'
 import UserFavorites from './routes/UserFavorites'
-import AddDetails from './routes/AddDetails'
+import DetailsList from './routes/DetailsList'
 import UpdatePolicies from './routes/UpdatePolicies'
+import AddDetails from './routes/AddDetails'
+import UpdateDetails from './routes/UpdateDetails'
 
 function App() {
 
@@ -42,7 +44,9 @@ function App() {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path='/admin/insert-category' element={<InsertCategory/>} />
         <Route path="/userFavorites" element={<UserFavorites />} />
-        <Route path="/admin/add-details" element={<AddDetails />} />
+        <Route path="/admin/details-list" element={<DetailsList />} />
+        <Route path="/admin/add-detail" element={<AddDetails />} />
+        <Route path="/admin/update-detail/:id" element={<UpdateDetails />} />
         <Route path="/admin/update-policies" element={<UpdatePolicies />} />
       </Routes>
       <Footer />
