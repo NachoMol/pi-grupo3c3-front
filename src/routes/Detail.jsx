@@ -1,4 +1,4 @@
-import { Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
+import { Box, Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importa ThemeProvider y createTheme
 import { Container } from '@mui/material'
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import '../styless/Detail.css';
 import axios from 'axios';
 import Feature from './Feature';
 import { useContextGlobal } from '../context/Context';
+import ProductPolicies from './ProductPolicies';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
@@ -113,6 +114,16 @@ const Detail = () => {
             </Grid>
           </Container>
         </div>
+      </div>
+
+      <div>
+        {/* Sección de políticas del producto */}
+        <Box component={Paper} elevation={3} p={3} mt={4}>
+            <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
+              Product Policies
+            </Typography>
+            <ProductPolicies />
+        </Box>
       </div>
       {/* Modal para redirigir, si el usuario que reserva no esta logueado */}
       <Dialog
