@@ -17,6 +17,7 @@ import Context from './context/Context'
 import UserProfile from './routes/UserProfile'
 import InsertCategory from './routes/InsertCategory'
 import UserFavorites from './routes/UserFavorites'
+import AddDetails from './routes/AddDetails'
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path='/admin/insert-category' element={<InsertCategory/>} />
         <Route path="/userFavorites" element={<UserFavorites />} />
+        <Route path="/admin/add-details" element={<AddDetails />} />
       </Routes>
       <Footer />
     </Context>

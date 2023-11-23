@@ -37,10 +37,26 @@ const UsersList = () => {
   // };
 
   const handleAdminChange = async (userId, makeAdmin) => {
+    console.log('URL:', `http://localhost:8080/users/update/${userId}`);
+    console.log('Data:', { makeAdmin });
+  
     try {
       const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
+      console.log('Server response:', response);
+      console.log('userId:', userId);
+      console.log('makeAdmin:', makeAdmin);
       console.log(response.data);
-      setAdminChanges(prevState => ({ ...prevState, [userId]: makeAdmin }));
+  
+      setUsers(prevState => {
+        const updatedUsers = prevState.map(user => {
+          if (user.id === userId) {
+            return { ...user, admin: makeAdmin };
+          }
+          return user;
+        });
+        console.log('Updated Users:', updatedUsers);
+        return updatedUsers;
+      });
     } catch (error) {
       console.error('Error updating admin status:', error);
     }
@@ -77,7 +93,7 @@ const UsersList = () => {
                       backgroundColor: user.admin ? 'red' : 'blue', // Color según el estado de admin
                       color: 'white', // Texto en color blanco para mayor contraste
                     }}
-                    onClick={() => handleAdminChange(user.id, !adminChanges[user.id])}
+                    onClick={() => handleAdminChange(user.id, !user.admin)}
                   >
                     {user.admin ? 'Remove Admin' : 'Make Admin'}
                   </Button>

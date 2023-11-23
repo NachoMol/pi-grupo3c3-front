@@ -34,9 +34,10 @@ const InsertCategory = () => {
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
     
-    //     if (error || !userData.user.admin) {
-    //       return;
-    //     }
+    //     if (!userData.user.admin) {
+  //     console.error('Permission denied. Only admins can add categories.');
+  //     return;
+  //   }
     
     //     try {
     //       setLoading(true); // Indicar que la solicitud ha comenzado
