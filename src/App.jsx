@@ -18,6 +18,7 @@ import UserProfile from './routes/UserProfile'
 import InsertCategory from './routes/InsertCategory'
 import UserFavorites from './routes/UserFavorites'
 import AddDetails from './routes/AddDetails'
+import UpdatePolicies from './routes/UpdatePolicies'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
         <Route path='/admin/insert-category' element={<InsertCategory/>} />
         <Route path="/userFavorites" element={<UserFavorites />} />
         <Route path="/admin/add-details" element={<AddDetails />} />
+        <Route path="/admin/update-policies" element={<UpdatePolicies />} />
       </Routes>
       <Footer />
     </Context>
