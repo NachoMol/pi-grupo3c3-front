@@ -24,7 +24,6 @@ const ShowCars = () => {
             <li className="detail-information" key={carObj.id}>
               <p>Car Name: {carObj.name}</p>
               <p>Price: {carObj.price}</p>
-              <p>Stock: {carObj.stock}</p>
             </li>
           )
         )}
