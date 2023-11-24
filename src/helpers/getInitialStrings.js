@@ -6,7 +6,6 @@
  * @return {string} The concatenated initials.
  */
 const getInitialStrings = (firstName, lastName) => {
-
     const firstInitial = firstName?.charAt(0).toUpperCase();
     const lastInitial = lastName?.charAt(0).toUpperCase();
 

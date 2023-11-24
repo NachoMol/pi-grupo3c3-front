@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import userReducer from '../reducer/userReducer';
@@ -7,7 +9,6 @@ import { ulrUser } from '../config/config';
 import { useNavigate } from 'react-router-dom';
 import carReducer from '../reducer/carsReducer';
 
-
 const getAuthenticate = JSON.parse(localStorage.getItem('auth'));
 const getUser = JSON.parse(localStorage.getItem('user'));
 const getFavorite = JSON.parse(localStorage.getItem('favorites'));
@@ -16,8 +17,9 @@ const CarStates = createContext();
 const ContextGlobal = createContext();
 
 const initialState = {
-    cars: [],
-    filter: { categoryId: [], keyword: '', checkInDate: '', checkOutDate: '' },
+    products: [],
+    filter: [],
+    filterLoadingProducts: false,
     fav: getFavorite ? getFavorite : [],
     user: getUser ? getUser : { email: null, lastname: null, name: null },
     auth: getAuthenticate ? getAuthenticate : { isLogged: false, username: null, token: null }
@@ -27,11 +29,11 @@ const Context = ({ children }) => {
     // debugger;
     const [cars, dispatchCars] = useReducer(carReducer, initialState)
     const [carFilter, dispatchCarFilter] = useReducer(carReducer, initialState)
+    const [filterLoading, dispatchFilterLoading] = useReducer(carReducer, initialState);
     const [favorites, dispatchFavorites] = useReducer(carReducer, initialState)
     const [userData, dispatchUserData] = useReducer(userReducer, initialState)
     const [authUser, dispatchAuthUser] = useReducer(userReducer, initialState)
     const navigate = useNavigate()
-
 
     const handleLogout = () => {
         localStorage.removeItem('auth')
@@ -74,13 +76,6 @@ const Context = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(userData.user));
     }, [userData.user])
 
-    //Al cambiar el estado de carFilter consume el endpoint para obtener los carros filtrados
-    useEffect(() => {
-        console.log('cambio el filtro', carFilter.filter)
-
-        //Falta hacer que el response se setee en el estado de cars para renderizarlo en el componente
-    }, [carFilter.filter])
-
     // Al cambiar el estado de favorites valida si el fav es dif de null y lo setea en el ls
     useEffect(() => {
         if (favorites.fav.length === 0) return;
@@ -106,13 +101,14 @@ const Context = ({ children }) => {
 
     return (
         <ContextGlobal.Provider value={{
-            userData, dispatchUserData, 
-            authUser, dispatchAuthUser, handleLogout, 
+            userData, dispatchUserData,
+            authUser, dispatchAuthUser, handleLogout,
         }}>
             <CarStates.Provider value={{
                 cars, dispatchCars,
                 carFilter, dispatchCarFilter,
-                favorites, dispatchFavorites
+                favorites, dispatchFavorites,
+                filterLoading, dispatchFilterLoading
             }}>
                 {children}
             </CarStates.Provider>

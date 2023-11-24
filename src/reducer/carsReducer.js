@@ -1,5 +1,19 @@
+import { types } from "../types/types";
+
 const carReducer = (state, action) => {
     switch (action.type) {
+        case types.GET_CARS:
+            return { ...state, products: action.payload }
+        case types.SET_FILTER_CARS:
+            return {
+                ...state,
+                filter: action.payload
+            }
+        case types.LOADING_FILTER_CARS:
+            return {
+                ...state,
+                filterLoadingProducts: action.payload
+            }
         case 'ADD_CAR':
             return {
                 ...state,
