@@ -79,7 +79,7 @@ const InsertVehicle = () => {
 
   const handleCategoryChange = (event) => {
     const categoryId = event.target.value;
-  
+
     if (categoryId) {
       setVehicle({ ...vehicle, category: { id: categoryId } });
       console.log('Selected Category ID:', categoryId);
@@ -90,7 +90,7 @@ const InsertVehicle = () => {
 
   const handleCitiesChange = (event) => {
     const cityId = event.target.value;
-  
+
     if (cityId) {
       setVehicle({ ...vehicle, city: { id: cityId } });
       console.log('Selected City ID:', cityId);
@@ -101,17 +101,17 @@ const InsertVehicle = () => {
 
   const handleDetailsChange = (event) => {
     const { name, checked } = event.target;
-  
+
     let updatedSelectedDetails = [...selectedDetails];
-  
+
     if (checked) {
       updatedSelectedDetails.push(name);
     } else {
       updatedSelectedDetails = updatedSelectedDetails.filter((detail) => detail !== name);
     }
-  
+
     setSelectedDetails(updatedSelectedDetails);
-  
+
     console.log('Selected Details:', updatedSelectedDetails);
     console.log('Images: ', images);
   };
@@ -123,6 +123,15 @@ const InsertVehicle = () => {
   };
 
   const handleSubmit = async (event) => {
+    // Verificar si el usuario conectado es un administrador
+    const authData = JSON.parse(localStorage.getItem('auth'));
+    const isAdmin = authData.isAdmin === true;
+
+    if (!isAdmin) {
+      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
+      console.log('Permission denied. Only admins can add details.');
+      return;
+    }
     event.preventDefault();
     setLoading(true);
 
@@ -209,7 +218,7 @@ const InsertVehicle = () => {
           <div className="category-label">
             <FormControl component="fieldset" className="category-label">
               <FormLabel id="demo-radio-buttons-group-label">Category</FormLabel>
-              <RadioGroup 
+              <RadioGroup
                 value={vehicle.category.id}
                 onChange={handleCategoryChange}
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -229,7 +238,7 @@ const InsertVehicle = () => {
           <div className="city-label">
             <FormControl component="fieldset" className="city-label">
               <FormLabel id="demo-radio-buttons-group-label">City</FormLabel>
-              <RadioGroup 
+              <RadioGroup
                 value={vehicle.city.id}
                 onChange={handleCitiesChange}
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -268,7 +277,7 @@ const InsertVehicle = () => {
           <div className="button-container">
             <input type="file" accept="image/*" onChange={handleImageChange} multiple />
             {error && <p className="error-message">{error}</p>}
-            <Button className="button" type="submit" variant="contained" sx={{marginTop: 3}}>
+            <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3 }}>
               Submit
             </Button>
           </div>

@@ -43,14 +43,15 @@ const UpdatePolicies = () => {
   }, []);
 
   const handleUpdate = async () => {
-    // if (!userData.user.admin) {
-    //          console.error('Permission denied. Only admins make this change.');
-    //          return;
-    //        }
+    // Verificar si el usuario conectado es un administrador
+    const authData = JSON.parse(localStorage.getItem('auth'));
+    const isAdmin = authData.isAdmin === true;
 
-    // if (error) {
-    //     return;
-    // }
+    if (!isAdmin) {
+      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
+      console.log('Permission denied. Only admins can add details.');
+      return;
+    }
 
     try {
       const response = await axios.put(

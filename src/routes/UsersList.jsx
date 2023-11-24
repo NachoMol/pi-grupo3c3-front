@@ -34,6 +34,15 @@ const UsersList = () => {
   }, []);
 
   const handleAdminChange = async (userId, makeAdmin) => {
+    // Verificar si el usuario conectado es un administrador
+    const authData = JSON.parse(localStorage.getItem('auth'));
+    const isAdmin = authData.isAdmin === true;
+
+    if (!isAdmin) {
+      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
+      console.log('Permission denied. Only admins can add details.');
+      return;
+    }
     try {
       const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
       setUsers((prevState) => {

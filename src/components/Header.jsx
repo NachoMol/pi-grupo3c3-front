@@ -106,9 +106,6 @@ const Header = () => {
                     <Link to={'/UserFavorites'} style={{textDecoration: 'none'}}>
                       <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
                     </Link>
-                    <Link to={'/admin'} style={{ textDecoration: 'none' }}>
-                        <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
-                      </Link>
                     {userData.user.admin && (  // Verifica si el usuario es administrador
                       <Link to={'/admin'} style={{ textDecoration: 'none' }}>
                         <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
