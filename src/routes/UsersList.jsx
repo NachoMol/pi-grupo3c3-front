@@ -19,26 +19,15 @@ const UsersList = () => {
     };
     fetchUsers();
   }, []);
-                                              //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN HACER Y DESHACER ADMINS
-  // const handleAdminChange = async (userId, makeAdmin) => {
-  //   // Verificar si el usuario actual es un administrador antes de permitir el cambio
-  //   if (!userData.user.admin) {
-  //     console.error('Permission denied. Only admins can change admin status.');
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
-  //     console.log(response.data);
-  //     setAdminChanges(prevState => ({ ...prevState, [userId]: makeAdmin }));
-  //   } catch (error) {
-  //     console.error('Error updating admin status:', error);
-  //   }
-  // };
 
   const handleAdminChange = async (userId, makeAdmin) => {
     console.log('URL:', `http://localhost:8080/users/update/${userId}`);
     console.log('Data:', { makeAdmin });
+    // if (!userData.user.admin) {
+    //        console.error('Permission denied. Only admins can make this changes.');
+    //        return;
+    //      }
+    
   
     try {
       const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });

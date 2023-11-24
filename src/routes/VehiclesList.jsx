@@ -33,39 +33,13 @@ const VehiclesList = () => {
   }, [page])
 
   console.log("Vehicles: ", vehicles);
-                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN ELIMINAR AUTOS
-// const handleDelete = (id) => {
-
-//   if (!userData.user.admin) {
-//             console.error('Permission denied. Only admins can delete vehicules.');
-//             return;
-//           }
-//     Swal.fire({
-//       title: '¿Estás seguro?',
-//       text: "¡No podrás revertir esto!",
-//       icon: 'warning',
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: '¡Sí, bórralo!'
-//     }).then(async (result) => {
-//       if (result.isConfirmed) {
-//         try {
-//           await axios.delete(`http://localhost:8080/products/delete/${id}`);
-//           setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
-//           Swal.fire(
-//             '¡Eliminado!',
-//             'El producto ha sido eliminado.',
-//             'success'
-//           )
-//         } catch (error) {
-//           console.error('Error deleting vehicle:', error);
-//         }
-//       }
-//     })
-//   }
 
   const handleDelete = (id) => {
+    // if (!userData.user.admin) {
+    //        console.error('Permission denied. Only admins can make this changes.');
+    //        return;
+    //      }
+    
     Swal.fire({
       title: '¿Estás seguro?',
       text: "¡No podrás revertir esto!",

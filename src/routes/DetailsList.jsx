@@ -96,19 +96,19 @@ const DetailsTable = () => {
                 />
               </StyledTableCell>
               <StyledTableCell align="right">
+                <Link to={`/admin/update-detail/${detail.id}`}>
+                  <Button variant="contained" color="primary">
+                    Update
+                  </Button>
+                </Link>
+              </StyledTableCell>
+              <StyledTableCell align="right">
                 <IconButton
                   aria-label="delete"
                   onClick={() => handleDeleteDetail(detail.id)}
                 >
                   <DeleteIcon />
                 </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <Link to={`/admin/update-detail/${detail.id}`}>
-                  <Button variant="contained" color="primary">
-                    Update
-                  </Button>
-                </Link>
               </StyledTableCell>
             </StyledTableRow>
           ))}
