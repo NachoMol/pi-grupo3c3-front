@@ -41,23 +41,28 @@ const UsersList = () => {
     console.log('Data:', { makeAdmin });
   
     try {
-      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
+      // Actualiza el estado de administrador del usuario en la base de datos
+      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
       console.log('Server response:', response);
       console.log('userId:', userId);
       console.log('makeAdmin:', makeAdmin);
-      console.log(response.data);
-  
-      setUsers(prevState => {
-        const updatedUsers = prevState.map(user => {
-          if (user.id === userId) {
-            return { ...user, admin: makeAdmin };
-          }
-          return user;
+      
+
+    // Si la llamada a la API es exitosa, actualiza el estado del componente
+      if (response.status === 200) {
+        console.log(response.data);
+        setUsers(prevState => {
+          const updatedUsers = prevState.map(user => {
+            if (user.id === userId) {
+              return { ...user, admin: makeAdmin };
+            }
+            return user;
+          });
+          return updatedUsers;
         });
-        console.log('Updated Users:', updatedUsers);
-        return updatedUsers;
-      });
+      }
     } catch (error) {
+      // Si la llamada a la API falla, maneja el error adecuadamente
       console.error('Error updating admin status:', error);
     }
   };
