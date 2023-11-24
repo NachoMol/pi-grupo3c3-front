@@ -11,7 +11,6 @@ import {
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import '../styless/InsertVehicle.css';
-import InputFileUpload from '../components/InputFileUpload';
 import { useContextGlobal } from '../context/Context';
 
 const InsertVehicle = () => {
@@ -241,6 +240,7 @@ const InsertVehicle = () => {
       else setError('Error al enviar los datos. Intente nuevamente.');
     } finally {
       setLoading(false); // Indicar que la solicitud ha finalizado
+      window.location.reload();
     }
   };
 
@@ -329,7 +329,7 @@ const InsertVehicle = () => {
 
 
         <div className="button-container">
-          <InputFileUpload onChange={handleImageChange} />
+          <input type="file" accept="image/*" onChange={handleImageChange} multiple />
           {error && <p className="error-message">{error}</p>}
           <Button className="button" type="submit" variant="contained" sx={{marginTop: 3}}>
             Submit
