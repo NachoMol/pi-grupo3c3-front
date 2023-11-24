@@ -41,13 +41,12 @@ const VehiclesList = () => {
     //      }
     
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: "¡No podrás revertir esto!",
+      title: '¿Are you sure you want to delete it?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: '¡Sí, bórralo!'
+      confirmButtonText: 'Yes'
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -87,20 +86,7 @@ const VehiclesList = () => {
                 <TableCell>{vehicle.name}</TableCell>
                 <TableCell>{vehicle.category.name}</TableCell>
                 <TableCell>
-                  <Button sx={{
-                    color: 'white',
-                    backgroundColor: 'red',
-                    textTransform: 'uppercase',
-                    textAlign: 'center',
-                    padding: '10px',
-                    marginRight: '5px',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    '&:hover': {
-                      backgroundColor: 'darkred',
-                    },
-                  }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
-                  <Link to={'/admin/update-vehicle/' + vehicle.id}>
+                <Link to={'/admin/update-vehicle/' + vehicle.id}>
                     <Button sx={{
                       color: 'white',
                       backgroundColor: 'blue',
@@ -115,6 +101,19 @@ const VehiclesList = () => {
                       },
                     }}>Update</Button>
                   </Link>
+                  <Button sx={{
+                    color: 'white',
+                    backgroundColor: 'red',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    padding: '10px',
+                    marginRight: '5px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: 'darkred',
+                    },
+                  }} onClick={() => handleDelete(vehicle.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

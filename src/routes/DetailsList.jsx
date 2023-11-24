@@ -12,6 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import Tooltip from '@mui/material/Tooltip';
+import Feature from './Feature';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,32 +56,41 @@ const DetailsTable = () => {
   }, []);
 
   const handleDeleteDetail = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8080/details/delete/${id}`);
-      setDetails((prevDetails) => prevDetails.filter((detail) => detail.id !== id));
-      console.log(`Detail with ID ${id} deleted successfully.`);
-    } catch (error) {
-      console.error(`Error deleting detail with ID ${id}`, error);
-    }
+    // Mostrar cuadro de confirmación
+    Swal.fire({
+      title: '¿Are you sure you want to delete it?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Realizar la eliminación si el usuario confirma
+          await axios.delete(`http://localhost:8080/details/delete/${id}`);
+          setDetails((prevDetails) => prevDetails.filter((detail) => detail.id !== id));
+          Swal.fire(
+            'Deleted!',
+            `The detail with ID ${id} has been deleted.`,
+            'success'
+          );
+        } catch (error) {
+          console.error(`Error deleting detail with ID ${id}`, error);
+        }
+      }
+    });
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
+ 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ maxWidth: '90%', margin: 'auto', marginTop: '30px' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Detail Name</StyledTableCell>
             <StyledTableCell>Image</StyledTableCell>
-            <StyledTableCell>Action</StyledTableCell>
-            <StyledTableCell>Action</StyledTableCell> {/* Nueva celda para Update */}
+            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Actions</StyledTableCell> {/* Nueva celda para Update */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -89,11 +101,12 @@ const DetailsTable = () => {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <img
-                  src={detail.img_url}
+                  src={`${detail.img_url}`}
                   alt={detail.name}
                   style={{ maxWidth: '50px' }}
                   onError={() => console.log(`Error loading image for ${detail.name}`)}
                 />
+               
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Link to={`/admin/update-detail/${detail.id}`}>
@@ -103,12 +116,14 @@ const DetailsTable = () => {
                 </Link>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <IconButton
-                  aria-label="delete"
-                  onClick={() => handleDeleteDetail(detail.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                <Tooltip title="Delete" arrow>
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteDetail(detail.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
               </StyledTableCell>
             </StyledTableRow>
           ))}
