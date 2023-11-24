@@ -87,13 +87,14 @@ const Context = ({ children }) => {
         localStorage.setItem("favorites", JSON.stringify(favorites.fav));
     }, [favorites.fav])
 
+    // Esta demás, funciona comoel que sigue (load_favorites)
     // Cargar los favoritos desde localStorage cuando se monta el componente
-    useEffect(() => {
-        const favs = localStorage.getItem('favorites');
-        if (favs) {
-            dispatchFavorites({ type: 'SET_FAVORITES', payload: JSON.parse(favs) });
-        }
-    }, []);
+    // useEffect(() => {
+    //     const favs = localStorage.getItem('favorites');
+    //     if (favs) {
+    //         dispatchFavorites({ type: 'SET_FAVORITES', payload: JSON.parse(favs) });
+    //     }
+    // }, []);
 
     // Cargar los favoritos desde localStorage cuando se monta el componente
     useEffect(() => {
