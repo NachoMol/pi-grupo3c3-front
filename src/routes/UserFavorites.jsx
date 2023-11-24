@@ -24,7 +24,7 @@ const UserFavorites = () => {
             });
     };
 
-    // Llama a fetchFavorites en el componente UserFavorites
+    // Llama a fetchFavorites 
     useEffect(() => {
         fetchFavorites();
     }, []);
@@ -33,12 +33,12 @@ const UserFavorites = () => {
     return (
         <div>
             <h2>Your Favorites</h2>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {favorites.fav.map((car, index) => (
-                    <Grid item xs={12} sm={6} key={car.id}>
-                        <Box display="flex" justifyContent="center">
-                            <RenderCars key={car.id} car={car} />
-                        </Box>
+                    <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
+
+                        <RenderCars car={car} key={car.id} />
+
                     </Grid>
                 ))}
             </Grid>
