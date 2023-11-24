@@ -30,47 +30,17 @@ const InsertCategory = () => {
             setError('');
         }
     };
-                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN AGREGAR CATEGORIAS
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    
-    //     if (!userData.user.admin) {
-  //     console.error('Permission denied. Only admins can add categories.');
-  //     return;
-  //   }
-    
-    //     try {
-    //       setLoading(true); // Indicar que la solicitud ha comenzado
-    //       const response = await axios.post('http://localhost:8080/categories/create', {
-    //         name: category.title,
-    //         description: category.description,
-    //         image_url: category.image,
-    //       });
-    
-    //       // Limpia campos seleccionados
-    //       setCategory({
-    //         title: '',
-    //         description: '',
-    //         image: '',
-    //       });
-    //       // Establecer el mensaje de éxito
-    //       setSuccessMessage('Product signed up successfully');
-    //       setError(''); // Restablecer el mensaje de error
-    //     } catch (error) {
-    //       if (error.response && error.response.status === 500) {
-    //         setError('This name already exists');
-    //       } else setError('Error al enviar los datos. Intente nuevamente.');
-    //     } finally {
-    //       setLoading(false); // Indicar que la solicitud ha finalizado
-    //     }
-    //   };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        // if (!userData.user.admin) {
+        //          console.error('Permission denied. Only admins make this change.');
+        //          return;
+        //        }
 
-        if (error) {
-            return;
-        }
+        // if (error) {
+        //     return;
+        // }
 
         try {
             setLoading(true); // Indicar que la solicitud ha comenzado

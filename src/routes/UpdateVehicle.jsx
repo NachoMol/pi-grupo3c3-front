@@ -53,6 +53,15 @@ if (!car) {
 
 const handleCategoryChange = (event) => {
     const categoryId = event.target.value; // Obten el ID de la categoría seleccionada
+
+    // if (!userData.user.admin) {
+        //          console.error('Permission denied. Only admins make this change.');
+        //          return;
+        //        }
+
+        // if (error) {
+        //     return;
+        // }
   
     // Encuentra la categoría correspondiente en la lista de categorías
     

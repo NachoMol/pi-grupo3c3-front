@@ -36,6 +36,14 @@ const UpdateDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    // if (!userData.user.admin) {
+        //          console.error('Permission denied. Only admins make this change.');
+        //          return;
+        //        }
+
+        // if (error) {
+        //     return;
+        // }
 
     try {
       await axios.put(`http://localhost:8080/details/update/${id}`, detail);

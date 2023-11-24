@@ -29,6 +29,15 @@ const UpdatePolicies = () => {
         }, [policyId]);
 
     const handleUpdate = async () => {
+      // if (!userData.user.admin) {
+        //          console.error('Permission denied. Only admins make this change.');
+        //          return;
+        //        }
+
+        // if (error) {
+        //     return;
+        // }
+        
         try {
           const response = await axios.put(`http://localhost:8080/policies/update/${policyId}`, {
             title,

@@ -116,72 +116,19 @@ const InsertVehicle = () => {
     console.log('Files:', files);
     setImages(files);
   };
-                                            //EL HANDLE SUBMIT DE ABAJO ES PARA CUANDO QUERAMOS HACER Q SOLO LOS ADMINS PUEDAN AGREGAR AUTOS
-//   const handleSubmit = async (event) => {
-
-//     event.preventDefault();
-//     setLoading(true); // Indicar que la solicitud está en progreso
-//     console.log('Selected Details in handleSubmit:', selectedDetails);
-// if (!userData.user.admin) {
-//        console.error('Permission denied. Only admins can add vehicules.');
-//        return;
-//      }
-
-//     try {
-//       const selectedCategoryId = vehicle.category.id;
-//       const selectedCityId = vehicle.city.id;
-  
-//       // Enviar la solicitud para crear el producto
-//       const productResponse = await axios.post('http://localhost:8080/products/create', {
-//         name: vehicle.name,
-//         price: vehicle.price,
-//         category: { id: selectedCategoryId },
-//         city: { id: selectedCityId },
-//       });
-      
-//       const vehicleID = productResponse.data.id; // Obtén el ID del producto creado
-//       console.log("Product response: ", productResponse )
-
-//       const selectedDetailsAsNumbers = selectedDetails.map(Number);
-
-//       // Enviar la solicitud para crear el detail asociado al producto
-//       await axios.post(`http://localhost:8080/products/${vehicleID}/add-details`, selectedDetailsAsNumbers, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//         }
-//       });
-  
-//       // Limpia los detalles seleccionados y otros campos
-//       setSelectedDetails([]);
-//       setImages([]);
-//       setVehicle({
-//         name: '',
-//         price: '',
-//         category: { id: '' },
-//         city: { id: '' },
-//         details: [],
-//       });
-  
-//       // Establecer el mensaje de éxito
-//       setSuccessMessage('Product signed up successfully');
-//       setError(''); // Restablecer el mensaje de error
-//     } catch (error) {
-//       if (error.response && error.response.status === 500) {
-//       setError('This name already exists');
-//       }
-//       else setError('Error al enviar los datos. Intente nuevamente.');
-//     } finally {
-//       setLoading(false); // Indicar que la solicitud ha finalizado
-//     }
-//   };
-
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true); // Indicar que la solicitud está en progreso
     console.log('Selected Details in handleSubmit:', selectedDetails);
+// if (!userData.user.admin) {
+        //          console.error('Permission denied. Only admins make this change.');
+        //          return;
+        //        }
 
+        // if (error) {
+        //     return;
+        // }
 
     try {
       const selectedCategoryId = vehicle.category.id;
