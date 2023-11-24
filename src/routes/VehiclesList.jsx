@@ -77,7 +77,7 @@ const VehiclesList = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8080/products/delete/${id}`);
+          await axios.put(`http://localhost:8080/products/delete/${id}`);
           setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
           Swal.fire(
             '¡Eliminado!',
