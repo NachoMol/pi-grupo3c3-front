@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconButton, Card, CardActionArea, CardMedia, Typography, CardContent, CardActions, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCarStates } from '../context/Context';
 import { useContextGlobal } from '../context/Context';
 
@@ -9,6 +9,11 @@ const RenderCars = ({ car }) => {
     //  const [cars, setCars] = useState([]);
     const { favorites, dispatchFavorites } = useCarStates();
     const { userData } = useContextGlobal();
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        setIsFavorite(favorites.fav.some(favCar => favCar.id === car.id));
+    }, [favorites, car.id]);
 
     // const addFavorite = (car) => {
     //     dispatchFavorites({ type: 'ADD_FAVORITE', payload: car });
@@ -19,25 +24,36 @@ const RenderCars = ({ car }) => {
     // };
 
     const handleFavoriteClick = () => {
-        const isFavorite = favorites.fav.some(favCar => favCar.id === car.id);
+        
         const method = isFavorite ? 'DELETE' : 'POST';
         const url = isFavorite ? `http://localhost:8080/favorites/delete/${car.id}` : 'http://localhost:8080/favorites/create';
 
-        fetch(url, {
+        
+        const options = {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ user_id: userData.user.id, product_id: car.id }),
+        };
+    
+        if (method === 'POST') {
+            options.body = JSON.stringify({ user_id: userData.user.id, product_id: car.id });
+        }
+
+        fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-            .then(response => response.json())
-            .then(data => {
-                const actionType = isFavorite ? 'REMOVE_FAVORITE' : 'ADD_FAVORITE';
-                dispatchFavorites({ type: actionType, payload: data });
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        .then(data => {
+            const actionType = isFavorite ? 'REMOVE_FAVORITE' : 'ADD_FAVORITE';
+            dispatchFavorites({ type: actionType, payload: data });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     };
 
     return (
@@ -63,7 +79,7 @@ const RenderCars = ({ car }) => {
                 {/* favorites */}
 
                 <CardActions sx={{ justifyContent: 'center' }}>
-                    {favorites.fav.some(favCar => favCar.id === car.id) ? (
+                    {isFavorite ? (
                         <IconButton onClick={handleFavoriteClick} sx={{ position: 'absolute', top: 0, right: 0, color: 'red' }}>
                             ❤️
                         </IconButton>
