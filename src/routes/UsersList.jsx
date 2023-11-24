@@ -41,7 +41,7 @@ const UsersList = () => {
     console.log('Data:', { makeAdmin });
   
     try {
-      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { makeAdmin });
+      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
       console.log('Server response:', response);
       console.log('userId:', userId);
       console.log('makeAdmin:', makeAdmin);
