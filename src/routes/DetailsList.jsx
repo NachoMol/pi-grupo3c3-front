@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Tooltip from '@mui/material/Tooltip';
-import Feature from './Feature';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,7 +30,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -39,6 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const DetailsTable = () => {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -55,8 +55,19 @@ const DetailsTable = () => {
     fetchDetails();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleDeleteDetail = async (id) => {
-    // Mostrar cuadro de confirmación
     Swal.fire({
       title: '¿Are you sure you want to delete it?',
       icon: 'warning',
@@ -67,7 +78,6 @@ const DetailsTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Realizar la eliminación si el usuario confirma
           await axios.delete(`http://localhost:8080/details/delete/${id}`);
           setDetails((prevDetails) => prevDetails.filter((detail) => detail.id !== id));
           Swal.fire(
@@ -81,7 +91,15 @@ const DetailsTable = () => {
       }
     });
   };
- 
+
+  if (isMobile) {
+    return (
+      <Typography variant="h6" style={{ marginTop: '20px', textAlign: 'center' }}>
+        This component is not available on mobile devices.
+      </Typography>
+    );
+  }
+
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '90%', margin: 'auto', marginTop: '30px' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -90,7 +108,7 @@ const DetailsTable = () => {
             <StyledTableCell>Detail Name</StyledTableCell>
             <StyledTableCell>Image</StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell> {/* Nueva celda para Update */}
+            <StyledTableCell>Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,7 +124,6 @@ const DetailsTable = () => {
                   style={{ maxWidth: '50px' }}
                   onError={() => console.log(`Error loading image for ${detail.name}`)}
                 />
-               
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Link to={`/admin/update-detail/${detail.id}`}>
@@ -130,7 +147,6 @@ const DetailsTable = () => {
         </TableBody>
       </Table>
 
-      {/* Botón para agregar nuevo detalle */}
       <Link to={'/admin/add-detail'}>
         <Button
           variant="contained"

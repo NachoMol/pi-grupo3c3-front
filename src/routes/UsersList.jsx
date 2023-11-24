@@ -7,6 +7,7 @@ const UsersList = () => {
   const { userData } = useContextGlobal();
   const [users, setUsers] = useState([]);
   const [adminChanges, setAdminChanges] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,36 +21,42 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleAdminChange = async (userId, makeAdmin) => {
-    console.log('URL:', `http://localhost:8080/users/update/${userId}`);
-    console.log('Data:', { makeAdmin });
-    // if (!userData.user.admin) {
-    //        console.error('Permission denied. Only admins can make this changes.');
-    //        return;
-    //      }
-    
-  
     try {
       const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
-      console.log('Server response:', response);
-      console.log('userId:', userId);
-      console.log('makeAdmin:', makeAdmin);
-      console.log(response.data);
-  
-      setUsers(prevState => {
-        const updatedUsers = prevState.map(user => {
+      setUsers((prevState) => {
+        const updatedUsers = prevState.map((user) => {
           if (user.id === userId) {
             return { ...user, admin: makeAdmin };
           }
           return user;
         });
-        console.log('Updated Users:', updatedUsers);
         return updatedUsers;
       });
     } catch (error) {
       console.error('Error updating admin status:', error);
     }
   };
+
+  if (isMobile) {
+    return (
+      <Typography variant="h6" style={{ marginTop: '20px', textAlign: 'center' }}>
+        This component is not available on mobile devices.
+      </Typography>
+    );
+  }
 
   return (
     <Container>
@@ -78,9 +85,9 @@ const UsersList = () => {
                   <Button
                     variant="contained"
                     style={{
-                      width: '120px', // Tamaño deseado
-                      backgroundColor: user.admin ? 'red' : 'blue', // Color según el estado de admin
-                      color: 'white', // Texto en color blanco para mayor contraste
+                      width: '120px',
+                      backgroundColor: user.admin ? 'red' : 'blue',
+                      color: 'white',
                     }}
                     onClick={() => handleAdminChange(user.id, !user.admin)}
                   >

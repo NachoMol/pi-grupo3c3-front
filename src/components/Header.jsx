@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import LogoImage from "../assets/menu/logoExp-bgB.png";
-
 import { AppBar, Container, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, styled, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
@@ -59,7 +58,7 @@ const Header = () => {
     <AppBar position="sticky" sx={{ backgroundColor: '#5C4D6B', zIndex: 10 }}>
       <Container maxWidth={false}>
         <Toolbar disableGutters sx={{ maxHeight: 90, justifyContent:'space-between'}}>
-          <Box disableGutters sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, maxWidth: 135 }}>
+        <Box disableGutters sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', maxWidth: 135 }}>
             <Link to={'/'}>
               <img
                 src={LogoImage}
