@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import React from 'react'
 import { IconButton, Card, CardActionArea, CardMedia, Typography, CardContent, CardActions, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -24,38 +24,59 @@ const RenderCars = ({ car }) => {
     // };
 
     const handleFavoriteClick = () => {
-        
-        const method = isFavorite ? 'DELETE' : 'POST';
-        const url = isFavorite ? `http://localhost:8080/favorites/delete/${car.id}` : 'http://localhost:8080/favorites/create';
-
-        
-        const options = {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-    
-        if (method === 'POST') {
-            options.body = JSON.stringify({ user_id: userData.user.id, product_id: car.id });
+        if (isFavorite) {
+            fetch(`http://localhost:8080/favorites/${userData.user.id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const favorite = data.find(fav => fav.product_id === car.id);
+                if (favorite) {
+                    fetch(`http://localhost:8080/favorites/delete/${favorite.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: car.id });
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        } else {
+            fetch('http://localhost:8080/favorites/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id: userData.user.id, product_id: car.id })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                dispatchFavorites({ type: 'ADD_FAVORITE', payload: data });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
-
-        fetch(url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const actionType = isFavorite ? 'REMOVE_FAVORITE' : 'ADD_FAVORITE';
-            dispatchFavorites({ type: actionType, payload: data });
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
     };
-
     return (
         <div>
             <Card key={car.id} sx={{ maxWidth: 350, background: 'transparent', minWidth: 349, position: 'relative' }}>
