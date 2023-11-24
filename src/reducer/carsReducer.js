@@ -25,6 +25,16 @@ const carReducer = (state, action) => {
                 ...state,
                 fav: state.fav.filter(car => car.id !== action.payload)
             };
+            case 'LOAD_FAVORITES':
+                return {
+                    ...state,
+                    fav: action.payload
+                };
+            case 'CLEAR_FAVORITES':
+                return {
+                    ...state,
+                    fav: []
+                };
         default:
             return state;
     }

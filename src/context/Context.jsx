@@ -36,6 +36,9 @@ const Context = ({ children }) => {
     const handleLogout = () => {
         localStorage.removeItem('auth')
         localStorage.removeItem('user')
+        localStorage.removeItem('favorites')
+
+        dispatchFavorites({ type: 'CLEAR_FAVORITES' }) // Aquí está la corrección
 
         dispacthAction(dispatchAuthUser, types.GET_LOGOUT_USER, null)
         navigate('/')
@@ -92,10 +95,18 @@ const Context = ({ children }) => {
         }
     }, []);
 
+    // Cargar los favoritos desde localStorage cuando se monta el componente
+    useEffect(() => {
+        const favs = localStorage.getItem('favorites');
+        if (favs) {
+            dispatchFavorites({ type: 'LOAD_FAVORITES', payload: JSON.parse(favs) });
+        }
+    }, [authUser.auth]);
+
     return (
         <ContextGlobal.Provider value={{
-            userData, dispatchUserData,
-            authUser, dispatchAuthUser, handleLogout
+            userData, dispatchUserData, 
+            authUser, dispatchAuthUser, handleLogout, 
         }}>
             <CarStates.Provider value={{
                 cars, dispatchCars,
