@@ -110,7 +110,7 @@ const DetailsTable = () => {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ maxWidth: '90%', margin: 'auto', marginTop: '30px' }}>
+    <TableContainer component={Paper} sx={{ maxWidth: '90%', margin: 'auto', marginTop: '30px', marginBottom: '100px' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

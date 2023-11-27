@@ -138,9 +138,8 @@ const VehiclesList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
       {/* Manejar paginación */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3, alignItems: 'center', gap: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3, alignItems: 'center', gap: 2, paddingBottom:'100px' }}>
         <Button variant="outlined" onClick={handleFirstPageClick}>
           Inicio
         </Button>
