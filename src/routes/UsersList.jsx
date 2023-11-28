@@ -72,7 +72,7 @@ const UsersList = () => {
       <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
         User List
       </Typography>
-      <TableContainer component={Paper} >
+      <TableContainer component={Paper}>
         <Table >
           <TableHead>
             <TableRow>

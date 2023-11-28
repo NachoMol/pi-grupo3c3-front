@@ -13,6 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import '../styless/InsertVehicle.css';
 import { useContextGlobal } from '../context/Context';
+import { Link } from 'react-router-dom';
 
 const InsertVehicle = () => {
   const [vehicle, setVehicle] = useState({
@@ -282,12 +283,14 @@ const InsertVehicle = () => {
             </Button>
           </div>
         </form>
+        
         {loading && <p>Loading...</p>}
         {successMessage && (
           <p className="success-message">{successMessage}</p>
         )}
-      </div>
+      </div> 
     </div>
+    
   );
 };
 

@@ -15,6 +15,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { Container } from '@mui/system';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -110,61 +111,65 @@ const DetailsTable = () => {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ maxWidth: '90%', margin: 'auto', marginTop: '30px', marginBottom: '100px' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Detail Name</StyledTableCell>
-            <StyledTableCell>Image</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {details.map((detail) => (
-            <StyledTableRow key={detail.id}>
-              <StyledTableCell component="th" scope="row">
-                {detail.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <img
-                  src={`${detail.img_url}`}
-                  alt={detail.name}
-                  style={{ maxWidth: '50px' }}
-                  onError={() => console.log(`Error loading image for ${detail.name}`)}
-                />
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <Link to={`/admin/update-detail/${detail.id}`}>
-                  <Button variant="contained" color="primary">
-                    Update
-                  </Button>
-                </Link>
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <Tooltip title="Delete" arrow>
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => handleDeleteDetail(detail.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-
+    <Container>
+      <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
+        Detail List
+      </Typography>
+      <TableContainer component={Paper} sx={{ Width: '90%', margin: 'auto', marginTop: '30px' }}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Detail Name</StyledTableCell>
+              <StyledTableCell>Image</StyledTableCell>
+              <StyledTableCell></StyledTableCell>
+              <StyledTableCell>Actions</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {details.map((detail) => (
+              <StyledTableRow key={detail.id}>
+                <StyledTableCell component="th" scope="row">
+                  {detail.name}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <img
+                    src={`${detail.img_url}`}
+                    alt={detail.name}
+                    style={{ maxWidth: '50px' }}
+                    onError={() => console.log(`Error loading image for ${detail.name}`)}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <Link to={`/admin/update-detail/${detail.id}`}>
+                    <Button variant="contained" color="primary">
+                      Update
+                    </Button>
+                  </Link>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <Tooltip title="Delete" arrow>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteDetail(detail.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Link to={'/admin/add-detail'}>
         <Button
           variant="contained"
-          sx={{ mt: 3, mb: 2, bgcolor: '#1976D2', '&:hover': { bgcolor: '#1565C0' } }}
+          sx={{ mt: 3, mb: 2, bgcolor: '#1976D2', '&:hover': { bgcolor: '#1565C0' }, marginBottom: '100px' }}
         >
           Add Detail
         </Button>
       </Link>
-    </TableContainer>
+    </Container>
   );
 };
 

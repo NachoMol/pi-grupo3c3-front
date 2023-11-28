@@ -118,7 +118,7 @@ const Detail = () => {
 
       <div>
         {/* Sección de políticas del producto */}
-        <Box component={Paper} elevation={3} p={3} mt={4}>
+        <Box component={Paper} elevation={3} p={3} mt={4} sx={{paddingBottom:'100px'}}>
             <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
               Product Policies
             </Typography>
