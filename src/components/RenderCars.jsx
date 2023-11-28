@@ -4,26 +4,36 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useCarStates } from '../context/Context';
 import { useContextGlobal } from '../context/Context';
+import { Snackbar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const RenderCars = ({ car }) => {
     //  const [cars, setCars] = useState([]);
     const { favorites, dispatchFavorites } = useCarStates();
     const { userData } = useContextGlobal();
     const [isFavorite, setIsFavorite] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         setIsFavorite(favorites.fav.some(favCar => favCar.id === car.id));
     }, [favorites, car.id]);
 
-    // const addFavorite = (car) => {
-    //     dispatchFavorites({ type: 'ADD_FAVORITE', payload: car });
-    // };
+    const handleFavoriteClick = (event) => {
+        event.preventDefault();
 
-    // const removeFavorite = (carId) => {
-    //     dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: carId });
-    // };
-
-    const handleFavoriteClick = () => {
+        const authData = JSON.parse(localStorage.getItem('auth'));
+        console.log(authData)
+        if (!authData) {
+            setMessage('Permission denied, you must log in to add favorites.');
+            setOpen(true);
+            setTimeout(() => {
+                navigate('/register');
+            }, 6000); // Espera 6 segundos antes de redirigir
+            return;
+        }
         if (isFavorite) {
             dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: car.id });
             fetch(`http://localhost:8080/favorites/${userData.user.id}`)
@@ -55,7 +65,7 @@ const RenderCars = ({ car }) => {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        }  else {
+        } else {
             dispatchFavorites({ type: 'ADD_FAVORITE', payload: car });
             fetch('http://localhost:8080/favorites/create', {
                 method: 'POST',
@@ -77,6 +87,15 @@ const RenderCars = ({ car }) => {
         }
     };
     return (
+        <>
+        <Snackbar
+             sx={{ height: "100%" }}
+             open={open}
+             autoHideDuration={5000}
+             onClose={() => setOpen(false)}
+             message={message}
+             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        />
         <div>
             <Card key={car.id} sx={{ maxWidth: 350, background: 'transparent', minWidth: 349, position: 'relative' }}>
                 <CardActionArea>
@@ -130,7 +149,9 @@ const RenderCars = ({ car }) => {
                 </CardActions>
             </Card>
         </div>
-    )
+        </>
+    );
+
 }
 
 export default RenderCars
