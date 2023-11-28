@@ -25,37 +25,38 @@ const RenderCars = ({ car }) => {
 
     const handleFavoriteClick = () => {
         if (isFavorite) {
+            dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: car.id });
             fetch(`http://localhost:8080/favorites/${userData.user.id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const favorite = data.find(fav => fav.product_id === car.id);
-                if (favorite) {
-                    fetch(`http://localhost:8080/favorites/delete/${favorite.id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: car.id });
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        } else {
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const favorite = data.find(fav => fav.product_id === car.id);
+                    if (favorite) {
+                        fetch(`http://localhost:8080/favorites/delete/${favorite.id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }  else {
+            dispatchFavorites({ type: 'ADD_FAVORITE', payload: car });
             fetch('http://localhost:8080/favorites/create', {
                 method: 'POST',
                 headers: {
@@ -63,18 +64,16 @@ const RenderCars = ({ car }) => {
                 },
                 body: JSON.stringify({ user_id: userData.user.id, product_id: car.id })
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                dispatchFavorites({ type: 'ADD_FAVORITE', payload: data });
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
     };
     return (
