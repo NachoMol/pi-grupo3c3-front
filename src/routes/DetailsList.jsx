@@ -57,7 +57,8 @@ const DetailsTable = () => {
       await axios.delete(`http://localhost:8080/details/delete/${id}`);
       setDetails((prevDetails) => prevDetails.filter((detail) => detail.id !== id));
       console.log(`Detail with ID ${id} deleted successfully.`);
-    } catch (error) {
+    }
+    catch (error) {
       console.error(`Error deleting detail with ID ${id}`, error);
     }
   };
@@ -69,7 +70,7 @@ const DetailsTable = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
