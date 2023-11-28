@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styless/CarGallery.css';
 import PropTypes from 'prop-types';
+import { fetchImageUrl } from '../utils/fetchImageUrl';
 
-const CarGallery = ({productImages = []}) => {
+const CarGallery = ({productImages = [], productId}) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [productImageUrls, setProductImageUrls] = useState([]);
 
   const toggleZoom = () => {
     setIsZoomed(!isZoomed);
@@ -20,11 +22,34 @@ const CarGallery = ({productImages = []}) => {
     setCurrentImageIndex(newIndex);
   };
 
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      if (!Array.isArray(productImages) || productImages.length === 0) {
+        console.error('Invalid productImages');
+        return;
+      }
+
+      if (typeof fetchImageUrl !== 'function') {
+        console.error('fetchImageUrl is not a function');
+        return;
+      }
+
+      try {
+        const imageUrl = await fetchImageUrl(productId);
+        setProductImageUrls(imageUrl);
+      } catch (error) {
+        console.error('Failed to fetch image URL', error);
+      }
+    };
+
+    fetchImageUrls();
+  }, [productImages, productId, fetchImageUrl]);
+  
+
   // Verificación condicional para manejar el caso cuando productImages es undefined o vacío
   if (!productImages || productImages.length === 0) {
     return <div>No images available</div>;
   }
-
 
   return (
     <div className={`gallery ${isZoomed ? 'zoomed' : ''}`}>
@@ -34,7 +59,7 @@ const CarGallery = ({productImages = []}) => {
         </div>
         <img
           className={`mainPhoto ${isZoomed ? 'zoomed-photo' : ''}`}
-          src={`http://localhost:8080/images/${productImages[currentImageIndex].filename}`}
+          src={productImageUrls[currentImageIndex]}
           alt=''
           onClick={!isZoomed ? toggleZoom : null}
         />
@@ -48,11 +73,11 @@ const CarGallery = ({productImages = []}) => {
         )}
       </div>
       <ul className={`photosContainer ${isZoomed ? 'zoomed-photos-container' : ''}`}>
-        {productImages.map((image, index) => (
+        {productImageUrls.map((imageUrl, index) => (
           <li key={index} className={`photos ${isZoomed ? 'zoomed-photos' : ''}`}>
             <img
               className={`photo ${isZoomed ? 'zoomed-secondary-photos' : ''}`}
-              src={`http://localhost:8080/images/${image.filename}`}
+              src={imageUrl}
               alt=''
               onClick={() => {
                 if (!isZoomed) {
@@ -68,11 +93,7 @@ const CarGallery = ({productImages = []}) => {
 }
 
 CarGallery.propTypes = {
-  productImages: PropTypes.arrayOf(
-    PropTypes.shape({
-      filename: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  productImages: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default CarGallery;
