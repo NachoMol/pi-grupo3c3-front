@@ -7,6 +7,7 @@ const UsersList = () => {
   const { userData } = useContextGlobal();
   const [users, setUsers] = useState([]);
   const [adminChanges, setAdminChanges] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,30 +21,37 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleAdminChange = async (userId, makeAdmin) => {
-    console.log('URL:', `http://localhost:8080/users/update/${userId}`);
-    console.log('Data:', { makeAdmin });
-    // if (!userData.user.admin) {
-    //        console.error('Permission denied. Only admins can make this changes.');
-    //        return;
-    //      }
-    
-  
+    // Verificar si el usuario conectado es un administrador
+    const authData = JSON.parse(localStorage.getItem('auth'));
+    const isAdmin = authData.isAdmin === true;
+
+    if (!isAdmin) {
+      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
+      console.log('Permission denied. Only admins can add details.');
+      return;
+    }
     try {
       const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
-      console.log('Server response:', response);
-      console.log('userId:', userId);
-      console.log('makeAdmin:', makeAdmin);
-      console.log(response.data);
-  
-      setUsers(prevState => {
-        const updatedUsers = prevState.map(user => {
+      setUsers((prevState) => {
+        const updatedUsers = prevState.map((user) => {
           if (user.id === userId) {
             return { ...user, admin: makeAdmin };
           }
           return user;
         });
-        console.log('Updated Users:', updatedUsers);
         return updatedUsers;
       });
     } catch (error) {
@@ -51,13 +59,21 @@ const UsersList = () => {
     }
   };
 
+  if (isMobile) {
+    return (
+      <Typography variant="h6" style={{ marginTop: '20px', textAlign: 'center' }}>
+        This component is not available on mobile devices.
+      </Typography>
+    );
+  }
+
   return (
-    <Container>
+    <Container sx={{paddingBottom:'100px'}}>
       <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
         User List
       </Typography>
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer component={Paper} >
+        <Table >
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -78,9 +94,9 @@ const UsersList = () => {
                   <Button
                     variant="contained"
                     style={{
-                      width: '120px', // Tamaño deseado
-                      backgroundColor: user.admin ? 'red' : 'blue', // Color según el estado de admin
-                      color: 'white', // Texto en color blanco para mayor contraste
+                      width: '120px',
+                      backgroundColor: user.admin ? 'red' : 'blue',
+                      color: 'white',
                     }}
                     onClick={() => handleAdminChange(user.id, !user.admin)}
                   >
