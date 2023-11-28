@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto+Mono&family=Victor+Mono:wght@700&display=swap');
 
+html {
+  margin: 0;
+  padding: 0;
+}
 #root {
   font-family: 'Quicksand', sans-serif;
   text-align: center;
@@ -25,9 +29,10 @@
 
 body {
   margin: 0;
-  padding: 0 0 100px 0;
+  padding: 0;
   position: relative;
   min-height: 100vh;
+  
 }
 
 header{
@@ -38,19 +43,6 @@ header{
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.search-section {
-
-}
-
-.categories-section {
-
-
-}
-
-.recommendations-section {
-
 }
 
 /* Estilos para el toast de SweetAlert2 (Login) */
@@ -65,11 +57,7 @@ header{
 }
 /* ------------------------------------ */
 
-@media (min-height:calc(101vh - 100px)) {
-  body {
-    padding-bottom: 100px; /* Agrega el padding solo cuando es necesario */
-  }
-}
+
 
 @keyframes logo-spin {
   from {
@@ -87,12 +75,6 @@ header{
 }
 
 
-
-@media (min-width: 1366px){
-  body{
-
-  }
-}
 
 
 

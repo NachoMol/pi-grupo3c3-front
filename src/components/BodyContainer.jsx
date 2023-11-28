@@ -35,12 +35,12 @@ const BodyContainer = () => {
     }, [filter])
 
     return (
-        <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;' }} >
+        <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;', }} >
             <FilterList />
             {filterLoadingProducts ? <CircularProgress sx={{color: '#5C4D6B', mt: '2rem'}} />: (
                 <Grid container spacing={2} sx={{ mt: '1rem' }}>
                     {car.length > 0 && car.map(car => (
-                        <Grid item key={car.id} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
+                        <Grid item key={car.id} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px', marginBottom: '100px' }}>
                             <RenderCars car={car} loading={filterLoading} />
                         </Grid>
                     ))}

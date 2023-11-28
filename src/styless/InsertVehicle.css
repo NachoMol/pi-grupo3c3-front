@@ -12,8 +12,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: center;
-  max-height: 80vw;
+  padding-bottom: 100px;
 }
+
 
 /* Estilos para el título */
 .form-container h2 {

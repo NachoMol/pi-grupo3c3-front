@@ -56,7 +56,7 @@ const UserFavorites = () => {
             <h2>Your Favorites</h2>
             <Grid container spacing={2} sx={{ mt: '1rem' }}>
                 {favorites.fav.map((car, index) => (
-                    <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px' }}>
+                    <Grid item key={index} xs={12} sm={12} md={6} lg={6} xl={6} sx={{ display: 'Flex', justifyContent: 'center', paddingRight: '16px', marginBottom: '100px' }}>
 
                         <RenderCars car={car} key={car.id} />
 

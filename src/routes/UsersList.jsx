@@ -68,12 +68,12 @@ const UsersList = () => {
   }
 
   return (
-    <Container>
+    <Container sx={{paddingBottom:'100px'}}>
       <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
         User List
       </Typography>
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer component={Paper} >
+        <Table >
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
