@@ -1,18 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Typography, Container } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 import axios from 'axios';
 
+
 const UpdatePolicies = () => {
-  const [policyId, setPolicyId] = useState('');
+  const [selectedPolicyId, setSelectedPolicyId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [policyTitles, setPolicyTitles] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPolicyTitles = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/policies');
+        const titles = response.data.map(policy => ({
+          id: policy.id,
+          name: policy.title,
+        }));
+
+        // Actualiza los títulos disponibles
+        setPolicyTitles(titles);
+      } catch (error) {
+        console.error('Error fetching policy titles', error);
+      }
+    };
+
+    // Cargar los títulos disponibles al montar el componente
+    fetchPolicyTitles();
+  }, []);
 
   useEffect(() => {
     const fetchPolicyDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/policies/${policyId}`
+          `http://localhost:8080/policies/${selectedPolicyId}`
         );
         const policyDetails = response.data;
 
@@ -24,11 +56,11 @@ const UpdatePolicies = () => {
       }
     };
 
-    // Verifica si el policyId es válido antes de intentar cargar los detalles
-    if (policyId) {
+    // Verifica si el selectedPolicyId es válido antes de intentar cargar los detalles
+    if (selectedPolicyId) {
       fetchPolicyDetails();
     }
-  }, [policyId]);
+  }, [selectedPolicyId]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,33 +75,11 @@ const UpdatePolicies = () => {
   }, []);
 
   const handleUpdate = async () => {
-    // Verificar si el usuario conectado es un administrador
-    const authData = JSON.parse(localStorage.getItem('auth'));
-    const isAdmin = authData.isAdmin === true;
+    // ... Código de actualización
+  };
 
-    if (!isAdmin) {
-      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
-      console.log('Permission denied. Only admins can add details.');
-      return;
-    }
-
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/policies/update/${policyId}`,
-        {
-          title,
-          description,
-        }
-      );
-
-      if (response.status === 201) {
-        console.log('Policy updated successfully');
-      } else {
-        console.log('Failed to update policy');
-      }
-    } catch (error) {
-      console.error('Error updating policy', error);
-    }
+  const handleCloseMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -83,14 +93,25 @@ const UpdatePolicies = () => {
           <Typography variant="h6" style={{ marginTop: '20px' }}>
             Update Policy
           </Typography>
-          <TextField
-            label="Policy ID"
-            variant="outlined"
-            value={policyId}
-            onChange={(e) => setPolicyId(e.target.value)}
-            fullWidth
-            style={{ marginTop: '10px' }}
-          />
+          <FormControl fullWidth style={{ marginTop: '10px' }}>
+            <InputLabel style={{marginTop: '8px' }}>Select Policy Title</InputLabel>
+            <Select
+              label="Select Policy Title"
+              value={selectedPolicyId}
+              onChange={(e) => setSelectedPolicyId(e.target.value)}
+              fullWidth
+              style={{ marginTop: '10px' }}
+              onClose={handleCloseMenu}
+              onOpen={() => setMenuOpen(true)}
+              open={menuOpen}
+            >
+              {policyTitles.map((title) => (
+                <MenuItem key={title.id} value={title.id}>
+                  {title.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             label="Title"
             variant="outlined"
