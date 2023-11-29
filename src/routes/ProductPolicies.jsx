@@ -33,7 +33,9 @@ const ProductPolicies = () => {
         <Grid container spacing={2}>
             {policies.map((policy, index) => (
                 <Grid item xs={12} sm={6} md={4} key={policy.id}>
-                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}>
+              {/* Modifiqué el margin bottom porque quedaba texto tapado por el footer */}
+                {/* <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}> */}
+                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '50px' }}>
                     <Typography variant="h6">{policy.title}</Typography>
                     <Typography variant="body1">{policy.description}</Typography>
                 </div>
