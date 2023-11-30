@@ -32,14 +32,6 @@ const Header = () => {
 
   const { handleLogout } = useContextGlobal()
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
   const handleClickAvatar = (event) => {
     setAnchorElAvatar(event.currentTarget);
   };
@@ -88,7 +80,6 @@ const Header = () => {
                       margin: '7px 0 0 0',
                     }}
                   >
-                    {/* Add user name here */}
                   </UserTitle>
                   <Avatar sx={{ bgcolor: '#A3A3A3', mb: '6px', '&:hover': { cursor: 'pointer' } }} onClick={handleClickAvatar}>
                     {avatar}
@@ -99,6 +90,7 @@ const Header = () => {
                     anchorEl={anchorElAvatar}
                     open={Boolean(anchorElAvatar)}
                     onClose={handleCloseAvatarMenu}
+                    autoFocus={true}
                   >
                     <Link to={'/UserProfile'} style={{textDecoration: 'none'}}>
                       <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
@@ -115,7 +107,7 @@ const Header = () => {
                   </Menu>
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', gap:'25px' }}>
                   <Typography
                     variant="h5"
                     sx={{
@@ -149,7 +141,7 @@ const Header = () => {
                     }}
                   >
                     <Link to={'/register/'} style={{ fontFamily: 'Spinnaker, sans-serif', color: '#FFF', textDecoration: 'none', fontSize: 18 }}>
-                      Sign Up
+                      Create account
                     </Link>
                   </Typography>
                 </div>
