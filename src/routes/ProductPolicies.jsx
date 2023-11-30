@@ -30,19 +30,17 @@ const ProductPolicies = () => {
     }
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ paddingBottom: '20px' }}>
             {policies.map((policy, index) => (
                 <Grid item xs={12} sm={6} md={4} key={policy.id}>
-              {/* Modifiqué el margin bottom porque quedaba texto tapado por el footer */}
-                {/* <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}> */}
-                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '50px' }}>
+                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}>
                     <Typography variant="h6">{policy.title}</Typography>
-                    <Typography variant="body1">{policy.description}</Typography>
+                    <Typography variant="body1" style={{ paddingBottom: '20px', textAlign:'justify' }}>{policy.description}</Typography>
                 </div>
                 </Grid>
             ))}
         </Grid>
-)
+    )
 }
 
 export default ProductPolicies
