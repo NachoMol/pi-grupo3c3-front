@@ -27,8 +27,9 @@ export default function Feature({ car }) {
       sx={{
         width: '100%',
         maxWidth: 360,
-        bgcolor: 'background.paper',
+        backgroundColor: '#D9D9D9',
         overflow: 'auto',
+      
 
         '@media (max-width: 800px)': {
           maxWidth: '100%',  
@@ -37,8 +38,8 @@ export default function Feature({ car }) {
     >
       {car.details.map((detail) => (
         <div key={detail.id}>
-          <ListItem>
-            <ListItemAvatar>
+          <ListItem sx={{background:'#D9D9D9', paddingTop:'0', paddingLeft: '0'}}>
+            <ListItemAvatar >
               <Avatar sx={{ background: blueGrey[500] }}>
                 {/* Aquí puedes renderizar el icono adecuado para cada detalle */}
                 {/* Por ejemplo, si 'detail.icon' contiene el nombre del icono, podrías usar un switch o un objeto de mapeo para seleccionar el icono adecuado. */}
