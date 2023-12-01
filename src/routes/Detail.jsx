@@ -7,7 +7,6 @@ import CarGallery from '../components/CarGallery';
 import '../styless/App.css';
 import '../styless/Detail.css';
 import axios from 'axios';
-import Feature from './Feature';
 import { useContextGlobal } from '../context/Context';
 import ProductPolicies from './ProductPolicies';
 import { useMediaQuery } from '@mui/material';
@@ -116,9 +115,12 @@ const Detail = () => {
                 </Typography>
               </div>
               <div style={{ width: '50%', textAlign:'left' }}>
-                <Typography variant="body1">
-                  <Feature car={car} />
-                </Typography>
+                {car.details.map((detail) => (
+      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+        <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
+        <Typography variant="body1">{detail.name}</Typography>
+      </div>
+    ))}
               </div>
             </div>
 
@@ -169,5 +171,6 @@ const Detail = () => {
     </ThemeProvider>
   );
 }
+
 
 export default Detail;

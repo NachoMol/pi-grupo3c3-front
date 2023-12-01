@@ -27,6 +27,7 @@
   .back-logo{
     width: 40px;
     height: auto;
+    filter: invert(1);
   }
   
   .detail-div{
