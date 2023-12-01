@@ -120,8 +120,16 @@
 }
 }
 
-@media (max-width: 660px){
-
+@media (max-width: 873px){
+  .mainPhotoContainer {
+    width: 80vw;
+  }
+  .mainPhoto {
+    width: 80vw;
+  }  
+  .photosContainer {
+    width: 80vw;
+  }
 }
 
  @media (max-width: 460px){   

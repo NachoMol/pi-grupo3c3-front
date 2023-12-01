@@ -10,8 +10,11 @@ import axios from 'axios';
 import Feature from './Feature';
 import { useContextGlobal } from '../context/Context';
 import ProductPolicies from './ProductPolicies';
+import { useMediaQuery } from '@mui/material';
+
 
 const theme = createTheme(); // Configura el tema de Material-UI
+
 
 const Detail = () => {
 
@@ -25,6 +28,7 @@ const Detail = () => {
 
 
   const [loading, setLoading] = useState(true);
+  const isSmallScreen = useMediaQuery('(max-width:517px)', { noSsr: true });
 
   const handleReservation = () => {
     if (!isLogged) {
@@ -78,40 +82,54 @@ const Detail = () => {
 
       <div className='detail-div'>
         <div>
-          <CarGallery productImages={car.images.map(image => image.url)} productId={params.id}/>
+          <CarGallery productImages={car.images.map(image => image.url)} productId={params.id} />
         </div>
+
         <div className='detail-information'>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="100%" disableGutters>
             <CssBaseline />
-            <Typography component="h1" variant="h5">
-              Car Details
-            </Typography>
 
-            {/* Detalles del coche */}
-            <Typography variant="subtitle1">
-              Price: {car.price}
-            </Typography>
-            <Typography variant="subtitle1">
-              Category: {car.category?.name}
-            </Typography>
-            <Typography variant="subtitle1">
-              City: {car.city?.city}
-            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+              <Typography component="h1" variant="h5" style={{ width: '100%' }}>
+                Car Details
+                <hr style={{ backgroundColor: 'rgba(55, 25, 87, 1', width: '100%', border: 'none', height: '1px' }} />
+              </Typography>
+            </div>
 
-            {/* Sección de detalles */}
-            <Typography variant="h6" style={{ marginTop: '20px' }}>
-              Specifications
-            </Typography>
-            <Typography variant="body1">
-              <Feature car={car} />
-            </Typography>
+            <div style={{
+              display: 'flex',
+              flexDirection: isSmallScreen ? 'column' : 'row',
+              justifyContent: 'center',
+              width: '100%',
+              alignItems: 'center',
+              backgroundColor: '#D9D9D9'
+            }}>
+              <div style={{ width: '50%' }}>
+                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
+                  Price: {car.price}
+                </Typography>
+                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                  Category: {car.category?.name}
+                </Typography>
+                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                  City: {car.city?.city}
+                </Typography>
+              </div>
+              <div style={{ width: '50%', textAlign:'left' }}>
+                <Typography variant="body1">
+                  <Feature car={car} />
+                </Typography>
+              </div>
+            </div>
+
+
 
             {/* Botón de reserva */}
-            <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
+            {/* <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
               <Button variant="contained" onClick={handleReservation} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
                 Make a Reservation
               </Button>
-            </Grid>
+            </Grid> */}
           </Container>
         </div>
       </div>
@@ -120,10 +138,10 @@ const Detail = () => {
         {/* Sección de políticas del producto */}
         {/* <Box component={Paper} elevation={3} p={3} mt={4} sx={{paddingBottom:'100px'}}> */}
         <Box component={Paper} elevation={3} p={3} mt={4} >
-            <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
-              Product Policies
-            </Typography>
-            <ProductPolicies />
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
+            Product Policies
+          </Typography>
+          <ProductPolicies />
         </Box>
       </div>
       {/* Modal para redirigir, si el usuario que reserva no esta logueado */}
