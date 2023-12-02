@@ -1,7 +1,10 @@
 .gallery {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 100%;
+  max-width: 600px; /* Ancho máximo del contenedor principal */
+  height: 400px; /* Altura fija del contenedor principal */
+  margin: auto; /* Centrar horizontalmente */
   align-items: center;
   justify-content: space-between;
   z-index: 20;
@@ -26,16 +29,24 @@
 }
 
 .photosContainer {
-  width: 40vw;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* grid-template-rows: repeat(2, 1fr); */
-  grid-gap: 40px; /* Espacio entre las imágenes */
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px; /* Espacio entre las imágenes */
   align-items: center;
   justify-items: center;
   padding: 0;
-  margin-top:20px;
+  margin-top: 20px;
   list-style-type: none;
+  height: 100%; /* Ajustar la altura al 100% del contenedor principal */
+}
+.photo {
+  border: 2px solid #898989;
+  max-width: 100%;
+  max-height: 100%; /* Agrega esta línea para establecer una altura máxima */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* .photos {
@@ -109,8 +120,16 @@
 }
 }
 
-@media (max-width: 660px){
-
+@media (max-width: 873px){
+  .mainPhotoContainer {
+    width: 80vw;
+  }
+  .mainPhoto {
+    width: 80vw;
+  }  
+  .photosContainer {
+    width: 80vw;
+  }
 }
 
  @media (max-width: 460px){   

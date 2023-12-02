@@ -27,29 +27,35 @@
   .back-logo{
     width: 40px;
     height: auto;
+    filter: invert(1);
   }
   
   .detail-div{
     display: flex;
     justify-content: space-around;
+    align-items: start;
     width: 100%;
+    padding: 10px;
   }
   
   .detail-information{
     font-family: Arial, sans-serif;
     font-size: 16px;
-    display: inline-grid;
-    width: 20vw;
-    background-color: rgba(255, 255, 255, 1);
-    margin-top: 35px;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    background-color:#D9D9D9;
+    margin-top: 15px;
     margin-bottom: 1em;
-    padding: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border: 2px solid rgba(55, 25, 87, 1);
+  
+     -webkit-border-radius: 20px;
+    -moz-border-radius: 20px; 
+     border-radius: 20px; 
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
-    -moz-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 11px 1px 43px 11px rgba(0,0,0,0.75); 
   }
   
   .detail-information h3 {
@@ -82,47 +88,7 @@
     background-color: rgb(78, 54, 120);
   }
   
-
-  @media (max-width: 1060px){
-    .detail-information{
-      width: 25vw;
-      padding:10px 15px;
-  }
-  }
-
-  @media (max-width: 990px){
-    .detail-information{
-      font-size: 14px;
-      width: 30vw;
-      padding: 0px 10px 10px 10px;
-      }
-      .detail-information h3 {
-        font-size: 18px;
-      }
-      }
-  
-   @media (max-width: 790px){
-    .detail-information{
-      display: block;
-    }
-    .detail-information h3 {
-      font-size: 16px;
-    }
-    }
-
-    @media (max-width: 604px){
-      .detail-information h3 {
-        font-size: 14px;
-      }
-      .detail-information h4 {
-        margin: 5px 0px;
-      }
-      .detail-information{
-        font-size: 12px;
-      }
-      
-    }
-   @media (max-width: 460px){
+   @media (max-width: 873px){
     .detail-div{
       display: flex;
       flex-direction: column;
@@ -131,12 +97,14 @@
       width: 100%;
     }
     .detail-information{
-      width: 60vw;
-      font-size: 14px;
+      width: 80vw;
   }
   .detail-information h3 {
     font-size: 16px;
   }
   } 
+ @media (max-width: 517px) {
+ 
+ } 
  
   
