@@ -6,6 +6,7 @@ import { useCarStates } from '../context/Context';
 import { useContextGlobal } from '../context/Context';
 import { Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const RenderCars = ({ car }) => {
     //  const [cars, setCars] = useState([]);
@@ -36,7 +37,7 @@ const RenderCars = ({ car }) => {
         }
         if (isFavorite) {
             dispatchFavorites({ type: 'REMOVE_FAVORITE', payload: car.id });
-            fetch(`http://localhost:8080/favorites/${userData.user.id}`)
+            fetch(`${URL}/favorites/${userData.user.id}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -46,7 +47,7 @@ const RenderCars = ({ car }) => {
                 .then(data => {
                     const favorite = data.find(fav => fav.product_id === car.id);
                     if (favorite) {
-                        fetch(`http://localhost:8080/favorites/delete/${favorite.id}`, {
+                        fetch(`${URL}/favorites/delete/${favorite.id}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ const RenderCars = ({ car }) => {
                 });
         } else {
             dispatchFavorites({ type: 'ADD_FAVORITE', payload: car });
-            fetch('http://localhost:8080/favorites/create', {
+            fetch(`${URL}/favorites/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

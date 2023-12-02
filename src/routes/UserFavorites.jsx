@@ -4,13 +4,14 @@ import RenderCars from '../components/RenderCars'; // Asegúrate de usar la ruta
 import { Box, Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { types } from '../types/types';
+import { URL } from '../config/config';
 
 const UserFavorites = () => {
     const { favorites, dispatchFavorites } = useCarStates();
     const { userData } = useContextGlobal();
 
     const fetchFavorites = () => {
-        return fetch(`http://localhost:8080/favorites/${userData.user.id}`, {
+        return fetch(`${URL}/favorites/${userData.user.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ const UserFavorites = () => {
     useEffect(() => {
         fetchFavorites().then(favorites => {
             const productPromises = favorites.map(favorite =>
-                fetch(`http://localhost:8080/products/${favorite.product_id}`)
+                fetch(`${URL}/products/${favorite.product_id}`)
                     .then(response => response.json())
             );
     

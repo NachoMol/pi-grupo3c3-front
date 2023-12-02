@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import { URL } from '../config/config'
 
 
 const ShowCars = () => {
@@ -7,7 +8,7 @@ const ShowCars = () => {
   const [car, setCar] = useState([])
 
   const fetchData = () => {
-    return axios.get("http://localhost:8080/products")
+    return axios.get(`${URL}/products`)
     .then((response) => setCar(response.data))
   }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styless/CategoryList.css';
+import {URL} from '../config/config';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -9,7 +10,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/categories');
+        const response = await axios.get(`${URL}/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories', error);

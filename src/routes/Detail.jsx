@@ -10,6 +10,7 @@ import axios from 'axios';
 import Feature from './Feature';
 import { useContextGlobal } from '../context/Context';
 import ProductPolicies from './ProductPolicies';
+import { URL } from '../config/config';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
@@ -46,7 +47,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/products/' + params.id);
+        const response = await axios.get(`${URL}/products/` + params.id);
         setCar(response.data);
         setLoading(false); // Indicar que los datos se cargaron
       } catch (error) {

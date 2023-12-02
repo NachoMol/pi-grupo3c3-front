@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useContextGlobal } from '../context/Context';
+import { URL } from '../config/config';
 
 const UpdateVehicle = () => {
 
@@ -16,7 +17,7 @@ const UpdateVehicle = () => {
     useEffect(() => {
         const fetchCar = async () => {
           try {
-            const response = await axios.get('http://localhost:8080/products/' + params.id);
+            const response = await axios.get(`${URL}/products/` + params.id);
             setCar(response.data);
             setLoading(false); // Indicar que los datos se cargaron
           } catch (error) {
@@ -32,7 +33,7 @@ const UpdateVehicle = () => {
       useEffect(() => {
         const fetchCategories = async () => {
           try {
-            const categoriesResponse = await axios.get('http://localhost:8080/categories');
+            const categoriesResponse = await axios.get(`${URL}/categories`);
             setCategories(categoriesResponse.data);
         } catch (error) {
             console.error('Error fetching categories', error);
@@ -94,7 +95,7 @@ const handleCategoryChange = (event) => {
       const selectedCategoryId = car.category.id;
   
       // Enviar la solicitud para crear el producto
-      const updateResponse = await axios.put('http://localhost:8080/products/update/' + car.id, {
+      const updateResponse = await axios.put(`${URL}/products/update/` + car.id, {
         name: car.name,
         price: car.price,
         category: { id: selectedCategoryId },

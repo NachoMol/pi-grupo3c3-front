@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { Grid, Typography } from '@mui/material'
 import axios from 'axios'
+import { URL } from '../config/config'
 
 const ProductPolicies = () => {
     const[policies, setPolicies] = useState([])
@@ -9,7 +10,7 @@ const ProductPolicies = () => {
     useEffect(() => {
         const fetchPolicies = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/policies')
+                const response = await axios.get(`${URL}/policies`)
                 setPolicies(response.data)
                 setLoading(false)
             }catch (error) {

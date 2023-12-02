@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FormControl, Button, Checkbox, FormLabel, FormGroup } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const UpdateDetails = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const UpdateDetails = () => {
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/details/${id}`);
+        const response = await axios.get(`${URL}/details/${id}`);
         const { name, img_url } = response.data;
         setDetail({ name, img_url });
       } catch (error) {
@@ -46,7 +47,7 @@ const UpdateDetails = () => {
         // }
 
     try {
-      await axios.put(`http://localhost:8080/details/update/${id}`, detail);
+      await axios.put(`${URL}/details/update/${id}`, detail);
 
       setSuccessMessage('Detail updated successfully');
       setError('');

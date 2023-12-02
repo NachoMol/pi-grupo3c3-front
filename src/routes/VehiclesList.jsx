@@ -3,6 +3,7 @@ import { Container, Typography, Box, Table, TableBody, TableCell, TableContainer
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const VehiclesList = () => {
   const [vehicles, setVehicles] = useState([]);
@@ -18,7 +19,7 @@ const VehiclesList = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/products/pagination?page=${page - 1}&size=${size}`);
+        const response = await axios.get(`${URL}/products/pagination?page=${page - 1}&size=${size}`);
         setVehicles(response.data.content);
         setHasNextPage(!response.data.last);
       } catch (error) {
@@ -60,7 +61,7 @@ const VehiclesList = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.put(`http://localhost:8080/products/delete/${id}`);
+          await axios.put(`${URL}/products/delete/${id}`);
           setVehicles(vehicles.filter(vehicle => vehicle.id !== id));
           Swal.fire(
             '¡Eliminado!',

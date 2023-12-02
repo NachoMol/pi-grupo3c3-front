@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { FormControl, Button, Checkbox, FormLabel, FormGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const AddDetails = () => {
     const [detail, setDetail] = useState({
@@ -34,7 +35,7 @@ const AddDetails = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:8080/details/create', detail);
+            const response = await axios.post(`${URL}/details/create`, detail);
 
             setDetail({
                 name: '',
