@@ -17,7 +17,6 @@ import 'react-calendar/dist/Calendar.css';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
-
 const Detail = () => {
 
   const [car, setCar] = useState([]);
@@ -96,73 +95,74 @@ const Detail = () => {
       </header>
 
       <div className='detail-div'>
-        <div className= 'ladoIzquiero' style= {{width:'40%'}}>
+        <div className='ladoIzquiero' style={{ width: '40%' }}>
           <CarGallery productImages={car.images.map(image => image.url)} productId={params.id} />
         </div>
 
 
-<div className='ladoDerecho' style={{display:'flex', flexDirection:'column', backgroundColor:'#ECECEC', padding:'15px', width: '50%', border: '2px solid #ECECEC', borderRadius: '5px'}}>
-        <div className='detail-information'>
-          <Container component="main" Width="100%" disableGutters>
-            <CssBaseline />
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-              <Typography component="h1" variant="h5" style={{ width: '100%' }}>
-                Car Details
-                <hr style={{ backgroundColor: 'rgba(55, 25, 87, 1', width: '100%', border: 'none', height: '1px' }} />
-              </Typography>
-            </div>
-            <div style={{
-              display: 'flex',
-              flexDirection: isSmallScreen ? 'column' : 'row',
-              justifyContent: 'center',
-              width: '100%',
-              alignItems: 'center',
-              backgroundColor: '#fff'
-            }}>
-              <div style={{display:'flex', justifyContent:'space-evenly'}}>
-              <div className='detailsLeft' style={{ float:'left', textAlign:'center', marginRight:'20px' }}>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
-                  Price: {car.price}
-                </Typography>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
-                  Category: {car.category?.name}
-                </Typography>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
-                  City: {car.city?.city}
+        <div className='ladoDerecho' style={{ display: 'flex', flexDirection: 'column', padding: '15px', width: '50%' }}>
+          <div className='detail-information'>
+            <Container component="main" Width="100%" disableGutters>
+              <CssBaseline />
+              <div style={{ display: 'flex', justifyContent: 'center', alignContent:'center', marginBottom: '20px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
+                  Car Details
+                  <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
                 </Typography>
               </div>
-              <div className='detailsRight' style={{ float:'left', textAlign:'center', marginLeft:'80px' }}>
-                {car.details.map((detail) => (
-                  <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor:'#FFF' }}>
-                    <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
-                    <Typography variant="body1">{detail.name}</Typography>
+              <div style={{
+                display: 'flex',
+                flexDirection: isSmallScreen ? 'column' : 'row',
+                justifyContent: 'center',
+                width: '100%',
+                alignItems: 'center',
+                backgroundColor: '#fff'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', marginRight: '100px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
+                      Price: {car.price}
+                    </Typography>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                      Category: {car.category?.name}
+                    </Typography>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                      City: {car.city?.city}
+                    </Typography>
                   </div>
-                ))}
+                  <div className='detailsRight' style={{ float: 'left', textAlign: 'center', marginLeft: '80px' }}>
+                    {car.details.map((detail) => (
+                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
+                        <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
+                        <Typography variant="body1">{detail.name}</Typography>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              </div>
-            </div>
-          </Container>
-        </div>
-        {/* Calendario */}
-        <div className="Calendario">
-          <DatePicker  
-            selected={startDate}
-            onChange={onChange}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            inline
-            monthsShown={2}
-            style={{width:'100%'}}
-          />
-        </div>
+            </Container>
+          </div>
+          {/* Calendario */}
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae'}}>
+            <DatePicker
+              selected={startDate}
+              onChange={onChange}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+              monthsShown={2}
+              style={{ width: '100%', backgroundColor: '#5e2b96' }}
+            />
 
- {/* Botón de reserva */}
-        <Grid container justifyContent="center" style={{ marginTop: '5px', width:'100%' }}>
-              <Button variant="contained" onClick={handleReservation} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+          </div>
+
+          {/* Botón de reserva */}
+          <Grid container justifyContent="center" style={{ width: '100%' }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
               Start Reservation
-              </Button>
-            </Grid>
+            </Button>
+          </Grid>
 
         </div>
 
