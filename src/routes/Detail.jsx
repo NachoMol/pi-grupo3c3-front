@@ -118,19 +118,19 @@ const Detail = () => {
                 alignItems: 'center',
                 backgroundColor: '#fff'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', marginRight: '100px' }}>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
+                <div style={{ display: 'flex', position:'relative', justifyContent: 'space-evenly' }}>
+                <div className='detailsLeft' style={{ float: 'left', marginRight: '100px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }} >
                       Price: {car.price}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
                       Category: {car.category?.name}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
                       City: {car.city?.city}
                     </Typography>
                   </div>
-                  <div className='detailsRight' style={{ float: 'left', textAlign: 'center', marginLeft: '80px' }}>
+                  <div className='detailsRight' style={{ float: 'left' }}>
                     {car.details.map((detail) => (
                       <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
@@ -143,7 +143,7 @@ const Detail = () => {
             </Container>
           </div>
           {/* Calendario */}
-          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae'}}>
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '100%'}}>
             <DatePicker
               selected={startDate}
               onChange={onChange}
@@ -151,7 +151,7 @@ const Detail = () => {
               endDate={endDate}
               selectsRange
               inline
-              monthsShown={2}
+              monthsShown={window.innerWidth > 1261 ? 2 : 2}
               style={{ width: '100%', backgroundColor: '#5e2b96' }}
             />
 
