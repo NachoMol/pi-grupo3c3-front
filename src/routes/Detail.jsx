@@ -13,6 +13,7 @@ import { useMediaQuery } from '@mui/material';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-calendar/dist/Calendar.css';
+import { URL } from '../config/config';
 
 
 const theme = createTheme(); // Configura el tema de Material-UI
