@@ -30,7 +30,7 @@ const ProductPolicies = () => {
     }
 
     return (
-        <Grid container spacing={2} style={{ paddingBottom: '20px' }}>
+        <Grid container spacing={13} style={{ paddingBottom: '20px' }}>
             {policies.map((policy, index) => (
                 <Grid item xs={12} sm={6} md={4} key={policy.id}>
                 <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}>
