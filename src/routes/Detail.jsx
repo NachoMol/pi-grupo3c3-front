@@ -104,7 +104,7 @@ const Detail = () => {
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
-              <div style={{ display: 'flex', justifyContent: 'center', alignContent:'center', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginBottom: '10px' }}>
                 <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
                   Car Details
                   <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
@@ -118,21 +118,21 @@ const Detail = () => {
                 alignItems: 'center',
                 backgroundColor: '#fff'
               }}>
-                <div style={{ display: 'flex', position:'relative', justifyContent: 'space-evenly' }}>
-                <div className='detailsLeft' style={{ float: 'left', marginRight: '100px' }}>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }} >
+                <div className='containerDetailsLeftAndRight' style={{ display: 'flex', position: 'relative', justifyContent: 'space-evenly', width: '100%', height: 'auto' }}>
+                  <div className='detailsLeft' style={{ float: 'left', width: '50%' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }} >
                       Price: {car.price}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }}>
                       Category: {car.category?.name}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }}>
                       City: {car.city?.city}
                     </Typography>
                   </div>
-                  <div className='detailsRight' style={{ float: 'left' }}>
+                  <div className='detailsRight' style={{ float: 'left', width: '50%' }}>
                     {car.details.map((detail) => (
-                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
+                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center',justifyContent: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
                         <Typography variant="body1">{detail.name}</Typography>
                       </div>
@@ -143,7 +143,7 @@ const Detail = () => {
             </Container>
           </div>
           {/* Calendario */}
-          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '100%'}}>
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
             <DatePicker
               selected={startDate}
               onChange={onChange}
@@ -154,7 +154,6 @@ const Detail = () => {
               monthsShown={window.innerWidth > 1261 ? 2 : 2}
               style={{ width: '100%', backgroundColor: '#5e2b96' }}
             />
-
           </div>
 
           {/* Botón de reserva */}

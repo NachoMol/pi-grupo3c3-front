@@ -114,32 +114,26 @@
   padding: 10px;
 }
 
-@media (max-width: 920px){   
+/* @media (max-width: 920px){   
 .photosContainer{
   grid-gap: 20px;
 }
-}
+} */
 
-@media (max-width: 873px){
+@media (max-width: 1107px){
   .mainPhotoContainer {
     width: 80vw;
+    
   }
   .mainPhoto {
     width: 80vw;
+   
   }  
   .photosContainer {
     width: 80vw;
+    
+  }
+  .gallery {
+    height: auto;
   }
 }
-
- @media (max-width: 460px){   
-  .mainPhotoContainer {
-    width: 80vw;
-  }  
-  .mainPhoto {
-    width: 80vw;
-  }  
-  .photosContainer {
-    width: 80vw;
-  }
-  } 
