@@ -9,9 +9,12 @@ import '../styless/Detail.css';
 import axios from 'axios';
 import { useContextGlobal } from '../context/Context';
 import ProductPolicies from './ProductPolicies';
+import { useMediaQuery } from '@mui/material';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-calendar/dist/Calendar.css';
 
 const theme = createTheme(); // Configura el tema de Material-UI
-
 
 const Detail = () => {
 
@@ -26,6 +29,19 @@ const Detail = () => {
 
   const [loading, setLoading] = useState(true);
   const isSmallScreen = useMediaQuery('(max-width:517px)', { noSsr: true });
+
+  // Calendario
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
+
+  const onChange = dates => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+
 
   const handleReservation = () => {
     if (!isLogged) {
@@ -78,60 +94,84 @@ const Detail = () => {
       </header>
 
       <div className='detail-div'>
-        <div>
+        <div className='ladoIzquiero' style={{ width: '40%' }}>
           <CarGallery productImages={car.images.map(image => image.url)} productId={params.id} />
         </div>
 
-        <div className='detail-information'>
-          <Container component="main" maxWidth="100%" disableGutters>
-            <CssBaseline />
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-              <Typography component="h1" variant="h5" style={{ width: '100%' }}>
-                Car Details
-                <hr style={{ backgroundColor: 'rgba(55, 25, 87, 1', width: '100%', border: 'none', height: '1px' }} />
-              </Typography>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              flexDirection: isSmallScreen ? 'column' : 'row',
-              justifyContent: 'center',
-              width: '100%',
-              alignItems: 'center',
-              backgroundColor: '#D9D9D9'
-            }}>
-              <div style={{ width: '50%' }}>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
-                  Price: {car.price}
-                </Typography>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
-                  Category: {car.category?.name}
-                </Typography>
-                <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
-                  City: {car.city?.city}
+        <div className='ladoDerecho' style={{ display: 'flex', flexDirection: 'column', padding: '15px', width: '50%' }}>
+          <div className='detail-information'>
+            <Container component="main" Width="100%" disableGutters>
+              <CssBaseline />
+              <div style={{ display: 'flex', justifyContent: 'center', alignContent:'center', marginBottom: '20px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
+                  Car Details
+                  <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
                 </Typography>
               </div>
-              <div style={{ width: '50%', textAlign:'left' }}>
-                {car.details.map((detail) => (
-      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-        <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
-        <Typography variant="body1">{detail.name}</Typography>
-      </div>
-    ))}
+              <div style={{
+                display: 'flex',
+                flexDirection: isSmallScreen ? 'column' : 'row',
+                justifyContent: 'center',
+                width: '100%',
+                alignItems: 'center',
+                backgroundColor: '#fff'
+              }}>
+                <div style={{ display: 'flex', position:'relative', justifyContent: 'space-evenly' }}>
+                <div className='detailsLeft' style={{ float: 'left', marginRight: '100px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }} >
+                      Price: {car.price}
+                    </Typography>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
+                      Category: {car.category?.name}
+                    </Typography>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontSize: '16px' }}>
+                      City: {car.city?.city}
+                    </Typography>
+                  </div>
+                  <div className='detailsRight' style={{ float: 'left' }}>
+                    {car.details.map((detail) => (
+                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
+                        <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
+                        <Typography variant="body1">{detail.name}</Typography>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            </Container>
+          </div>
+          {/* Calendario */}
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '100%'}}>
+            <DatePicker
+              selected={startDate}
+              onChange={onChange}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+              monthsShown={window.innerWidth > 1261 ? 2 : 2}
+              style={{ width: '100%', backgroundColor: '#5e2b96' }}
+            />
 
+          </div>
 
+          {/* Botón de reserva */}
+          <Grid container justifyContent="center" style={{ width: '100%' }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+              Start Reservation
+            </Button>
+          </Grid>
 
-            {/* Botón de reserva */}
-            {/* <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
+        </div>
+
+        {/* Botón de reserva */}
+        {/* <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
               <Button variant="contained" onClick={handleReservation} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
                 Make a Reservation
               </Button>
             </Grid> */}
-          </Container>
-        </div>
+
       </div>
 
       <div>
