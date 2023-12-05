@@ -38,7 +38,6 @@ function App() {
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
         <Route path="/login" element={<Login />} />
-
         <Route path='/admin/vehicles' element={<VehiclesList />} />
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />
