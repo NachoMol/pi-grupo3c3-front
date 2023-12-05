@@ -1,5 +1,5 @@
 import { Box, Container, CssBaseline, Typography, Grid, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Admin = () => {
@@ -81,6 +81,13 @@ const Admin = () => {
                   <Link to={'/admin/insert-category'}>
                     <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96', }, }}>
                       Add Category
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Link to={'/admin/category-list'}>
+                    <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96', }, }}>
+                      Category List
                     </Button>
                   </Link>
                 </Grid>

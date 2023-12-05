@@ -20,6 +20,7 @@ const UpdatePolicies = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [policyTitles, setPolicyTitles] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null);
 
   useEffect(() => {
     const fetchPolicyTitles = async () => {
@@ -52,6 +53,7 @@ const UpdatePolicies = () => {
         // Actualiza los estados con los detalles del policy
         setTitle(policyDetails.title);
         setDescription(policyDetails.description);
+        setUpdateStatus(null);
       } catch (error) {
         console.error('Error fetching policy details', error);
       }
@@ -76,9 +78,28 @@ const UpdatePolicies = () => {
   }, []);
 
   const handleUpdate = async () => {
-    // ... Código de actualización
-  };
+    const authData = JSON.parse(localStorage.getItem('auth'));
+    const isAdmin = authData.isAdmin === true;
+    if (!isAdmin) {
+      // Si el usuario no es un administrador, mostrar un mensaje o realizar alguna acción
+      console.log('Permission denied. Only admins can add details.');
+      return;
+    }
+    try {
+      // Realizar la solicitud de actualización al backend
+      await axios.put(`http://localhost:8080/policies/update/${selectedPolicyId}`, {
+        title,
+        description,
+      });
 
+      // Actualizar el estado para mostrar un mensaje de éxito
+      setUpdateStatus('Updated successfully');
+    } catch (error) {
+      // Actualizar el estado para mostrar un mensaje de error
+      setUpdateStatus('There was a problem, try again later');
+      console.error('Error updating policy', error);
+    }
+  };
   const handleCloseMenu = () => {
     setMenuOpen(false);
   };
@@ -95,7 +116,7 @@ const UpdatePolicies = () => {
             Update Policy
           </Typography>
           <FormControl fullWidth style={{ marginTop: '10px' }}>
-            <InputLabel style={{marginTop: '8px' }}>Select Policy Title</InputLabel>
+            <InputLabel style={{ marginTop: '8px' }}>Select Policy Title</InputLabel>
             <Select
               label="Select Policy Title"
               value={selectedPolicyId}
@@ -138,6 +159,11 @@ const UpdatePolicies = () => {
           >
             Update Policy
           </Button>
+          {updateStatus && (
+            <Typography variant="body2" style={{ color: updateStatus.includes('successfully') ? 'green' : 'red', marginTop: '15px', fontSize: '16px' }}>
+              {updateStatus}
+            </Typography>
+          )}
         </>
       )}
     </Container>

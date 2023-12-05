@@ -234,7 +234,7 @@ const Register = () => {
                   </Typography>
                 )}
               </Grid>
-              <DefaultButton name="Sign Up" />
+              <DefaultButton name="Sign Up" type={"submit"} />
               <Grid container justifyContent="center">
                 <Grid item>
                 <Link to={'/login/'} style={{cursor: 'pointer'}}>{`Already have an account? Sign in`}</Link>

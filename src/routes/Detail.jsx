@@ -49,7 +49,7 @@ const Detail = () => {
     if (!isLogged) {
       setOpen(true);
     } else {
-      alert('Make a Reservation')
+      navigate(`/reservation/product/${car.id}`);
       console.log('Listo para reservar!');
     }
   };
@@ -159,7 +159,7 @@ const Detail = () => {
 
           {/* Botón de reserva */}
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'25px' }}>
               Start Reservation
             </Button>
           </Grid>
@@ -179,7 +179,7 @@ const Detail = () => {
         {/* Sección de políticas del producto */}
         {/* <Box component={Paper} elevation={3} p={3} mt={4} sx={{paddingBottom:'100px'}}> */}
         <Box component={Paper} elevation={3} p={3} mt={4} >
-          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '30px' }}>
             Product Policies
           </Typography>
           <ProductPolicies />
