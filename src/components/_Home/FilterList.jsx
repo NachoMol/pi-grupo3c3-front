@@ -122,7 +122,7 @@ const FilterList = () => {
 
   useEffect(() => {
     setAvailableCars({
-      checkin: checkOutDate ? format(checkInDate, 'yyyy-MM-dd') : '',
+      checkin: checkInDate ? format(checkInDate, 'yyyy-MM-dd') : '',
       checkout: checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : '',
       productName: searchText,
       categoryIds: categoryList.join(','),
@@ -310,6 +310,7 @@ const FilterList = () => {
             format='dd/MM/yyyy'
             onChange={handleCheckInDateChange}
             onBlur={handleFilter}
+            minDate={new Date()}
             sx={{ mt: '1rem' }}
             disablePast={true}
           />
