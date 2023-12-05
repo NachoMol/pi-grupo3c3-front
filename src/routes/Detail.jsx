@@ -174,7 +174,7 @@ const Detail = () => {
               </div>
             </Container>
           </div>
-          
+
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
 
