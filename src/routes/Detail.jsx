@@ -158,7 +158,7 @@ const Detail = () => {
 
           {/* Botón de reserva */}
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'25px' }}>
               Start Reservation
             </Button>
           </Grid>

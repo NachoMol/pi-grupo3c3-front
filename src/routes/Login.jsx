@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import { Alert, Avatar, TextField, Paper, Box, Grid, Typography } from '@mui/material';
+import { Alert, Avatar, TextField, Paper, Box, Grid, Typography, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { urlBackground, urlLogin } from '../config/config';
@@ -15,11 +15,12 @@ import { useContextGlobal } from '../context/Context';
 import { types } from '../types/types';
 import { dispacthAction } from '../helpers/dispatchAction';
 import { toastMessage } from '../helpers/toastMessage';
+import { useState } from 'react';
 
 
 const Login = () => {
     const { control, handleSubmit, formState: { errors } } = useForm();
-    // const [loading, setLoading] = useState(false); // Para un ajuste futuro el loading, no borrar.
+    const [loading, setLoading] = useState(false);
 
     const { authUser, dispatchAuthUser } = useContextGlobal();
     const { isLogged } = authUser.auth;
@@ -48,27 +49,23 @@ const Login = () => {
     const loginRequest = async (url, postData) => {
         // debugger;
         try {
-            // setLoading(true);
-            // toastMessage('success', 'Welcome!!', 'sdsadsadsakdsdj')
+            setLoading(true);
             const response = await axios.post(url, postData);
             const htppCode = response.status !== 200;
-
             if (!htppCode) {
-                dispacthAction(dispatchAuthUser, types.GET_AUTHENTICATE_USER, response.data)     
-            } 
+                dispacthAction(dispatchAuthUser, types.GET_AUTHENTICATE_USER, response.data)
+            }
         } catch (err) {
             console.error(err)
-            toastMessage('error', `Can't sign in!!`, 'Check your email and your password.')
+            toastMessage('error', `Can't sign in!!`, `Check your email and your password. ${err}.`);
         } finally {
-            // setLoading(false);
+            setLoading(false);
         }
     };
-
 
     useEffect(() => {
         if (isLogged) setTimeout(() => { navigate('/') }, 2500);
     }, [isLogged, navigate])
-
 
     return (
         <Grid container component="main" sx={{ height: '87vh', overflow: 'hidden' }}>
@@ -180,7 +177,10 @@ const Login = () => {
                                 </div>
                             )}
                         />
-                        <DefaultButton name="Sign In" />
+                        {
+                            loading ? <CircularProgress sx={{ color: '#5C4D6B', mt: '2rem' }} />
+                                : <DefaultButton name="Sign In" type={"submit"} />
+                        }
                     </Box>
                     <Grid container display='flex' justifyContent="center">
                         <Grid item>

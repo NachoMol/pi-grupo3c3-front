@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Button } from "@mui/material"
 
-const DefaultButton = ({name}) => {
+const DefaultButton = ({name, type, callback}) => {
     return (
         <Button
-            type="submit"
+            type={type}
             fullWidth
             variant="contained"
             sx={{
@@ -12,6 +12,7 @@ const DefaultButton = ({name}) => {
                     bgcolor: '#5e2b96',
                 },
             }}
+            onClick={type !== 'submit' ? callback : null}
         >
             {name}
         </Button>

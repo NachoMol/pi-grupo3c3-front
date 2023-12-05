@@ -1,19 +1,23 @@
 import Swal from "sweetalert2";
 
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'center-end',
-    iconColor: 'white',
-    customClass: {
-        popup: 'colored-toast',
-        container: 'custom-toast-container',
-    },
-    showConfirmButton: false,
-    timer: 1500,
-    timerProgressBar: true,
-})
 
-export const toastMessage = (type, titleInfo, msg) => {
+
+export const toastMessage = (type, titleInfo, msg, direction = 'center-end') => {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: direction,
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+            container: 'custom-toast-container',
+        },
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+    })
+
+    
     switch (type) {
         case 'success': {
             Toast.fire({
