@@ -32,29 +32,28 @@ const Detail = () => {
   const isSmallScreen = useMediaQuery('(max-width:517px)', { noSsr: true });
 
   // Calendario
-
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
 
   // Primero, defino un nuevo estado para los rangos de fechas reservadas
-  const [reservedDateRanges, setReservedDateRanges] = useState([]);
+  const [reservedDates, setReservedDates] = useState([]);
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  }
-
-
-  const onChange = dates => {
-    const [start, end] = dates;
-    setStartDate(formatDate(start));
-    setEndDate(formatDate(end));
+  const onChange = date => {
+    if (!isDateDisabled(date)) {
+      if (!startDate || (startDate && endDate)) {
+        setStartDate(date);
+        setEndDate(null);
+      } else {
+        setEndDate(date);
+      }
+    }
   };
 
-  // const onChange = dates => {
-  //   const [start, end] = dates;
-  //   setStartDate(start);
-  //   setEndDate(end);
-  // };
+  const isDateDisabled = date => {
+    return reservedDates.some(disabledDate =>
+      date.getTime() === disabledDate.getTime()
+    );
+  };
 
 
 
@@ -62,7 +61,7 @@ const Detail = () => {
     if (!isLogged) {
       setOpen(true);
     } else {
-      navigate(`/reservation/product/${car.id}`);
+      alert('Make a Reservation')
       console.log('Listo para reservar!');
     }
   };
@@ -94,12 +93,17 @@ const Detail = () => {
     const fetchReservedDates = async () => {
       try {
         const response = await axios.get('http://localhost:8080/reservations/current/' + params.id);
-        const dateRanges = response.data.map(reservation => ({
-          start: new Date(reservation.checkin),
-          end: new Date(reservation.checkout)
-        }));
-        console.log(dateRanges); // Imprime los rangos de fechas para verificar que se están procesando correctamente
-        setReservedDateRanges(dateRanges);
+        const dates = response.data.flatMap(reservation => {
+          const start = new Date(reservation.checkin);
+          const end = new Date(reservation.checkout);
+          const dateList = [];
+          for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+            dateList.push(new Date(dt));
+          }
+          return dateList;
+        });
+        console.log(dates); // Imprime las fechas para verificar que se están procesando correctamente
+        setReservedDates(dates);
       } catch (error) {
         console.error("Error fetching reserved dates", error);
       }
@@ -136,7 +140,7 @@ const Detail = () => {
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
-              <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginBottom: '20px' }}>
                 <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
                   Car Details
                   <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
@@ -150,21 +154,21 @@ const Detail = () => {
                 alignItems: 'center',
                 backgroundColor: '#fff'
               }}>
-                <div className='containerDetailsLeftAndRight' style={{ display: 'flex', position: 'relative', justifyContent: 'space-evenly', width: '100%', height: 'auto' }}>
-                  <div className='detailsLeft' style={{ float: 'left', width: '50%' }}>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }} >
+                <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', marginRight: '100px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
                       Price: {car.price}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
                       Category: {car.category?.name}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'center', width: '100%', fontSize: '16px' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
                       City: {car.city?.city}
                     </Typography>
                   </div>
-                  <div className='detailsRight' style={{ float: 'left', width: '50%' }}>
+                  <div className='detailsRight' style={{ float: 'left', textAlign: 'center', marginLeft: '80px' }}>
                     {car.details.map((detail) => (
-                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center',justifyContent: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
+                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
                         <Typography variant="body1">{detail.name}</Typography>
                       </div>
@@ -174,28 +178,24 @@ const Detail = () => {
               </div>
             </Container>
           </div>
-
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
-
-           {/* Se usa la función isDisabled para deshabilitar los rangos de fechas reservadas en el DatePicker */}            
-           <DatePicker
+            <DatePicker
               selected={startDate}
               onChange={onChange}
               startDate={startDate}
               endDate={endDate}
               selectsRange
               inline
-              monthsShown={window.innerWidth > 1261 ? 2 : 2}
-              style={{ width: '100%', backgroundColor: '#5e2b96' }}
-              isDisabled={date => reservedDateRanges.some(({ start, end }) => start.getTime() <= date.getTime() && date.getTime() <= end.getTime())}
-              minDate={new Date()} // Deshabilita las fechas anteriores a la fecha actual
+              monthsShown={2}
+              highlightDates={reservedDates.map(date => ({ "react-datepicker__day--highlighted": [date] }))}
             />
+
           </div>
 
           {/* Botón de reserva */}
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'25px' }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
               Start Reservation
             </Button>
           </Grid>
@@ -215,7 +215,7 @@ const Detail = () => {
         {/* Sección de políticas del producto */}
         {/* <Box component={Paper} elevation={3} p={3} mt={4} sx={{paddingBottom:'100px'}}> */}
         <Box component={Paper} elevation={3} p={3} mt={4} >
-          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '30px' }}>
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
             Product Policies
           </Typography>
           <ProductPolicies />
