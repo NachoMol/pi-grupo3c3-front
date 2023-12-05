@@ -21,6 +21,7 @@ import UpdatePolicies from './routes/UpdatePolicies'
 import AddDetails from './routes/AddDetails'
 import UpdateDetails from './routes/UpdateDetails'
 import CategoryList from './routes/CategoryList'
+import ReservationPage from './routes/ReservationPage'
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
         <Route path="/login" element={<Login />} />
-
+        <Route path="/reservation/product/:id" element={<ReservationPage />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />
