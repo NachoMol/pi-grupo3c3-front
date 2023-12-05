@@ -130,6 +130,12 @@
   -moz-box-shadow: 11px 1px 43px 11px rgba(0, 0, 0, 0.75);
 }
 
+/* Cambiar el fondo a los dias deshabilitados! */
+
+.react-datepicker__day--disabled {
+  background-color: grey !important;
+}
+
 @media (max-width: 1107px) {
   .detail-div {
     display: flex;
