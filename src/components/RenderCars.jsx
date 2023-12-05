@@ -16,6 +16,7 @@ const RenderCars = ({ car }) => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
+    
 
     useEffect(() => {
         setIsFavorite(favorites.fav.some(favCar => favCar.id === car.id));
@@ -97,20 +98,25 @@ const RenderCars = ({ car }) => {
              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         />
         <div>
-            <Card key={car.id} sx={{ maxWidth: 350, background: 'transparent', minWidth: 349, position: 'relative' }}>
+            <Card key={car.id} sx={{ width: 500, background: 'transparent', position: 'relative', '@media (max-width: 600px)': {width: '350px'} }}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
-                        height="149"
+                        height="250"
+                        sx={{
+                            '@media (max-width: 600px)': {
+                              height: '175px',
+                            },
+                          }}
                         image={car.images && car.images.length > 0 ? car.images[0].url : 'default_image_url'}
-                        alt={`image ${car.name}`}
+                        alt={`image ${car.name}`}   
                     />
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '20px', fontWeight: '800' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '22px', fontWeight: '800', margin:'5px' }}>
                         {car.name}
                     </Typography>
                     <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="body2" color="text.secondary">
-                            {car.price}
+                        <Typography variant="body2" color="text.secondary" sx={{fontSize:'16px', fontWeight:'600'}}>
+                            ${car.price}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -119,11 +125,11 @@ const RenderCars = ({ car }) => {
 
                 <CardActions sx={{ justifyContent: 'center' }}>
                     {isFavorite ? (
-                        <IconButton onClick={handleFavoriteClick} sx={{ position: 'absolute', top: 0, right: 0, color: 'red' }}>
+                        <IconButton onClick={handleFavoriteClick} sx={{ position: 'absolute', top: 0, right: 0, color: 'red',}} >
                             ❤️
                         </IconButton>
                     ) : (
-                        <IconButton onClick={handleFavoriteClick} sx={{ position: 'absolute', top: 0, right: 0, color: 'grey' }}>
+                        <IconButton onClick={handleFavoriteClick} sx={{ position: 'absolute', top: 0, right: 0, color: 'grey', }}>
                             🤍
                         </IconButton>
                     )}
@@ -135,15 +141,12 @@ const RenderCars = ({ car }) => {
                         <Button
                             size="small"
                             sx={{
-                                width: 124,
-                                height: 33,
-                                background: '#000',
-                                color: '#FFF',
-                                '&:hover': {
-                                    background: '#898989'
-                                }
+                                width: 150,
+                                height: 42,
+                                color: 'white',
+                                bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' },
                             }}>
-                            Cars Details
+                            Car Details
                         </Button>
                     </Link>
                 </CardActions>
