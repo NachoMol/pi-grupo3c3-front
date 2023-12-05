@@ -36,11 +36,25 @@ const Detail = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
 
+  // Primero, defino un nuevo estado para los rangos de fechas reservadas
+  const [reservedDateRanges, setReservedDateRanges] = useState([]);
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  }
+
+
   const onChange = dates => {
     const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+    setStartDate(formatDate(start));
+    setEndDate(formatDate(end));
   };
+
+  // const onChange = dates => {
+  //   const [start, end] = dates;
+  //   setStartDate(start);
+  //   setEndDate(end);
+  // };
 
 
 
@@ -73,6 +87,24 @@ const Detail = () => {
       }
     }
     fetchCar();
+  }, [params.id]);
+
+  // Solicitud al endpoint para obtener las fechas reservadas
+  useEffect(() => {
+    const fetchReservedDates = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/reservations/current/' + params.id);
+        const dateRanges = response.data.map(reservation => ({
+          start: new Date(reservation.checkin),
+          end: new Date(reservation.checkout)
+        }));
+        console.log(dateRanges); // Imprime los rangos de fechas para verificar que se están procesando correctamente
+        setReservedDateRanges(dateRanges);
+      } catch (error) {
+        console.error("Error fetching reserved dates", error);
+      }
+    }
+    fetchReservedDates();
   }, [params.id]);
 
   console.log('initialArray', car);
@@ -142,9 +174,12 @@ const Detail = () => {
               </div>
             </Container>
           </div>
+          
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
-            <DatePicker
+
+           {/* Se usa la función isDisabled para deshabilitar los rangos de fechas reservadas en el DatePicker */}            
+           <DatePicker
               selected={startDate}
               onChange={onChange}
               startDate={startDate}
@@ -153,6 +188,8 @@ const Detail = () => {
               inline
               monthsShown={window.innerWidth > 1261 ? 2 : 2}
               style={{ width: '100%', backgroundColor: '#5e2b96' }}
+              isDisabled={date => reservedDateRanges.some(({ start, end }) => start.getTime() <= date.getTime() && date.getTime() <= end.getTime())}
+              minDate={new Date()} // Deshabilita las fechas anteriores a la fecha actual
             />
           </div>
 
