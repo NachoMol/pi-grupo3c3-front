@@ -215,6 +215,7 @@ const Detail = () => {
               selectsRange
               inline
               monthsShown={2}
+              minDate={new Date()} // Deshabilita las fechas anteriores al día actual
               highlightDates={reservedDates.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
