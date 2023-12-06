@@ -1,4 +1,5 @@
 import './styless/App.css'
+import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Detail from "./routes/Detail"
 import Admin from "./routes/Admin"
@@ -25,6 +26,8 @@ import ReservationPage from './routes/ReservationPage'
 
 function App() {
 
+  const [selectedDates, setSelectedDates] = useState({ startDate: null, endDate: null });
+
   
   return (
     <>
@@ -32,14 +35,14 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail setSelectedDates={setSelectedDates}/>} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/products" element={<ShowCars />} />
         <Route path='/register' element={<Register />} />
         <Route path='/admin/users' element={<UsersList />} />
         <Route path='/admin/insert-vehicle' element={<InsertVehicle />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/reservation/product/:id" element={<ReservationPage />} />
+        <Route path="/reservation/product/:id" element={<ReservationPage selectedDates={selectedDates} />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
         <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />

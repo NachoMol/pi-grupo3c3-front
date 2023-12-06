@@ -11,7 +11,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import '../styless/ReservationPage.css';
 
-const ReservationPage = () => {
+const ReservationPage = ({ selectedDates }) => {
     const params = useParams();
     const { id } = params;
 
@@ -22,6 +22,11 @@ const ReservationPage = () => {
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    /*const highlightDates = [
+        { "react-datepicker__day--highlighted-checkin": selectedDates.startDate },
+        { "react-datepicker__day--highlighted-checkout": selectedDates.endDate },
+      ];*/
 
     const fetchProduct = async () => {
         const response = await axios.get('http://localhost:8080/products/' + params.id);
@@ -45,11 +50,11 @@ const ReservationPage = () => {
 
     const confirmReservation = async () => {
         const reservationDTO = {
-          product_id: product.id, 
+          product_id: product.id,
           user_id: userData.user.id,
           city_id: product.city.id,
-          checkin: startDate, //
-          checkout: endDate, //
+          checkin: selectedDates.startDate, // Use the selected start date
+          checkout: selectedDates.endDate, // Use the selected end date
         };
       
         try {
@@ -76,13 +81,10 @@ const ReservationPage = () => {
                 <div className="Calendario" style={{ padding: '0px 10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '45%'}}>
                         <h3 style={{ backgroundColor: 'rgb(156,128,189)', padding: '10px', borderRadius: '5px' }}>Checkin/Checkout</h3>
                     <DatePicker
-                        /*selected={startDate}
-                        onChange={onChange}
-                        startDate={startDate}
-                        endDate={endDate}*/
                         selectsRange
                         inline
                         monthsShown={window.innerWidth > 1261 ? 2 : 2}
+                        //highlightDates={highlightDates}
                         style={{ width: '50%', backgroundColor: 'transparent' }}
                     />
                     <Grid container justifyContent="center" style={{ width: '100%' }}>
@@ -120,6 +122,22 @@ const ReservationPage = () => {
                             </Grid>
                             <Grid item xs={12} sm={6} md={3}>
                                 <TextField label="Location" value={product.city.city} InputProps={{ readOnly: true }} fullWidth />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <TextField
+                                    label="Check-in"
+                                    value={selectedDates.startDate ? selectedDates.startDate.toDateString() : ''}
+                                    InputProps={{ readOnly: true }}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <TextField
+                                    label="Check-out"
+                                    value={selectedDates.endDate ? selectedDates.endDate.toDateString() : ''}
+                                    InputProps={{ readOnly: true }}
+                                    fullWidth
+                                />
                             </Grid>
                         </Grid>
                     </form>

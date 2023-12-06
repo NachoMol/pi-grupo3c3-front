@@ -1,0 +1,12 @@
+/* Agrega estilos para las fechas de check-in */
+.react-datepicker__day--highlighted-checkin {
+    background-color: #66bb6a; /* Color de fondo para check-in */
+    color: #fff; /* Color de texto para check-in */
+  }
+  
+  /* Agrega estilos para las fechas de check-out */
+  .react-datepicker__day--highlighted-checkout {
+    background-color: #ef5350; /* Color de fondo para check-out */
+    color: #fff; /* Color de texto para check-out */
+  }
+  
