@@ -16,9 +16,8 @@ import '../styless/CarGallery.css';
 const ReservationPage = ({ selectedDates }) => {
     const params = useParams();
     const { id } = params;
-
     const { userData } = useContextGlobal();
-    const { dispatchCars } = useCarStates();
+    const { cars, dispatchCars } = useCarStates();
 
     const [product, setProduct] = useState(null);
 
@@ -49,6 +48,7 @@ const ReservationPage = ({ selectedDates }) => {
     if (!userData.user || !userData.user.email || !product) {
         return <div>Loading...</div>;
     }
+    const firstProductImages = product.images || [];
 
     const confirmReservation = async () => {
         const reservationDTO = {
@@ -76,7 +76,13 @@ const ReservationPage = ({ selectedDates }) => {
                 <Grid container spacing={2} sx={{ display: 'flex', justifyContent: "space-between", alignItems: 'start', margin: '0px', width: '100%' }}>
                     {/* Imagenes */}
                     <Grid item xs={12} sm={6} sx={{ paddingTop: '0px !important', paddingRight: '60px' }}>
-                        <CarGallery productImages={product.images} productId={product.id} />
+                        {/* Aquí incluyes la galería de imágenes */}
+                        <img
+                            className="mainProductImage"
+                            src={firstProductImages.length > 0 ? firstProductImages[0].url : ''}
+                            alt="Product"
+                            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+                        />
                     </Grid>
                     {/* Calendario */}
 
