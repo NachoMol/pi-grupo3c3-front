@@ -169,10 +169,9 @@ const Detail = ({setSelectedDates}) => {
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
-              <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginBottom: '20px' }}>
-                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius:'5px', padding:'10px' }}>
                   Car Details
-                  <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
                 </Typography>
               </div>
               <div style={{
