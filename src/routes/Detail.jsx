@@ -61,7 +61,7 @@ const Detail = () => {
     if (!isLogged) {
       setOpen(true);
     } else {
-      alert('Make a Reservation')
+      navigate(`/reservation/product/${car.id}`);
       console.log('Listo para reservar!');
     }
   };
