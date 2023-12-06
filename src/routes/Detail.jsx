@@ -13,6 +13,7 @@ import { useMediaQuery } from '@mui/material';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-calendar/dist/Calendar.css';
+import {URL} from '../config/config';
 
 
 const theme = createTheme(); // Configura el tema de Material-UI
@@ -77,7 +78,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/products/' + params.id);
+        const response = await axios.get(`${URL}/products/` + params.id);
         setCar(response.data);
         setLoading(false); // Indicar que los datos se cargaron
       } catch (error) {
@@ -92,7 +93,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchReservedDates = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/reservations/current/' + params.id);
+        const response = await axios.get(`${URL}/reservations/current/` + params.id);
         const dates = response.data.flatMap(reservation => {
           const start = new Date(reservation.checkin + 'T00:00');
           const end = new Date(reservation.checkout + 'T00:00');
