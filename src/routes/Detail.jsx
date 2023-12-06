@@ -18,7 +18,7 @@ import { is } from 'date-fns/locale';
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
-const Detail = () => {
+const Detail = ({setSelectedDates}) => {
 
   const [car, setCar] = useState([]);
   const [open, setOpen] = useState(false);
@@ -62,6 +62,8 @@ const Detail = () => {
       setStartDate(start);
       setEndDate(end);
       setError(null);
+      // Update the selected dates in the parent component (App.js)
+      setSelectedDates({ startDate: start, endDate: end });
     }
     console.log('Rango de fechas seleccionadas',dates)
   };
