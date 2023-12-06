@@ -68,22 +68,24 @@ const ReservationPage = ({ selectedDates }) => {
     };
 
     return (
-        <Container maxWidth="lg">
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <h2 style={{ textAlign: 'center', paddingBottom: '10px' }}>Reservation Details</h2>
+        <Container maxWidth={false} sx={{ width: '100%', paddingRight: '0px', paddingLeft: '0px' }}>
+            <Grid container spacing={2}  >
+                <Grid item xs={12} sx={{ width: '100%', paddingLeft: '0px !important', paddingRight: '0px !important' }}>
+                    <h2 style={{ textAlign: 'center', width: '100%', padding: '10px', backgroundColor: 'rgb(176,148,209)', paddingRight: '0px', paddingLeft: '0px' }}>Reservation Details</h2>
                 </Grid>
-                <Grid container spacing={2} sx={{ display: 'flex', justifyContent: "space-between", alignItems: 'start', margin: '0px', width: '100%' }}>
+                <Grid container spacing={2} sx={{ display: 'flex', justifyContent: "space-evenly", paddingRight: '0px', paddingLeft: '0px', margin: '0px', width: '100%' }}>
                     {/* Imagenes */}
-                    <Grid item xs={12} sm={6} sx={{ paddingTop: '0px !important', paddingRight: '60px' }}>
-                        {/* Aquí incluyes la galería de imágenes */}
-                        <img
-                            className="mainProductImage"
-                            src={firstProductImages.length > 0 ? firstProductImages[0].url : ''}
-                            alt="Product"
-                            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
-                        />
-                    </Grid>
+                    <div className='detail-div'>
+                        <Grid item xs={12} sm={6} sx={{ paddingTop: '0px !important', paddingRight: '60px' }}>
+                            {/* Aquí incluyes la galería de imágenes */}
+                            <img
+                                className="mainProductImage"
+                                src={firstProductImages.length > 0 ? firstProductImages[0].url : ''}
+                                alt="Product"
+                                style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+                            />
+                        </Grid>
+                    </div>
                     {/* Calendario */}
 
                     <div className="Calendario" style={{ padding: '0px 10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '45%', minHeight: '400px' }}>
@@ -111,33 +113,35 @@ const ReservationPage = ({ selectedDates }) => {
                 {/* <form>*/}
 
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: '100px', borderRadius: '5px', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: '#d9d9d9', width: '100%' }}>
-                    <h2>Reservation Verification</h2>
+                    <Grid item xs={12} sx={{ width: '100%' }}>
+                        <h2 style={{ textAlign: 'center', padding: '10px', backgroundColor: 'rgb(176,148,209)' }}>Reservation Verification</h2>
+                    </Grid>
                     {/*Formulario*/}
-                    <form style={{ backgroundColor: '#fff', borderRadius: '5px', padding: '10px', boxShadow: '0px 0px 10px rgba(0,0,0,0.15)' }}>
+                    <form style={{ backgroundColor: '#fff', borderRadius: '5px', padding: '20px', width: '80%', boxShadow: '0px 0px 10px rgba(0,0,0,0.15)' }}>
 
                         <Grid container spacing={2} justifyContent="center">
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Name" value={userData.user.name} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Lastname" value={userData.user.lastname} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Email" value={userData.user.email} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Product Name" value={product.name} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Product Price" value={product.price} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Category" value={product.category.name} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Location" value={product.city.city} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField
                                     label="Check-in"
                                     value={selectedDates.startDate ? selectedDates.startDate.toDateString() : ''}
@@ -145,7 +149,7 @@ const ReservationPage = ({ selectedDates }) => {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={12} sm={4} md={4}>
                                 <TextField
                                     label="Check-out"
                                     value={selectedDates.endDate ? selectedDates.endDate.toDateString() : ''}
@@ -155,15 +159,14 @@ const ReservationPage = ({ selectedDates }) => {
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="center" style={{ width: '100%' }}>
-                            <Button variant="contained" onClick={confirmReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', marginTop: '20px', '&:hover': { bgcolor: '#5e2b96' } }}>
+                            <Button variant="contained" onClick={confirmReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', marginTop: '30px', '&:hover': { bgcolor: '#5e2b96' }, padding: '10px' }}>
                                 Confirm Reservation
                             </Button>
                         </Grid>
 
-                        {/* <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>Confirmar Reserva</Button> */}
-
                     </form>
                 </div>
+
 
                 {/* <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'} alignItems="center">
                     <Divider orientation="horizontal" flexItem variant='inset' />
@@ -171,7 +174,7 @@ const ReservationPage = ({ selectedDates }) => {
                     <Divider orientation="horizontal" flexItem variant='inset' />
                 </Box> */}
 
-                <Box component={Paper} elevation={3} p={3} mt={4} >
+                <Box component={Paper} elevation={3} p={3} mt={15} >
                     <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
                         Product Policies
                     </Typography>
