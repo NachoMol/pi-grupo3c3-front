@@ -181,7 +181,7 @@ const Detail = () => {
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
             <DatePicker
-              // selected={startDate}
+              selected={startDate}
               onChange={onChange}
               startDate={startDate}
               endDate={endDate}

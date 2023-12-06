@@ -9,6 +9,7 @@ import ProductPolicies from './ProductPolicies';
 import CarGallery from '../components/CarGallery';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import '../styless/ReservationPage.css';
 
 const ReservationPage = () => {
     const params = useParams();
@@ -63,17 +64,17 @@ const ReservationPage = () => {
         <Container maxWidth="lg">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <h2 style={{ textAlign: 'center' }}>Reservation Details</h2>
+                <h2 style={{ textAlign: 'center', paddingBottom:'10px' }}>Reservation Details</h2>
                 </Grid>
-                <Grid container spacing={2} justifyContent="center">
+                <Grid container spacing={2} sx={{display: 'flex', justifyContent:"space-between", alignItems:'start', margin:'0px'}}>
                     {/* Imagenes */}
-                    <Grid item xs={12} sm={6}>
-                        <CarGallery productImages={product.images} productId={product.id} />
+                    <Grid item xs={12} sm={6} sx={{paddingTop:'0px !important', paddingRight: '60px' }}>
+                        <CarGallery productImages={product.images} productId={product.id}/>
                     </Grid>
                 {/* Calendario */}
                 
-                <div className="Calendario" style={{ padding: '10px', margin: '50px auto', maxWidth: '500px', marginLeft: '85px'}}>
-                    <h3>Checkin/Checkout</h3>
+                <div className="Calendario" style={{ padding: '0px 10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '45%'}}>
+                        <h3 style={{ backgroundColor: 'rgb(156,128,189)', padding: '10px', borderRadius: '5px' }}>Checkin/Checkout</h3>
                     <DatePicker
                         /*selected={startDate}
                         onChange={onChange}
