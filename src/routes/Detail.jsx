@@ -94,8 +94,8 @@ const Detail = () => {
       try {
         const response = await axios.get('http://localhost:8080/reservations/current/' + params.id);
         const dates = response.data.flatMap(reservation => {
-          const start = new Date(reservation.checkin);
-          const end = new Date(reservation.checkout);
+          const start = new Date(reservation.checkin + 'T00:00');
+          const end = new Date(reservation.checkout + 'T00:00');
           const dateList = [];
           for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
             dateList.push(new Date(dt));
@@ -181,7 +181,7 @@ const Detail = () => {
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
             <DatePicker
-              selected={startDate}
+              // selected={startDate}
               onChange={onChange}
               startDate={startDate}
               endDate={endDate}

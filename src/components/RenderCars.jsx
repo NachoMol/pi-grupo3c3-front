@@ -99,6 +99,7 @@ const RenderCars = ({ car }) => {
              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         />
         <div>
+        <Link to={'/detail/' + car.id} style={{ textDecoration: 'none' }}>
             <Card key={car.id} sx={{ width: 500, background: 'transparent', position: 'relative', '@media (max-width: 600px)': {width: '350px'} }}>
                 <CardActionArea>
                     <CardMedia
@@ -138,7 +139,7 @@ const RenderCars = ({ car }) => {
 
 
                 <CardActions sx={{ justifyContent: 'center' }}>
-                    <Link to={'/detail/' + car.id} style={{ textDecoration: 'none' }}>
+                  
                         <Button
                             size="small"
                             sx={{
@@ -149,9 +150,10 @@ const RenderCars = ({ car }) => {
                             }}>
                             Car Details
                         </Button>
-                    </Link>
+                   
                 </CardActions>
             </Card>
+            </Link>
         </div>
         </>
     );
