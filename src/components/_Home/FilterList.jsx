@@ -51,9 +51,9 @@ const FilterList = () => {
     SUV: false,
     Pickup: false
   });
-  // const [selectedOption, setSelectedOption] = useState(null); // estado para manejar la seleccion del autocompletado
+  const [selectedOption, setSelectedOption] = useState(null); // estado para manejar la seleccion del autocompletado
   const [categoryList, setCategorylist] = useState([]);
-  // const [options, setOptions] = React.useState([]); // estado para manejar las opciones del autocompletado
+  const [options, setOptions] = React.useState([]); // estado para manejar las opciones del autocompletado
   const [availableCars, setAvailableCars] = useState([]);
 
   const { dispatchCarFilter, dispatchFilterLoading } = useCarStates();
@@ -80,7 +80,6 @@ const FilterList = () => {
    */
   const handleCheckboxChange = (id) => {
     const index = categoryList.indexOf(Number(id));
-
     if (index === -1) {
       const newCategory = [...categoryList, Number(id)];
       setCategorylist(newCategory);
@@ -104,30 +103,37 @@ const FilterList = () => {
   }, [])
 
 
-  //Ajuste futuro para el autocomplete
-  // useEffect(() => {
-  //   const getAvailableProducts = async () => {
-  //     try {
-  //       const response = await axios.get(`${urlReservation}/availableproducts`);
-  //       setOptions(response.data.content)
+  // Ajuste futuro para el autocomplete
+  useEffect(() => {
+    const getAvailableProducts = async () => {
+      try {
+        const response = await axios.get(`${urlReservation}/availableproducts`);
+        setOptions(response.data.content)
 
-  //       console.log('options', response.data.content)
-  //     } catch (error) {
-  //       console.error('Error al obtener lista de productos disponibles.', error);
-  //     }
-  //   };
+        console.log('options', response.data.content)
+      } catch (error) {
+        console.error('Error al obtener lista de productos disponibles.', error);
+      }
+    };
 
-  //   getAvailableProducts();
-  // }, []);
+    getAvailableProducts();
+  }, []);
 
   useEffect(() => {
     setAvailableCars({
       checkin: checkInDate ? format(checkInDate, 'yyyy-MM-dd') : '',
       checkout: checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : '',
-      productName: searchText,
+      // productName: searchText,
+      productName: selectedOption?.name || searchText,
       categoryIds: categoryList.join(','),
     });
-  }, [selectedCategories, searchText, checkInDate, checkOutDate])
+  }, [selectedCategories, searchText, checkInDate, checkOutDate]);
+
+  const { checkin, checkout, categoryIds } = availableCars;
+
+  useEffect(() => {
+    handleFilter();
+  }, [checkin, checkout, categoryIds]);
 
   //se incorpora el estado selected options para el autocompletado pero no funciona correctamente
   // useEffect(() => {
@@ -197,9 +203,15 @@ const FilterList = () => {
   }
 
   // Mejora futura para autocomplete
-  // const handleSelect = (selectedOption) => {
-  //   setsearchText(selectedOption)
-  // };
+  const handleSelect = (selectedOption) => {
+    setsearchText(selectedOption)
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleFilter();
+    }
+  };
 
   const getFilterCarList = async (config) => {
     try {
@@ -208,7 +220,7 @@ const FilterList = () => {
       const { data } = await axios.get(`${urlReservation}/availableproducts`, config);
 
       if (data.content.length === 0) {
-        toastMessage('error', 'Lo sentimos..', 'No hay productos disponibles.');
+        toastMessage('error', 'Lo sentimos..', 'No hay productos disponibles.', 'center');
         // alert('No hay productos disponibles')
         dispacthAction(dispatchCarFilter, types.SET_FILTER_CARS, [])
       } else {
@@ -227,6 +239,32 @@ const FilterList = () => {
 
   return (
     <Container>
+      <Autocomplete
+        options={options}
+        getOptionLabel={(option) => option.name}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search"
+            value={selectedOption ? selectedOption.name : searchText}
+            onChange={e => handleSearch(e)}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                  <IconButton type="button" sx={{ p: '10px', zIndex: 0 }} aria-label="search" onClick={handleFilter}>
+                    <SearchIcon />
+                  </IconButton>
+                </>
+              ),
+            }}
+            sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
+          />
+        )}
+        onChange={(event, newValue) => { handleSelect(newValue ? newValue.name : ''); console.log(newValue ? newValue.name : '') }}
+      />
       {/* <Autocomplete
         options={options}
         getOptionLabel={(option) => option.name}
@@ -236,13 +274,14 @@ const FilterList = () => {
             label="Search"
             value={selectedOption?.name || searchText}
             onChange={handleSearch}
-            onBlur={handleFilter}
+            // onBlur={handleFilter}
+            onKeyDown={handleKeyDown}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
                 <>
                   <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                  <IconButton type="button" sx={{ p: '10px', zIndex: 0 }} aria-label="search">
+                  <IconButton type="button" sx={{ p: '10px', zIndex: 0 }} aria-label="search" onClick={handleFilter}>
                     <SearchIcon />
                   </IconButton>
                 </>
@@ -254,13 +293,14 @@ const FilterList = () => {
         onChange={(event, newValue) => handleSelect(newValue)}
       /> */}
 
-      <TextField
+      {/* <TextField
         id="outlined-search"
         label="Search"
         type="search"
         value={searchText}
         onChange={handleSearch}
-        onBlur={handleFilter}
+        // onBlur={handleFilter}
+        onKeyDown={handleKeyDown} 
         InputProps={{
           endAdornment: (
             <>
@@ -272,9 +312,9 @@ const FilterList = () => {
           ),
         }}
         sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
-      />
+      /> */}
 
-      <h2>Categories</h2>
+      <h2 style={{ fontFamily: 'Roboto' }}>Categories</h2>
 
       <GridIcon container spacing={2}>
         {categories && categories.map((category) => (
@@ -298,7 +338,7 @@ const FilterList = () => {
         ))}
       </GridIcon>
 
-      <Container sx={{textAlign: 'start'}}>
+      <Container sx={{ textAlign: 'start' }}>
         <span onClick={handleFilterReset} style={{ cursor: 'pointer', color: '#5C4D6B' }}>Clear Filter</span>
       </Container>
 

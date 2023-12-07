@@ -47,7 +47,6 @@ const CategoryList = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8080/categories');
-        console.log('response', response.data);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories', error);
@@ -72,7 +71,6 @@ const CategoryList = () => {
     try {
       setLoading(true);
       await axios.delete(`${urlCategories}/delete/${idCategory}`);
-      console.log('id', idCategory)
       toastMessage('success', 'Success!!!', 'The category deleted successfully.', 'center');
       setCategories(categories.filter((category) => category.id !== idCategory));
     } catch (error) {
@@ -131,7 +129,6 @@ const CategoryList = () => {
                       (<CircularProgress sx={{ color: '#705b85', mt: '4px' }} />)
                       : (<StyledTableCell align="center">
                         <Tooltip title="Delete">
-
                           <DeleteIcon onClick={() => handleClickOpen(row.id)} />
                         </Tooltip>
                       </StyledTableCell>)
