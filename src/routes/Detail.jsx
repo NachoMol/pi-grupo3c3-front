@@ -14,11 +14,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-calendar/dist/Calendar.css';
 import {URL} from '../config/config';
+import { is } from 'date-fns/locale';
 
 
 const theme = createTheme(); // Configura el tema de Material-UI
 
-const Detail = () => {
+const Detail = ({setSelectedDates}) => {
 
   const [car, setCar] = useState([]);
   const [open, setOpen] = useState(false);
@@ -39,7 +40,10 @@ const Detail = () => {
   // Primero, defino un nuevo estado para los rangos de fechas reservadas
   const [reservedDates, setReservedDates] = useState([]);
 
-  const onChange = date => {
+  //Estado para manejar errores
+  const [error, setError] = useState(null);
+
+  /*const onChange = date => {
     if (!isDateDisabled(date)) {
       if (!startDate || (startDate && endDate)) {
         setStartDate(date);
@@ -47,15 +51,38 @@ const Detail = () => {
       } else {
         setEndDate(date);
       }
+      console.log(date)
     }
+  };*/
+
+  const onChange = dates => {
+    const [start, end] = dates;
+    if (isDateDisabled(start) || (end && isDateDisabled(end))) {
+      setError('Date not available. Please select another date')
+    }else{
+      setStartDate(start);
+      setEndDate(end);
+      setError(null);
+      // Update the selected dates in the parent component (App.js)
+      setSelectedDates({ startDate: start, endDate: end });
+    }
+    console.log('Rango de fechas seleccionadas',dates)
   };
 
-  const isDateDisabled = date => {
+  /*const isDateDisabled = date => {
     return reservedDates.some(disabledDate =>
       date.getTime() === disabledDate.getTime()
     );
-  };
+  };*/
 
+  const isDateDisabled = (date) => {
+    if (date instanceof Date) {
+      return reservedDates.some(disabledDate => 
+        date.getTime() === new Date(disabledDate).getTime()
+      );
+    }
+    return false;
+  };
 
 
   const handleReservation = () => {
@@ -105,8 +132,10 @@ const Detail = () => {
         });
         console.log(dates); // Imprime las fechas para verificar que se están procesando correctamente
         setReservedDates(dates);
+        setError(null); // Si la solicitud fue exitosa, limpia el mensaje de error
       } catch (error) {
         console.error("Error fetching reserved dates", error);
+        setError('There was a problem getting available dates. Please try again later.'); // Si hubo un error, actualiza el estado con un mensaje de error
       }
     }
     fetchReservedDates();
@@ -141,10 +170,9 @@ const Detail = () => {
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
-              <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginBottom: '20px' }}>
-                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius:'5px', padding:'10px' }}>
                   Car Details
-                  <hr style={{ backgroundColor: '#9c80bd', width: '100%', border: 'none', height: '1px' }} />
                 </Typography>
               </div>
               <div style={{
@@ -182,16 +210,17 @@ const Detail = () => {
           {/* Calendario */}
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
             <DatePicker
-              // selected={startDate}
+              selected={startDate}
               onChange={onChange}
               startDate={startDate}
               endDate={endDate}
               selectsRange
               inline
               monthsShown={2}
-              highlightDates={reservedDates.map(date => ({ "react-datepicker__day--highlighted": [date] }))}
+              minDate={new Date()} // Deshabilita las fechas anteriores al día actual
+              highlightDates={reservedDates.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
             />
-
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
 
           {/* Botón de reserva */}

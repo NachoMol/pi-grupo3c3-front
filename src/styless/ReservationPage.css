@@ -1,0 +1,50 @@
+.mainPhoto {
+    margin-top: 0px;
+}
+
+.css-mhc70k-MuiGrid-root, .detail-div {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 30px !important;
+    width: 100% !important;
+}
+
+@media (min-width: 600px) {
+    .css-j4tilh-MuiContainer-root {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}
+
+@media (max-width: 1107px) {
+    .Calendario{
+        width: 80vw !important;
+    }
+    .mainPhotoContainer {
+        width: 80vw;
+        
+      }
+      .mainPhoto {
+        width: 80vw;
+       
+      }  
+      .photosContainer {
+        width: 80vw;
+        
+      }
+      .gallery {
+        height: auto;
+      }
+      .photos img{
+        width: 100px;
+      }
+
+/* .gallery {
+    width: 80vw;
+    margin: 0px;
+}
+.css-59kbuz-MuiGrid-root {
+    width: 80vw;
+}*/
+
+}

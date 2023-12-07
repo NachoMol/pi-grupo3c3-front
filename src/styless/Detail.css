@@ -132,8 +132,9 @@
 
 /* Cambiar el fondo a los dias deshabilitados! */
 
-.react-datepicker__day--disabled {
-  background-color: grey !important;
+.react-datepicker__day--highlighted-custom {
+  background-color: red !important;
+  color: white !important;
 }
 
 @media (max-width: 1107px) {
