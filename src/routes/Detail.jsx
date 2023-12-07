@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { Box, Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles'; // Importa ThemeProvider y createTheme
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from '@mui/material'
-import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import CarGallery from '../components/CarGallery';
 import '../styless/App.css';
@@ -13,81 +13,67 @@ import { useMediaQuery } from '@mui/material';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-calendar/dist/Calendar.css';
-import { is } from 'date-fns/locale';
 
+const theme = createTheme();
 
-const theme = createTheme(); // Configura el tema de Material-UI
-
-const Detail = ({setSelectedDates}) => {
-
+const Detail = ({ setSelectedDates }) => {
   const [car, setCar] = useState([]);
   const [open, setOpen] = useState(false);
-  const params = useParams()
+  const params = useParams();
 
   const { authUser } = useContextGlobal();
   const { isLogged } = authUser.auth;
   const navigate = useNavigate();
 
-
   const [loading, setLoading] = useState(true);
   const isSmallScreen = useMediaQuery('(max-width:517px)', { noSsr: true });
 
-  // Calendario
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  // Primero, defino un nuevo estado para los rangos de fechas reservadas
   const [reservedDates, setReservedDates] = useState([]);
-
-  //Estado para manejar errores
   const [error, setError] = useState(null);
 
-  /*const onChange = date => {
-    if (!isDateDisabled(date)) {
-      if (!startDate || (startDate && endDate)) {
-        setStartDate(date);
-        setEndDate(null);
-      } else {
-        setEndDate(date);
-      }
-      console.log(date)
-    }
-  };*/
+  const [totalPrice, setTotalPrice] = useState(null);
 
   const onChange = dates => {
     const [start, end] = dates;
-    if (isDateDisabled(start) || (end && isDateDisabled(end))) {
-      setError('Date not available. Please select another date')
-    }else{
+    if (!start || (end && isDateDisabled(start)) || (end && isDateDisabled(end))) {
+      setError('Date not available. Please select another date');
+    } else {
       setStartDate(start);
       setEndDate(end);
       setError(null);
-      // Update the selected dates in the parent component (App.js)
+
+      let daysDifference = 1; // Establecer un mínimo de 1 día
+      if (end) {
+        daysDifference = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      }
+
+      const productPrice = car.price;
+      const calculatedTotalPrice = daysDifference * productPrice;
+
+      setTotalPrice(calculatedTotalPrice);
       setSelectedDates({ startDate: start, endDate: end });
     }
-    console.log('Rango de fechas seleccionadas',dates)
   };
 
-  /*const isDateDisabled = date => {
-    return reservedDates.some(disabledDate =>
-      date.getTime() === disabledDate.getTime()
-    );
-  };*/
-
-  const isDateDisabled = (date) => {
+  const isDateDisabled = date => {
     if (date instanceof Date) {
-      return reservedDates.some(disabledDate => 
+      return reservedDates.some(disabledDate =>
         date.getTime() === new Date(disabledDate).getTime()
       );
     }
     return false;
   };
 
-
   const handleReservation = () => {
     if (!isLogged) {
       setOpen(true);
     } else {
+      // Guardar valores en localStorage antes de navegar
+      localStorage.setItem('startDate', startDate ? startDate.toISOString() : null);
+      localStorage.setItem('endDate', endDate ? endDate.toISOString() : null);
+      localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
       navigate(`/reservation/product/${car.id}`);
       console.log('Listo para reservar!');
     }
@@ -102,20 +88,36 @@ const Detail = ({setSelectedDates}) => {
   }
 
   useEffect(() => {
+    // Recuperar valores del localStorage al cargar el componente
+    const storedStartDate = localStorage.getItem('startDate');
+    const storedEndDate = localStorage.getItem('endDate');
+    const storedTotalPrice = localStorage.getItem('totalPrice');
+
+    if (storedStartDate) {
+      setStartDate(new Date(storedStartDate));
+    }
+
+    if (storedEndDate) {
+      setEndDate(new Date(storedEndDate));
+    }
+
+    if (storedTotalPrice) {
+      setTotalPrice(parseFloat(storedTotalPrice));
+    }
+
     const fetchCar = async () => {
       try {
         const response = await axios.get('http://localhost:8080/products/' + params.id);
         setCar(response.data);
-        setLoading(false); // Indicar que los datos se cargaron
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching cars", error);
-        setLoading(false); // También manejar errores
+        setLoading(false);
       }
-    }
+    };
+
     fetchCar();
   }, [params.id]);
-
-  // Solicitud al endpoint para obtener las fechas reservadas
   useEffect(() => {
     const fetchReservedDates = async () => {
       try {
@@ -129,18 +131,16 @@ const Detail = ({setSelectedDates}) => {
           }
           return dateList;
         });
-        console.log(dates); // Imprime las fechas para verificar que se están procesando correctamente
+        console.log(dates);
         setReservedDates(dates);
-        setError(null); // Si la solicitud fue exitosa, limpia el mensaje de error
+        setError(null);
       } catch (error) {
         console.error("Error fetching reserved dates", error);
-        setError('There was a problem getting available dates. Please try again later.'); // Si hubo un error, actualiza el estado con un mensaje de error
+        setError('There was a problem getting available dates. Please try again later.');
       }
     }
     fetchReservedDates();
   }, [params.id]);
-
-  console.log('initialArray', car);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -151,7 +151,7 @@ const Detail = ({setSelectedDates}) => {
   }
 
   return (
-    <ThemeProvider theme={theme}> {/* Proporciona el tema de Material-UI */}
+    <ThemeProvider theme={theme}>
       <header className='detail_header'>
         <Link to={'/'} className='back-logo-container'>
           <img className='back-logo' src="https://www.iconpacks.net/icons/3/free-icon-left-arrow-7252.png" alt="" />
@@ -164,13 +164,12 @@ const Detail = ({setSelectedDates}) => {
           <CarGallery productImages={car.images.map(image => image.url)} productId={params.id} />
         </div>
 
-
         <div className='ladoDerecho' style={{ display: 'flex', flexDirection: 'column', padding: '15px', width: '50%' }}>
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius:'5px', padding:'10px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius: '5px', padding: '10px' }}>
                   Car Details
                 </Typography>
               </div>
@@ -185,7 +184,8 @@ const Detail = ({setSelectedDates}) => {
                 <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                   <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', marginRight: '100px' }}>
                     <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
-                      Price: {car.price}
+                      {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
+                      Price: ${totalPrice !== null ? totalPrice : car.price}
                     </Typography>
                     <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
                       Category: {car.category?.name}
@@ -206,7 +206,7 @@ const Detail = ({setSelectedDates}) => {
               </div>
             </Container>
           </div>
-          {/* Calendario */}
+
           <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
             <DatePicker
               selected={startDate}
@@ -216,41 +216,29 @@ const Detail = ({setSelectedDates}) => {
               selectsRange
               inline
               monthsShown={2}
-              minDate={new Date()} // Deshabilita las fechas anteriores al día actual
+              minDate={new Date()}
               highlightDates={reservedDates.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
 
-          {/* Botón de reserva */}
           <Grid container justifyContent="center" style={{ width: '100%' }}>
             <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
               Start Reservation
             </Button>
           </Grid>
-
         </div>
-
-        {/* Botón de reserva */}
-        {/* <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
-              <Button variant="contained" onClick={handleReservation} sx={{ mt: 3, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
-                Make a Reservation
-              </Button>
-            </Grid> */}
-
       </div>
 
       <div>
-        {/* Sección de políticas del producto */}
-        {/* <Box component={Paper} elevation={3} p={3} mt={4} sx={{paddingBottom:'100px'}}> */}
-        <Box component={Paper} elevation={3} p={3} mt={4} >
-          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
+        <Box component={Paper} elevation={3} p={3} mt={4}>
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
             Product Policies
           </Typography>
           <ProductPolicies />
         </Box>
       </div>
-      {/* Modal para redirigir, si el usuario que reserva no esta logueado */}
+
       <Dialog
         open={open}
         onClose={handleCloseDialog}
@@ -262,7 +250,7 @@ const Detail = ({setSelectedDates}) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            You must be logged in, to make a reservation. You want to sign in?
+            You must be logged in to make a reservation. Do you want to sign in?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -275,6 +263,5 @@ const Detail = ({setSelectedDates}) => {
     </ThemeProvider>
   );
 }
-
 
 export default Detail;
