@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import {URL} from '../config/config';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { TextField, Box, Paper, Grid, Typography, Container, Button } from '@mui/material';
@@ -9,7 +10,6 @@ import ProductPolicies from './ProductPolicies';
 import CarGallery from '../components/CarGallery';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { URL } from '../config/config';
 import '../styless/ReservationPage.css';
 import '../styless/Detail.css';
 import '../styless/CarGallery.css';
@@ -29,6 +29,14 @@ const ReservationPage = ({ selectedDates }) => {
         { "react-datepicker__day--highlighted-checkin": selectedDates.startDate },
         { "react-datepicker__day--highlighted-checkout": selectedDates.endDate },
       ];*/
+    const getNumberOfDays = () => {
+        if (selectedDates.startDate && selectedDates.endDate) {
+            const diffInTime = selectedDates.endDate.getTime() - selectedDates.startDate.getTime();
+            const diffInDays = diffInTime / (1000 * 60 * 60 * 24);
+            return Math.ceil(diffInDays);
+        }
+        return 1; // Por defecto, si las fechas no están definidas, se asume un día.
+    };
 
     const fetchProduct = async () => {
         const response = await axios.get(`${URL}/products/` + params.id);
@@ -56,53 +64,53 @@ const ReservationPage = ({ selectedDates }) => {
             product_id: product.id,
             user_id: userData.user.id,
             city_id: product.city.id,
-            checkin: selectedDates.startDate, // Use the selected start date
-            checkout: selectedDates.endDate, // Use the selected end date
+            checkin: selectedDates.startDate,
+            checkout: selectedDates.endDate,
+            total_price: product.price * getNumberOfDays(), // Precio total basado en la cantidad de días
         };
 
         try {
-          const response = await axios.post(`${URL}/reservations/create`, reservationDTO);
-          console.log('Reserva creada:', response.data);
+            const response = await axios.post(`${URL}/reservations/create`, reservationDTO);
+            console.log('Reserva creada:', response.data);
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
-     // Crear un array de fechas entre startDate y endDate
-const getDatesBetween = (start, end) => {
-    const dateArray = [];
-    let currentDate = new Date(start);
-  
-    while (currentDate <= end) {
-      dateArray.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-  
-    return dateArray;
-  };
-  
-  // Obtener las fechas seleccionadas
-  const { startDate, endDate } = selectedDates;
-  
-  // Crear un array de fechas entre startDate y endDate
-  const datesToHighlight = getDatesBetween(startDate, endDate);
+    // Crear un array de fechas entre startDate y endDate
+    const getDatesBetween = (start, end) => {
+        const dateArray = [];
+        let currentDate = new Date(start);
+
+        while (currentDate <= end) {
+            dateArray.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        return dateArray;
+    };
+
+    // Obtener las fechas seleccionadas
+    const { startDate, endDate } = selectedDates;
+
+    // Crear un array de fechas entre startDate y endDate
+    const datesToHighlight = getDatesBetween(startDate, endDate);
 
     return (
         <Container maxWidth={false} sx={{ width: '100%', paddingRight: '0px', paddingLeft: '0px' }}>
             <Grid container spacing={2}  >
-                <Grid item xs={12} sx={{ width: '100%', paddingLeft: '0px !important', paddingRight: '0px !important' }}>
+                <Grid item xs={12} sx={{ width: '100%', paddingLeft: '0px !important', paddingRight: '0px !important', }}>
                     <h2 style={{ textAlign: 'center', width: '100%', padding: '10px', backgroundColor: 'rgb(176,148,209)', paddingRight: '0px', paddingLeft: '0px' }}>Reservation Details</h2>
                 </Grid>
                 <Grid container spacing={2} sx={{ display: 'flex', justifyContent: "space-evenly", paddingRight: '0px', paddingLeft: '0px', margin: '0px', width: '100%' }}>
                     {/* Imagenes */}
                     <div className='detail-div'>
-                        <Grid item xs={12} sm={6} sx={{ paddingTop: '0px !important', paddingRight: '60px' }}>
-                            {/* Aquí incluyes la galería de imágenes */}
+                        <Grid item xs={12} sm={6}>
                             <img
                                 className="mainProductImage"
                                 src={firstProductImages.length > 0 ? firstProductImages[0].url : ''}
                                 alt="Product"
-                                style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+                                style={{ width: '100%', maxHeight: '350px', objectFit: 'cover', marginBottom: '30px', borderRadius: '30px' }}
                             />
                         </Grid>
                     </div>
@@ -118,25 +126,9 @@ const getDatesBetween = (start, end) => {
                             highlightDates={datesToHighlight.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
                             style={{ width: '50%', backgroundColor: 'transparent' }}
                         />
-                        {/* <Grid container justifyContent="center" style={{ width: '100%' }}>
-                        <Button variant="contained" onClick={confirmReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
-                            Confirm Reservation                    
-                        </Button>
-                    </Grid> */}
                     </div>
-
-
-
                 </Grid>
-
-                {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}> */}
-                {/*Formulario*/}
-                {/* <form>*/}
-
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: '100px', borderRadius: '5px', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: '#d9d9d9', width: '100%' }}>
-                    <Grid item xs={12} sx={{ width: '100%' }}>
-                        <h2 style={{ textAlign: 'center', padding: '10px', backgroundColor: 'rgb(176,148,209)' }}>Reservation Verification</h2>
-                    </Grid>
                     {/*Formulario*/}
                     <form style={{ backgroundColor: '#fff', borderRadius: '5px', padding: '20px', width: '80%', boxShadow: '0px 0px 10px rgba(0,0,0,0.15)' }}>
 
@@ -154,7 +146,7 @@ const getDatesBetween = (start, end) => {
                                 <TextField label="Product Name" value={product.name} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
                             <Grid item xs={12} sm={4} md={4}>
-                                <TextField label="Product Price" value={product.price} InputProps={{ readOnly: true }} fullWidth />
+                                <TextField label="Product Price" value={`$${product.price * getNumberOfDays()}`} InputProps={{ readOnly: true }} fullWidth />
                             </Grid>
                             <Grid item xs={12} sm={4} md={4}>
                                 <TextField label="Category" value={product.category.name} InputProps={{ readOnly: true }} fullWidth />
@@ -187,16 +179,8 @@ const getDatesBetween = (start, end) => {
 
                     </form>
                 </div>
-
-
-                {/* <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'} alignItems="center">
-                    <Divider orientation="horizontal" flexItem variant='inset' />
-                    <ProductPolicies />
-                    <Divider orientation="horizontal" flexItem variant='inset' />
-                </Box> */}
-
                 <Box component={Paper} elevation={3} p={3} mt={15} >
-                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253' }}>
+                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
                         Product Policies
                     </Typography>
                     <ProductPolicies />
