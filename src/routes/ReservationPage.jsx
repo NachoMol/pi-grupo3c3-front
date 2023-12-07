@@ -67,6 +67,25 @@ const ReservationPage = ({ selectedDates }) => {
         }
     };
 
+     // Crear un array de fechas entre startDate y endDate
+const getDatesBetween = (start, end) => {
+    const dateArray = [];
+    let currentDate = new Date(start);
+  
+    while (currentDate <= end) {
+      dateArray.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return dateArray;
+  };
+  
+  // Obtener las fechas seleccionadas
+  const { startDate, endDate } = selectedDates;
+  
+  // Crear un array de fechas entre startDate y endDate
+  const datesToHighlight = getDatesBetween(startDate, endDate);
+
     return (
         <Container maxWidth={false} sx={{ width: '100%', paddingRight: '0px', paddingLeft: '0px' }}>
             <Grid container spacing={2}  >
@@ -95,6 +114,7 @@ const ReservationPage = ({ selectedDates }) => {
                             inline
                             monthsShown={window.innerWidth > 1261 ? 2 : 2}
                             //highlightDates={highlightDates}
+                            highlightDates={datesToHighlight.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
                             style={{ width: '50%', backgroundColor: 'transparent' }}
                         />
                         {/* <Grid container justifyContent="center" style={{ width: '100%' }}>
