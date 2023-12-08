@@ -23,6 +23,7 @@ import AddDetails from './routes/AddDetails'
 import UpdateDetails from './routes/UpdateDetails'
 import CategoryList from './routes/CategoryList'
 import ReservationPage from './routes/ReservationPage'
+import ReservationList from './routes/ReservationList'
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
         <Route path="/admin/update-detail/:id" element={<UpdateDetails />} />
         <Route path="/admin/update-policies" element={<UpdatePolicies />} />
         <Route path="/admin/category-list" element={<CategoryList />} />
+        <Route path="/reservation-list" element={<ReservationList />} />
       </Routes>
       <Footer />
     </Context>

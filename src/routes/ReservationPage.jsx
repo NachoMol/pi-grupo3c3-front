@@ -1,41 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {URL} from '../config/config';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { TextField, Box, Paper, Grid, Typography, Container, Button } from '@mui/material';
-import { useContextGlobal, useCarStates } from '../context/Context';
+import {
+    TextField,
+    Box,
+    Paper,
+    Grid,
+    Typography,
+    Container,
+    Button,
+} from '@mui/material';
+import {
+    useContextGlobal,
+    useCarStates,
+} from '../context/Context';
 import ProductPolicies from './ProductPolicies';
-import CarGallery from '../components/CarGallery';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import '../styless/ReservationPage.css';
 import '../styless/Detail.css';
 import '../styless/CarGallery.css';
+import Swal from 'sweetalert2';
 
-const ReservationPage = ({ selectedDates }) => {
+const ReservationPage = ({ selectedDates, onDateChange }) => {
     const params = useParams();
     const { id } = params;
     const { userData } = useContextGlobal();
     const { cars, dispatchCars } = useCarStates();
-
     const [product, setProduct] = useState(null);
-
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const [openDatePicker, setOpenDatePicker] = useState(false);
 
-    /*const highlightDates = [
-        { "react-datepicker__day--highlighted-checkin": selectedDates.startDate },
-        { "react-datepicker__day--highlighted-checkout": selectedDates.endDate },
-      ];*/
     const getNumberOfDays = () => {
         if (selectedDates.startDate && selectedDates.endDate) {
             const diffInTime = selectedDates.endDate.getTime() - selectedDates.startDate.getTime();
             const diffInDays = diffInTime / (1000 * 60 * 60 * 24);
             return Math.ceil(diffInDays);
         }
-        return 1; // Por defecto, si las fechas no están definidas, se asume un día.
+        return 1;
     };
 
     const fetchProduct = async () => {
@@ -43,7 +49,6 @@ const ReservationPage = ({ selectedDates }) => {
         return response.data;
     };
 
-    console.log('product', product);
     useEffect(() => {
         const fetchData = async () => {
             const productData = await fetchProduct(id);
@@ -57,6 +62,7 @@ const ReservationPage = ({ selectedDates }) => {
     if (!userData.user || !userData.user.email || !product) {
         return <div>Loading...</div>;
     }
+
     const firstProductImages = product.images || [];
 
     const confirmReservation = async () => {
@@ -66,18 +72,30 @@ const ReservationPage = ({ selectedDates }) => {
             city_id: product.city.id,
             checkin: selectedDates.startDate,
             checkout: selectedDates.endDate,
-            total_price: product.price * getNumberOfDays(), // Precio total basado en la cantidad de días
+            total_price: product.price * getNumberOfDays(),
         };
 
         try {
             const response = await axios.post(`${URL}/reservations/create`, reservationDTO);
             console.log('Reserva creada:', response.data);
+            // Alerta de éxito con SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Reservation Successful',
+                text: 'Your reservation has been confirmed! You will recive further information via email.',
+            });
+            // Aquí puedes realizar más acciones después del éxito si es necesario
         } catch (error) {
             console.error('Error:', error);
+            // Alerta de error con SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Try again later.',
+            });
         }
     };
 
-    // Crear un array de fechas entre startDate y endDate
     const getDatesBetween = (start, end) => {
         const dateArray = [];
         let currentDate = new Date(start);
@@ -90,18 +108,18 @@ const ReservationPage = ({ selectedDates }) => {
         return dateArray;
     };
 
-    // Obtener las fechas seleccionadas
     const { startDate, endDate } = selectedDates;
-
-    // Crear un array de fechas entre startDate y endDate
     const datesToHighlight = getDatesBetween(startDate, endDate);
 
     return (
         <Container maxWidth={false} sx={{ width: '100%', paddingRight: '0px', paddingLeft: '0px' }}>
-            <Grid container spacing={2}  >
-                <Grid item xs={12} sx={{ width: '100%', paddingLeft: '0px !important', paddingRight: '0px !important', }}>
-                    <h2 style={{ textAlign: 'center', width: '100%', padding: '10px', backgroundColor: 'rgb(176,148,209)', paddingRight: '0px', paddingLeft: '0px' }}>Reservation Details</h2>
-                </Grid>
+            <Grid container spacing={2} sx={{ paddingTop: '0', marginTop: '0' }} >
+                <header style={{ display: 'flex', width: '100%', alignItems: 'center', backgroundColor: 'rgba(55, 25, 87, 1)' }}>
+                    <Link to={`/detail/${params.id}`}>
+                        <img style={{ filter: 'invert(1)', width: '40px', height: 'auto', padding: '10px 5px 10px 30px' }} src="https://www.iconpacks.net/icons/3/free-icon-left-arrow-7252.png" alt="" />
+                    </Link>
+                    <h2 style={{ flex: '1', color: 'white' }}>Reservation Details</h2>
+                </header>
                 <Grid container spacing={2} sx={{ display: 'flex', justifyContent: "space-evenly", paddingRight: '0px', paddingLeft: '0px', margin: '0px', width: '100%' }}>
                     {/* Imagenes */}
                     <div className='detail-div'>
@@ -115,16 +133,17 @@ const ReservationPage = ({ selectedDates }) => {
                         </Grid>
                     </div>
                     {/* Calendario */}
-
                     <div className="Calendario" style={{ padding: '0px 10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', width: '45%', minHeight: '400px' }}>
                         <h3 style={{ backgroundColor: 'rgb(156,128,189)', padding: '10px', borderRadius: '5px' }}>Checkin/Checkout</h3>
                         <DatePicker
                             selectsRange
                             inline
                             monthsShown={window.innerWidth > 1261 ? 2 : 2}
-                            //highlightDates={highlightDates}
-                            highlightDates={datesToHighlight.map(date => ({ "react-datepicker__day--highlighted-custom": [date] }))}
-                            style={{ width: '50%', backgroundColor: 'transparent' }}
+                            highlightDates={datesToHighlight.map(date => new Date(date))}
+                            selected={startDate}
+                            onChange={(dates) => onDateChange(dates)}
+                            startDate={startDate}
+                            endDate={endDate}
                         />
                     </div>
                 </Grid>

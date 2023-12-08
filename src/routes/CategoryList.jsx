@@ -73,7 +73,6 @@ const CategoryList = () => {
     try {
       setLoading(true);
       await axios.delete(`${urlCategories}/delete/${idCategory}`);
-      console.log('id', idCategory)
       toastMessage('success', 'Success!!!', 'The category deleted successfully.', 'center');
       setCategories(categories.filter((category) => category.id !== idCategory));
     } catch (error) {
@@ -132,7 +131,6 @@ const CategoryList = () => {
                       (<CircularProgress sx={{ color: '#705b85', mt: '4px' }} />)
                       : (<StyledTableCell align="center">
                         <Tooltip title="Delete">
-
                           <DeleteIcon onClick={() => handleClickOpen(row.id)} />
                         </Tooltip>
                       </StyledTableCell>)

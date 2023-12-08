@@ -103,6 +103,9 @@ const Header = () => {
                         <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
                       </Link>
                     )}
+                    <Link to={'/reservation-list'} style={{textDecoration: 'none'}}>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Reservations</MenuItem>
+                    </Link>
                       <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleLogoutClick}>Logout</MenuItem>
                   </Menu>
                 </div>

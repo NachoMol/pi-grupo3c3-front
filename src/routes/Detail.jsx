@@ -170,7 +170,7 @@ const Detail = ({ setSelectedDates }) => {
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius: '5px', padding: '10px' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius: '5px', padding: '10px', fontWeight:'600' }}>
                   Car Details
                 </Typography>
               </div>
@@ -224,7 +224,7 @@ const Detail = ({ setSelectedDates }) => {
           </div>
 
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' } }}>
+            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'15px' }}>
               Start Reservation
             </Button>
           </Grid>
@@ -232,7 +232,11 @@ const Detail = ({ setSelectedDates }) => {
       </div>
 
       <div>
+<<<<<<< HEAD
         <Box component={Paper} elevation={3} p={3} mt={4}>
+=======
+        <Box component={Paper} elevation={3} p={3} mt={4} sx={{marginTop:'0'}}>
+>>>>>>> main
           <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
             Product Policies
           </Typography>
