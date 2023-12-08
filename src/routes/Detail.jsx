@@ -232,11 +232,7 @@ const Detail = ({ setSelectedDates }) => {
       </div>
 
       <div>
-<<<<<<< HEAD
-        <Box component={Paper} elevation={3} p={3} mt={4}>
-=======
         <Box component={Paper} elevation={3} p={3} mt={4} sx={{marginTop:'0'}}>
->>>>>>> main
           <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
             Product Policies
           </Typography>
