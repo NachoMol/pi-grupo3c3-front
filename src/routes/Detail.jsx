@@ -257,6 +257,7 @@ const Detail = ({ setSelectedDates }) => {
                 bgcolor: '#302253',
                 '&:hover': { bgcolor: '#5e2b96' },
                 marginTop: '15px',
+                '&.Mui-disabled': { color: '#fff', backgroundColor: '#302253' }, 
               }}
               disabled={!startDate || !endDate} // Deshabilitar el botón si startDate o endDate es null
             >
