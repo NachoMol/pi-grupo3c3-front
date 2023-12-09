@@ -314,7 +314,7 @@ const FilterList = () => {
         sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
       /> */}
 
-      <h2 style={{ fontFamily: 'Roboto' }}>Categories</h2>
+      <h2 style={{ fontFamily: 'Quicksand' }}>Categories</h2>
 
       <GridIcon container spacing={2}>
         {categories && categories.map((category) => (
@@ -351,7 +351,7 @@ const FilterList = () => {
             onChange={handleCheckInDateChange}
             onBlur={handleFilter}
             minDate={new Date()}
-            sx={{ mt: '1rem' }}
+            sx={{ mt: '1rem'}}
             disablePast={true}
           />
           <DatePicker
