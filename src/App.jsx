@@ -45,7 +45,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reservation/product/:id" element={<ReservationPage selectedDates={selectedDates} />} />
         <Route path='/admin/vehicles' element={<VehiclesList />} />
-        <Route path='/admin/update-vehicle' element={<UpdateVehicle />} />
+        <Route path='/admin/update-vehicle/:id' element={<UpdateVehicle />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path='/admin/insert-category' element={<InsertCategory/>} />
         <Route path="/userFavorites" element={<UserFavorites />} />
