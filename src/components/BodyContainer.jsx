@@ -17,6 +17,12 @@ const BodyContainer = () => {
     console.log('bodyCar', car)
 
     useEffect(() => {
+
+        // Limpiar los valores de localStorage al cargar el componente
+        localStorage.removeItem('startDate');
+        localStorage.removeItem('endDate');
+        localStorage.removeItem('totalPrice');
+
         const fetchCars = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/products/random?size=${size}`);
@@ -30,9 +36,13 @@ const BodyContainer = () => {
     }, []); // se vuelve a ejecutar cuando cambian 'page' o 'size'
 
     useEffect(() => {
-              setCar(filter)
-          console.log('Bodyfilter', filter)
-    }, [filter])
+        // Aplicar el filtro y limpiar los valores de localStorage al aplicar el filtro
+        setCar(filter);
+        localStorage.removeItem('startDate');
+        localStorage.removeItem('endDate');
+        localStorage.removeItem('totalPrice');
+        console.log('Bodyfilter', filter);
+    }, [filter]);
 
     return (
         <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;'}} >

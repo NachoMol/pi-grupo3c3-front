@@ -35,6 +35,7 @@ const Detail = ({ setSelectedDates }) => {
 
   const [totalPrice, setTotalPrice] = useState(null);
 
+
   const isDateDisabled = date => {
     if (date instanceof Date) {
       return reservedDates.some(disabledDate =>
@@ -87,20 +88,6 @@ const Detail = ({ setSelectedDates }) => {
     }
   };
 
-  
-
-  const handleReservation = () => {
-    if (!isLogged) {
-      setOpen(true);
-    } else {
-      // Guardar valores en localStorage antes de navegar
-      localStorage.setItem('startDate', startDate ? startDate.toISOString() : null);
-      localStorage.setItem('endDate', endDate ? endDate.toISOString() : null);
-      localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
-      navigate(`/reservation/product/${car.id}`);
-      console.log('Listo para reservar!');
-    }
-  };
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -141,6 +128,7 @@ const Detail = ({ setSelectedDates }) => {
 
     fetchCar();
   }, [params.id]);
+
   useEffect(() => {
     const fetchReservedDates = async () => {
       try {
@@ -164,6 +152,20 @@ const Detail = ({ setSelectedDates }) => {
     }
     fetchReservedDates();
   }, [params.id]);
+
+  const handleReservation = () => {
+    if (!isLogged) {
+      setOpen(true);
+    } else {
+      // Guardar valores en localStorage antes de navegar
+      localStorage.setItem('startDate', startDate ? startDate.toISOString() : null);
+      localStorage.setItem('endDate', endDate ? endDate.toISOString() : null);
+      localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
+      navigate(`/reservation/product/${car.id}`);
+      console.log('Listo para reservar!');
+      
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
