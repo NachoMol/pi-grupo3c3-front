@@ -30,9 +30,9 @@ const RenderCars = ({ car }) => {
         if (!authData) {
             setMessage('Permission denied, you must log in to add favorites.');
             setOpen(true);
-            setTimeout(() => {
+            /*setTimeout(() => {
                 navigate('/register');
-            }, 6000); // Espera 6 segundos antes de redirigir
+            }, 6000); // Espera 6 segundos antes de redirigir*/
             return;
         }
         if (isFavorite) {
