@@ -248,7 +248,18 @@ const Detail = ({ setSelectedDates }) => {
           </div>
 
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'15px' }}>
+            <Button
+              variant="contained"
+              onClick={handleReservation}
+              sx={{
+                mt: 1,
+                mb: 2,
+                bgcolor: '#302253',
+                '&:hover': { bgcolor: '#5e2b96' },
+                marginTop: '15px',
+              }}
+              disabled={!startDate || !endDate} // Deshabilitar el botón si startDate o endDate es null
+            >
               Start Reservation
             </Button>
           </Grid>
