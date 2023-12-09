@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from 'react-router-dom';
 import {
     TextField,
     Box,
@@ -33,6 +34,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [openDatePicker, setOpenDatePicker] = useState(false);
+    const navigate = useNavigate();
 
     const getNumberOfDays = () => {
         if (selectedDates.startDate && selectedDates.endDate) {
@@ -84,6 +86,8 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
                 text: 'Your reservation has been confirmed! You will recive further information via email.',
             });
             // Aquí puedes realizar más acciones después del éxito si es necesario
+            // Redirige a /reservation-list después de la reserva exitosa
+            navigate('/reservation-list');
         } catch (error) {
             console.error('Error:', error);
             // Alerta de error con SweetAlert2
