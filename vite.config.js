@@ -7,7 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@emotion/react', '@emotion/styled', '@mui/material/Tooltip']
   },
-  esbuild: {
+  esbuildOptions: {
     jsxInject: `import React from 'react'`,
     jsxFactory: `React.createElement`,
     jsxFragment: `React.Fragment`,
