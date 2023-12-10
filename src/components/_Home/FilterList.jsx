@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Autocomplete, Button, Checkbox, Container, Divider, FormControlLabel, Grid, IconButton, Paper, TextField } from '@mui/material'
+import { Autocomplete, Typography, Button, Box, Checkbox, Container, Divider, FormControlLabel, Grid, IconButton, Paper, TextField } from '@mui/material'
 import CategoryIcon from './CategoryIcon'
 import SearchIcon from '@mui/icons-material/Search';
 import styled from '@emotion/styled'
@@ -17,6 +17,7 @@ import { useCarStates } from '../../context/Context';
 import { toastMessage } from '../../helpers/toastMessage';
 import { dispacthAction } from '../../helpers/dispatchAction';
 import { FaTrash } from 'react-icons/fa';
+import './styleHome/FilterList.css';
 
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
@@ -239,14 +240,14 @@ const FilterList = () => {
   }
 
   return (
-    <Container>
+    <Container sx= {{margin:'0', padding: '0'}}>
       <Autocomplete
         options={options}
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search"
+            label="Search by name, dates or categories"
             value={selectedOption ? selectedOption.name : searchText}
             onChange={e => handleSearch(e)}
             onKeyDown={handleKeyDown}
@@ -261,7 +262,16 @@ const FilterList = () => {
                 </>
               ),
             }}
-            sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
+            sx={{
+              mt: '1rem',
+              '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                color: '#302253',
+              },
+              '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                color: '#5e2b96',
+              }, width: '38vw', minWidth: 320, mt: '1.5rem'
+            }}
+          // sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
           />
         )}
         onChange={(event, newValue) => { handleSelect(newValue ? newValue.name : ''); console.log(newValue ? newValue.name : '') }}
@@ -314,8 +324,12 @@ const FilterList = () => {
         }}
         sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
       /> */}
+      <Box sx={{ width: '100%' }}>
+  <Grid>
+    <h2 style={{marginTop:'30px', fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd' }}>Categories</h2>
+  </Grid>
+</Box>
 
-      <h2 style={{ fontFamily: 'Quicksand' }}>Categories</h2>
 
       <GridIcon container spacing={2}>
         {categories && categories.map((category) => (
@@ -342,12 +356,12 @@ const FilterList = () => {
       {/* <Container sx={{ textAlign: 'start' }}>
         <span onClick={handleFilterReset} style={{ cursor: 'pointer', color: '#5C4D6B' }}>Clear Filter</span>
       </Container> */}
-       <Container sx={{padding:'10px'}}>
-<Button onClick={handleFilterReset} sx={{backgroundColor: 'rgb(156, 128, 189)', color: '#fff'}}> <FaTrash color="white" style={{ marginRight: '5px' }}/> Clear Filter</Button>
-</Container>
+      <Container sx={{ padding: '15px' }}>
+        <Button onClick={handleFilterReset} sx={{ bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, color: '#fff' }}> <FaTrash color="white" style={{ marginRight: '5px' }} /> Clear Filter</Button>
+      </Container>
       <Grid container spacing={2} mt={1} justifyContent={'space-evenly'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-          <DatePicker
+          {/* <DatePicker
             label="Check-in date"
             value={checkInDate}
             format='dd/MM/yyyy'
@@ -356,16 +370,50 @@ const FilterList = () => {
             minDate={new Date()}
             sx={{ mt: '1rem'}}
             disablePast={true}
-          />
-          <DatePicker
-            label="Check-Out date"
-            value={checkOutDate}
-            format='dd/MM/yyyy'
-            onChange={handleCheckOutDateChange}
-            onBlur={handleFilter}
-            sx={{ mt: '1rem' }}
-            minDate={new Date()}
-          />
+          /> */}
+
+          <Grid >
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you want to travel?</Typography>
+            <DatePicker
+              label="Check-in date"
+              value={checkInDate}
+              format='dd/MM/yyyy'
+              onChange={handleCheckInDateChange}
+              onBlur={handleFilter}
+              minDate={new Date()}
+              sx={{
+                mt: '1rem',
+                '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                  color: '#302253',
+                },
+                '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                  color: '#5e2b96',
+                },
+              }}
+              disablePast={true}
+            />
+          </Grid>
+          <Grid >
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you finish your trip?</Typography>
+
+            <DatePicker
+              label="Check-Out date"
+              value={checkOutDate}
+              format='dd/MM/yyyy'
+              onChange={handleCheckOutDateChange}
+              onBlur={handleFilter}
+              minDate={new Date()}
+              sx={{
+                mt: '1rem',
+                '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                  color: '#302253',
+                },
+                '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                  color: '#5e2b96',
+                },
+              }}
+            />
+          </Grid>
         </LocalizationProvider>
       </Grid>
     </Container>

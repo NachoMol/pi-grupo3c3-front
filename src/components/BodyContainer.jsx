@@ -47,7 +47,7 @@ const BodyContainer = () => {
     return (
         <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;'}} >
             <FilterList />
-            <h2 style={{paddingTop:'10px'}}>Our Recommendations</h2>
+            <h2 style={{marginTop:'30px', paddingTop:'10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd'}}>Our Recommendations</h2>
             {filterLoadingProducts ? <CircularProgress sx={{color: '#5C4D6B', mt: '2rem'}} />: (
                 <Grid container spacing={2} sx={{ mt: '1rem' }}>
                     {car.length > 0 && car.map(car => (
