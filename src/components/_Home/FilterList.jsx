@@ -18,6 +18,8 @@ import { toastMessage } from '../../helpers/toastMessage';
 import { dispacthAction } from '../../helpers/dispatchAction';
 import { FaTrash } from 'react-icons/fa';
 import './styleHome/FilterList.css';
+import { isAfter } from 'date-fns';
+import { isBefore } from 'date-fns';
 
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
@@ -60,6 +62,7 @@ const FilterList = () => {
 
   const { dispatchCarFilter, dispatchFilterLoading } = useCarStates();
   const { checkInDate, checkOutDate } = dates;
+  const [tempDate, setTempDate] = useState(null);
 
   /**
    * Handles the change event for the given input element.
@@ -171,19 +174,41 @@ const FilterList = () => {
     setsearchText(e.target.value);
   }
 
+  // const handleCheckInDateChange = (date) => {
+  //   // setDates((prevDates) => ({
+  //   //   ...prevDates,
+  //   //   checkInDate: date,
+  //   // }));
+  // };
   const handleCheckInDateChange = (date) => {
-    setDates((prevDates) => ({
-      ...prevDates,
-      checkInDate: date,
-    }));
+    setTempDate(date);
+    if (checkOutDate && isAfter(date, checkOutDate)) {
+      alert('The arrival date cannot be later than the departure date.');
+    } else {
+      setDates((prevDates) => ({
+        ...prevDates,
+        checkInDate: date,
+      }));
+      setTempDate(null);
+    }
   };
 
   // Función para manejar el cambio de la fecha de check-out
+  // const handleCheckOutDateChange = (date) => {
+  //   setDates((prevDates) => ({
+  //     ...prevDates,
+  //     checkOutDate: date,
+  //   }));
+  // };
   const handleCheckOutDateChange = (date) => {
-    setDates((prevDates) => ({
-      ...prevDates,
-      checkOutDate: date,
-    }));
+    if (checkInDate && isBefore(date, checkInDate)) {
+      alert('The departure date cannot be before the arrival date.');
+    } else {
+      setDates((prevDates) => ({
+        ...prevDates,
+        checkOutDate: date,
+      }));
+    }
   };
 
   /**
