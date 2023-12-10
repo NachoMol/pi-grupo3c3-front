@@ -27,55 +27,76 @@ const UpdateVehicle = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [error, setError] = useState('');
   const params = useParams();
+  const [images, setImages] = useState(car.images || []);
 
-  const handleImageUpload = (event) => {
-    const selectedImages = Array.from(event.target.files);
+  const handleAddImage = async (event) => {
+    const file = event.target.files[0];
 
-    // Agregar las nuevas imágenes al estado
-    setCar({ ...car, images: [...car.images, ...selectedImages.map(image => ({ url: URL.createObjectURL(image) }))] });
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await axios.post('http://localhost:8080/upload-image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const imageUrl = response.data.url;
+
+      // Actualiza las imágenes con la nueva URL
+      setImages((prevImages) => [...prevImages, imageUrl]);
+    } catch (error) {
+      console.error('Error uploading image', error);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    // Remueve la imagen del estado
+    setImages((prevImages) => {
+      const updatedImages = [...prevImages];
+      updatedImages.splice(index, 1);
+      return updatedImages;
+    });
   };
 
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/products/${params.id}`);
+        const response = await axios.get(`http://localhost:8080/products/${params.id}`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+  
         const carData = response.data;
-
-        if (carData.images && carData.images.length > 0) {
-          // Si hay imágenes, establecerlas en el estado del vehículo
-          setCar({ ...carData, images: carData.images.map(image => ({ url: image })) });
-        } else {
-          // Si no hay imágenes, simplemente establecer el vehículo
-          setCar(carData);
-        }
-
+        setCar(carData);
+  
+        // Modifica los detalles para que estén administrados por Hibernate
+        const detailsResponse = await axios.get('http://localhost:8080/details', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        const detailsData = detailsResponse.data;
+  
+        // Obtener detalles actuales del vehículo y marcarlos
+        const currentDetails = carData.details.map(detail => detail.id.toString());
+        setSelectedDetails(currentDetails);
+  
+        // Verifica si hay imágenes y configura el estado
+        const carImages = carData.images || [];
+        setImages(carImages);
+  
         setLoading(false);
       } catch (error) {
         console.error('Error fetching car', error);
         setLoading(false);
       }
     };
-
-    fetchCar();
-  }, [params.id]);
-
-  const handleImageRemove = (index) => {
-    const updatedImages = [...car.images];
-    updatedImages.splice(index, 1);
-    setCar({ ...car, images: updatedImages });
-  };
-
-  useEffect(() => {
-    const fetchCar = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/products/${params.id}`);
-        setCar(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching car', error);
-        setLoading(false);
-      }
-    };
+  
     fetchCar();
   }, [params.id]);
 
@@ -127,23 +148,19 @@ const UpdateVehicle = () => {
   };
 
   const handleDetailsChange = (event) => {
-  const { name, checked } = event.target;
+    const { name, checked } = event.target;
 
-  let updatedSelectedDetails = [...selectedDetails];
+    let updatedSelectedDetails = [...selectedDetails];
 
-  const detailObject = details.find((detail) => detail.id.toString() === name);
-
-  if (detailObject) {
     if (checked) {
-      updatedSelectedDetails.push(detailObject);
+      updatedSelectedDetails.push(name);
     } else {
-      updatedSelectedDetails = updatedSelectedDetails.filter((detail) => detail.id !== detailObject.id);
+      updatedSelectedDetails = updatedSelectedDetails.filter((detail) => detail !== name);
     }
 
     setSelectedDetails(updatedSelectedDetails);
     console.log('Selected Details:', updatedSelectedDetails);
-  }
-};
+  };
 
   const handleNameChange = (event) => {
     const newName = event.target.value;
@@ -163,12 +180,19 @@ const UpdateVehicle = () => {
       const selectedCategoryId = car.category.id;
       const selectedCityId = car.city.id;
   
+      // Mapea los detalles a objetos completos Detail
+      const detailsToUpdate = selectedDetails.map((detailId) => {
+        const detail = details.find((d) => d.id === parseInt(detailId, 10));
+        return detail;
+      });
+  
       const updateData = {
         name: car.name,
         price: car.price,
         category: { id: selectedCategoryId },
         city: { id: selectedCityId },
-        details: selectedDetails.map((detail) => detail.id),
+        details: detailsToUpdate,
+        images: images,  // Incluye las imágenes actualizadas
       };
   
       const updateResponse = await axios.put(`http://localhost:8080/products/update/${car.id}`, updateData);
@@ -233,9 +257,9 @@ const UpdateVehicle = () => {
             />
           ))}
         </RadioGroup>
-        <div className="city-label">
-          <FormControl component="fieldset" className="city-label">
-            <FormLabel id="demo-radio-buttons-group-label" sx={{ fontSize: '22px', display: 'flex', justifyContent: 'center' }}>
+        <div className="city-label" sx={{ width: '100%' }}>
+          <FormControl component="fieldset" className="city-label" sx={{ width: '100%' }}>
+            <FormLabel id="demo-radio-buttons-group-label" sx={{ fontSize: '22px', display: 'flex', justifyContent: 'center', marginLeft: '155px' }}>
               City
             </FormLabel>
             <RadioGroup
@@ -273,45 +297,31 @@ const UpdateVehicle = () => {
               />
             ))}
           </FormGroup>
-          <FormLabel sx={{ fontSize: '22px', marginBottom: '18px' }}>Images</FormLabel>
-          <div className="image-container">
-            {car.images &&
-              car.images.map((image, index) => (
-                <div key={index} className="image-item" style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                  <img
-                    src={image.url}
-                    alt={`Image ${index}`}
-                    style={{
-                      width: '90px',
-                      height: '60px',
-                      objectFit: 'contain',
-                      marginRight: '5px',
-                      backgroundColor: 'rgba(217, 217, 217, 1)',
-                    }}
-                  />
-                  <Button variant="outlined" size="small" onClick={() => handleImageRemove(index)}>
-                    Remove
-                  </Button>
-                </div>
-              ))}
-          </div>
         </FormControl>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-          <label htmlFor="image-input" style={{ marginRight: '10px' }}>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              id="image-input"
-              style={{ display: 'none' }}
-              onChange={handleImageUpload}
-            />
-            <Button component="span" variant="contained" size="small">
-              Add Image
-            </Button>
-          </label>
-        </div>
-        <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3, fontSize: '16px' }} onClick={handleSubmit}>
+        <FormGroup>
+          <FormLabel sx={{ fontSize: '22px' }}>Images</FormLabel>
+          {images.map((image, index) => (
+             <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+             <img
+               src={image.url}
+               alt={`Image ${index}`}
+               style={{ width: '100px', height: '60px', objectFit: 'contain', marginRight: '25px', backgroundColor:'rgb(201, 201, 201)' }}
+             />
+             <Button onClick={() => handleRemoveImage(index)} variant="outlined" color="error">
+               Remove
+             </Button>
+           </div>
+          ))}
+          <Button
+            variant="contained"
+            component="label"
+            sx={{ marginTop: '8px', fontSize: '16px' }}
+          >
+            Add Image
+            <input type="file" accept="image/*" onChange={handleAddImage} style={{ display: 'none' }} />
+          </Button>
+        </FormGroup>
+        <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3, fontSize: '16px', backgroundColor:'#402253', '&:hover': { bgcolor: '#5e2b96' }, }} onClick={handleSubmit}>
           Update
         </Button>
         {loading && <p>Loading...</p>}
