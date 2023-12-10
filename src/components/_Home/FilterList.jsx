@@ -16,6 +16,7 @@ import { urlCategories, urlReservation } from '../../config/config'
 import { useCarStates } from '../../context/Context';
 import { toastMessage } from '../../helpers/toastMessage';
 import { dispacthAction } from '../../helpers/dispatchAction';
+import { FaTrash } from 'react-icons/fa';
 
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
@@ -338,10 +339,12 @@ const FilterList = () => {
         ))}
       </GridIcon>
 
-      <Container sx={{ textAlign: 'start' }}>
+      {/* <Container sx={{ textAlign: 'start' }}>
         <span onClick={handleFilterReset} style={{ cursor: 'pointer', color: '#5C4D6B' }}>Clear Filter</span>
-      </Container>
-
+      </Container> */}
+       <Container sx={{padding:'10px'}}>
+<Button onClick={handleFilterReset} sx={{backgroundColor: 'rgb(156, 128, 189)', color: '#fff'}}> <FaTrash color="white" style={{ marginRight: '5px' }}/> Clear Filter</Button>
+</Container>
       <Grid container spacing={2} mt={1} justifyContent={'space-evenly'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
           <DatePicker
