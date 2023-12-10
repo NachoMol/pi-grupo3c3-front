@@ -20,6 +20,7 @@ import { FaTrash } from 'react-icons/fa';
 import './styleHome/FilterList.css';
 import { isAfter } from 'date-fns';
 import { isBefore } from 'date-fns';
+import Swal from 'sweetalert2';
 
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
@@ -166,16 +167,14 @@ const FilterList = () => {
     setsearchText(e.target.value);
   }
 
-  // const handleCheckInDateChange = (date) => {
-  //   // setDates((prevDates) => ({
-  //   //   ...prevDates,
-  //   //   checkInDate: date,
-  //   // }));
-  // };
   const handleCheckInDateChange = (date) => {
     setTempDate(date);
     if (checkOutDate && isAfter(date, checkOutDate)) {
-      alert('The arrival date cannot be later than the departure date.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'The departure date cannot be before the arrival date.',
+      });
     } else {
       setDates((prevDates) => ({
         ...prevDates,
@@ -185,16 +184,14 @@ const FilterList = () => {
     }
   };
 
-  // Función para manejar el cambio de la fecha de check-out
-  // const handleCheckOutDateChange = (date) => {
-  //   setDates((prevDates) => ({
-  //     ...prevDates,
-  //     checkOutDate: date,
-  //   }));
-  // };
+
   const handleCheckOutDateChange = (date) => {
     if (checkInDate && isBefore(date, checkInDate)) {
-      alert('The departure date cannot be before the arrival date.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'The departure date cannot be before the arrival date.',
+      });
     } else {
       setDates((prevDates) => ({
         ...prevDates,
