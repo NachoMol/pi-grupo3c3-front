@@ -246,7 +246,7 @@ const Detail = ({ setSelectedDates }) => {
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
-
+          <div>  <h4 className='validDate'>Select a valid date range to begin your reservation.</h4> </div>
           <Grid container justifyContent="center" style={{ width: '100%' }}>
             <Button
               variant="contained"
