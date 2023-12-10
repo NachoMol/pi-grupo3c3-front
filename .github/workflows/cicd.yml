@@ -21,16 +21,6 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Update Vite and esbuild
-      run: npm install vite@latest esbuild@latest
-    
-    - name: Debug environment
-      run: |
-        node --version
-        npm --version
-        vite --version
-        esbuild --version
-
     - name: Build
       run: npm run build
 
