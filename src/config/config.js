@@ -8,4 +8,4 @@ export const urlCategories = 'http://localhost:8080/categories';
 export const urlReservation = 'http://localhost:8080/reservations';
 
 
-export const urlBackground = 'https://res.cloudinary.com/david-b/image/upload/f_auto,q_auto/v1/DH/Proyecto%20Integrador%20I/kqqbkydamaypjeznxgnx';
+export const urlLoginBackground = 'https://res.cloudinary.com/david-b/image/upload/f_auto,q_auto/v1/DH/Proyecto%20Integrador%20I/kqqbkydamaypjeznxgnx';
