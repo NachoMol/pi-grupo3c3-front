@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Alert, Avatar, TextField, Paper, Box, Grid, Typography, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { urlBackground, urlLogin } from '../config/config';
+import { urlLoginBackground, urlLogin } from '../config/config';
 import CopyrigthLogin from '../components/_Login/CopyrigthLogin';
 import DefaultButton from '../components/DefaultButton';
 import { useContextGlobal } from '../context/Context';
@@ -76,7 +76,7 @@ const Login = () => {
                 sm={4}
                 md={7}
                 sx={{
-                    backgroundImage: `url(${urlBackground})`,
+                    backgroundImage: `url(${urlLoginBackground})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'bottom',

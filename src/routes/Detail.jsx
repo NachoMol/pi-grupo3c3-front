@@ -36,10 +36,41 @@ const Detail = ({ setSelectedDates }) => {
 
   const [totalPrice, setTotalPrice] = useState(null);
 
+
+  const isDateDisabled = date => {
+    if (date instanceof Date) {
+      return reservedDates.some(disabledDate =>
+        date.getTime() === new Date(disabledDate).getTime()
+      );
+    }
+    return false;
+  };
+
+  const isRangeOverlapping = (start, end) => {
+    // Crear un nuevo objeto Date a partir de 'start' y 'end' para no modificar las fechas originales
+    let currentDate = new Date(start);
+    const endDate = new Date(end);
+
+    // Iterar sobre todas las fechas en el rango
+    while (currentDate <= endDate) {
+      // Si la fecha actual está en la lista de fechas reservadas, devolver verdadero
+      if (isDateDisabled(currentDate)) {
+        return true;
+      }
+      // Avanzar a la siguiente fecha
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    // Si ninguna fecha en el rango está en la lista de fechas reservadas, devolver falso
+    return false;
+  };
+
   const onChange = dates => {
     const [start, end] = dates;
-    if (!start || (end && isDateDisabled(start)) || (end && isDateDisabled(end))) {
-      setError('Date not available. Please select another date');
+   // if (!start || (end && isDateDisabled(start)) || (end && isDateDisabled(end))) {
+    if (isRangeOverlapping(start, end)){
+      setError('The selected dates overlap with an existing reservation. Please select another date range.');
+      setStartDate(null);
+      setEndDate(null);
     } else {
       setStartDate(start);
       setEndDate(end);
@@ -58,27 +89,6 @@ const Detail = ({ setSelectedDates }) => {
     }
   };
 
-  const isDateDisabled = date => {
-    if (date instanceof Date) {
-      return reservedDates.some(disabledDate =>
-        date.getTime() === new Date(disabledDate).getTime()
-      );
-    }
-    return false;
-  };
-
-  const handleReservation = () => {
-    if (!isLogged) {
-      setOpen(true);
-    } else {
-      // Guardar valores en localStorage antes de navegar
-      localStorage.setItem('startDate', startDate ? startDate.toISOString() : null);
-      localStorage.setItem('endDate', endDate ? endDate.toISOString() : null);
-      localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
-      navigate(`/reservation/product/${car.id}`);
-      console.log('Listo para reservar!');
-    }
-  };
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -119,6 +129,7 @@ const Detail = ({ setSelectedDates }) => {
 
     fetchCar();
   }, [params.id]);
+
   useEffect(() => {
     const fetchReservedDates = async () => {
       try {
@@ -142,6 +153,20 @@ const Detail = ({ setSelectedDates }) => {
     }
     fetchReservedDates();
   }, [params.id]);
+
+  const handleReservation = () => {
+    if (!isLogged) {
+      setOpen(true);
+    } else {
+      // Guardar valores en localStorage antes de navegar
+      localStorage.setItem('startDate', startDate ? startDate.toISOString() : null);
+      localStorage.setItem('endDate', endDate ? endDate.toISOString() : null);
+      localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
+      navigate(`/reservation/product/${car.id}`);
+      console.log('Listo para reservar!');
+      
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -222,9 +247,21 @@ const Detail = ({ setSelectedDates }) => {
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
-
+          <div>  <h4 className='validDate'>Select a valid date range to begin your reservation.</h4> </div>
           <Grid container justifyContent="center" style={{ width: '100%' }}>
-            <Button variant="contained" onClick={handleReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, marginTop:'15px' }}>
+            <Button
+              variant="contained"
+              onClick={handleReservation}
+              sx={{
+                mt: 1,
+                mb: 2,
+                bgcolor: '#302253',
+                '&:hover': { bgcolor: '#5e2b96' },
+                marginTop: '15px',
+                '&.Mui-disabled': { color: '#fff', backgroundColor: '#302253' }, 
+              }}
+              disabled={!startDate || !endDate} // Deshabilitar el botón si startDate o endDate es null
+            >
               Start Reservation
             </Button>
           </Grid>

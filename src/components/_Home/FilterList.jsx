@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Autocomplete, Button, Checkbox, Container, Divider, FormControlLabel, Grid, IconButton, Paper, TextField } from '@mui/material'
+import { Autocomplete, Typography, Button, Box, Checkbox, Container, Divider, FormControlLabel, Grid, IconButton, Paper, TextField } from '@mui/material'
 import CategoryIcon from './CategoryIcon'
 import SearchIcon from '@mui/icons-material/Search';
 import styled from '@emotion/styled'
@@ -10,12 +10,17 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import es from 'date-fns/locale/es';
-import { format } from 'date-fns'
+import { format, isValid } from 'date-fns'
 import { types } from '../../types/types'
 import { urlCategories, urlReservation } from '../../config/config'
 import { useCarStates } from '../../context/Context';
 import { toastMessage } from '../../helpers/toastMessage';
 import { dispacthAction } from '../../helpers/dispatchAction';
+import { FaTrash } from 'react-icons/fa';
+import './styleHome/FilterList.css';
+import { isAfter } from 'date-fns';
+import { isBefore } from 'date-fns';
+import Swal from 'sweetalert2';
 
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
@@ -53,11 +58,13 @@ const FilterList = () => {
   });
   const [selectedOption, setSelectedOption] = useState(null); // estado para manejar la seleccion del autocompletado
   const [categoryList, setCategorylist] = useState([]);
-  const [options, setOptions] = React.useState([]); // estado para manejar las opciones del autocompletado
+  const [options, setOptions] = useState([]); // estado para manejar las opciones del autocompletado
   const [availableCars, setAvailableCars] = useState([]);
+  const [componentLoaded, setComponentLoaded] = useState(false);
 
   const { dispatchCarFilter, dispatchFilterLoading } = useCarStates();
   const { checkInDate, checkOutDate } = dates;
+  const [tempDate, setTempDate] = useState(null);
 
   /**
    * Handles the change event for the given input element.
@@ -91,20 +98,6 @@ const FilterList = () => {
   };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${urlCategories}`);
-        setCategories(response.data)
-      } catch (error) {
-        console.error("Error fetching categories", error)
-      }
-    }
-    fetchCategories();
-  }, [])
-
-
-  // Ajuste futuro para el autocomplete
-  useEffect(() => {
     const getAvailableProducts = async () => {
       try {
         const response = await axios.get(`${urlReservation}/availableproducts`);
@@ -115,14 +108,25 @@ const FilterList = () => {
         console.error('Error al obtener lista de productos disponibles.', error);
       }
     };
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${urlCategories}`);
+        setCategories(response.data)
+      } catch (error) {
+        console.error("Error fetching categories", error)
+      }
+    }
 
+    fetchCategories();
     getAvailableProducts();
+    setComponentLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!componentLoaded) return;
     setAvailableCars({
-      checkin: checkInDate ? format(checkInDate, 'yyyy-MM-dd') : '',
-      checkout: checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : '',
+      checkin: isValid(checkInDate) ? format(checkInDate, 'yyyy-MM-dd') : '',
+      checkout: isValid(checkOutDate) ? format(checkOutDate, 'yyyy-MM-dd') : '',
       // productName: searchText,
       productName: selectedOption?.name || searchText,
       categoryIds: categoryList.join(','),
@@ -132,19 +136,13 @@ const FilterList = () => {
   const { checkin, checkout, categoryIds } = availableCars;
 
   useEffect(() => {
+    if (!componentLoaded) return;
     handleFilter();
   }, [checkin, checkout, categoryIds]);
 
-  //se incorpora el estado selected options para el autocompletado pero no funciona correctamente
-  // useEffect(() => {
-  //   setAvailableCars({
-  //     checkin: checkOutDate ? format(checkInDate, 'yyyy-MM-dd') : '',
-  //     checkout: checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : '',
-  //     productName: selectedOption?.name || '',
-  //     categoryIds: categoryList.join(','),
-  //   });
-  // }, [selectedCategories, selectedOption, checkInDate, checkOutDate]);
-
+  /**
+   * Resets the filter state by setting the search text, dates, selected categories, and category list to their initial values.
+   */
   const handleFilterReset = () => {
     setsearchText('');
     setDates({
@@ -170,18 +168,36 @@ const FilterList = () => {
   }
 
   const handleCheckInDateChange = (date) => {
-    setDates((prevDates) => ({
-      ...prevDates,
-      checkInDate: date,
-    }));
+    setTempDate(date);
+    if (checkOutDate && isAfter(date, checkOutDate)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'The departure date cannot be before the arrival date.',
+      });
+    } else {
+      setDates((prevDates) => ({
+        ...prevDates,
+        checkInDate: date,
+      }));
+      setTempDate(null);
+    }
   };
 
-  // Función para manejar el cambio de la fecha de check-out
+
   const handleCheckOutDateChange = (date) => {
-    setDates((prevDates) => ({
-      ...prevDates,
-      checkOutDate: date,
-    }));
+    if (checkInDate && isBefore(date, checkInDate)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'The departure date cannot be before the arrival date.',
+      });
+    } else {
+      setDates((prevDates) => ({
+        ...prevDates,
+        checkOutDate: date,
+      }));
+    }
   };
 
   /**
@@ -190,32 +206,42 @@ const FilterList = () => {
    */
   const handleFilter = () => {
     if (availableCars.searchText?.trim() === '') return;
+    // const {token} = JSON.parse(localStorage.getItem('auth'));
     const config = {
       params: availableCars,
       // headers: {
-      //   // Authorization: `Bearer ${localStorage.getItem('auth')}`, // Para cuando apliquen seguridad y necesite el token para consumir el endpoint
-      // autorization hardcode --- *** ---
-      //   Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfVVNFUlwifV0iLCJpc0FkbWluIjpmYWxzZSwidXNlcm5hbWUiOiJkYXZpZDEwbm92QHRlc3QuY29tIiwic3ViIjoiZGF2aWQxMG5vdkB0ZXN0LmNvbSIsImlhdCI6MTcwMDcyMzUyOCwiZXhwIjoxNzAwNzI3MTI4fQ.DEFC4ZXTrj0HX2jXGc0ZT6_XVlLFxresw3aVJfVv-tk`, 
-      // }
+      //   Authorization: `Bearer ${token}`,
     };
     console.log('objeto a enviar para filtro ---->', availableCars);
     getFilterCarList(config);
   }
 
-  // Mejora futura para autocomplete
+  /**
+   * Handle the select event.
+   * @param {any} selectedOption - The selected option.
+   * @return {void} 
+   */
   const handleSelect = (selectedOption) => {
     setsearchText(selectedOption)
   };
 
+  /**
+   * Handles the key down event and triggers a filter when the Enter key is pressed.
+   * @param {object} e - The keydown event object.
+   */
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleFilter();
     }
   };
 
+  /**
+   * Retrieves a filtered list of cars from the API.
+   * @param {object} config - The configuration object for the API request.
+   * @return {Promise} A promise that resolves with the filtered list of cars.
+   */
   const getFilterCarList = async (config) => {
     try {
-      // debugger;
       dispacthAction(dispatchFilterLoading, types.LOADING_FILTER_CARS, true)
       const { data } = await axios.get(`${urlReservation}/availableproducts`, config);
 
@@ -229,7 +255,6 @@ const FilterList = () => {
           payload: data.content
         })
       }
-
     } catch (error) {
       console.error('Error al obtener productos:', error);
     } finally {
@@ -238,14 +263,14 @@ const FilterList = () => {
   }
 
   return (
-    <Container>
+    <Container sx={{ margin: '0', padding: '0' }}>
       <Autocomplete
         options={options}
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search"
+            label="Search by name, dates or categories"
             value={selectedOption ? selectedOption.name : searchText}
             onChange={e => handleSearch(e)}
             onKeyDown={handleKeyDown}
@@ -260,61 +285,28 @@ const FilterList = () => {
                 </>
               ),
             }}
-            sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
+            sx={{
+              mt: '1rem',
+              '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                color: '#302253',
+              },
+              '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                color: '#5e2b96',
+              },
+              width: '38vw',
+              minWidth: 320
+            }}
+          // sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
           />
         )}
         onChange={(event, newValue) => { handleSelect(newValue ? newValue.name : ''); console.log(newValue ? newValue.name : '') }}
       />
-      {/* <Autocomplete
-        options={options}
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search"
-            value={selectedOption?.name || searchText}
-            onChange={handleSearch}
-            // onBlur={handleFilter}
-            onKeyDown={handleKeyDown}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                  <IconButton type="button" sx={{ p: '10px', zIndex: 0 }} aria-label="search" onClick={handleFilter}>
-                    <SearchIcon />
-                  </IconButton>
-                </>
-              ),
-            }}
-            sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
-          />
-        )}
-        onChange={(event, newValue) => handleSelect(newValue)}
-      /> */}
 
-      {/* <TextField
-        id="outlined-search"
-        label="Search"
-        type="search"
-        value={searchText}
-        onChange={handleSearch}
-        // onBlur={handleFilter}
-        onKeyDown={handleKeyDown} 
-        InputProps={{
-          endAdornment: (
-            <>
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <IconButton type="button" sx={{ p: '10px', zIndex: 0 }} aria-label="search" onClick={handleFilter}>
-                <SearchIcon />
-              </IconButton>
-            </>
-          ),
-        }}
-        sx={{ width: '38vw', minWidth: 320, mt: '1.5rem' }}
-      /> */}
-
-      <h2 style={{ fontFamily: 'Roboto' }}>Categories</h2>
+      <Box sx={{ width: '100%' }}>
+        <Grid>
+          <h2 style={{ marginTop: '30px', fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd' }}>Categories</h2>
+        </Grid>
+      </Box>
 
       <GridIcon container spacing={2}>
         {categories && categories.map((category) => (
@@ -338,31 +330,67 @@ const FilterList = () => {
         ))}
       </GridIcon>
 
-      <Container sx={{ textAlign: 'start' }}>
+      {/* <Container sx={{ textAlign: 'start' }}>
         <span onClick={handleFilterReset} style={{ cursor: 'pointer', color: '#5C4D6B' }}>Clear Filter</span>
+      </Container> */}
+      <Container sx={{ padding: '15px' }}>
+        <Button onClick={handleFilterReset} sx={{ bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, color: '#fff' }}> <FaTrash color="white" style={{ marginRight: '5px' }} /> Clear Filter</Button>
       </Container>
-
       <Grid container spacing={2} mt={1} justifyContent={'space-evenly'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-          <DatePicker
+          {/* <DatePicker
             label="Check-in date"
             value={checkInDate}
             format='dd/MM/yyyy'
             onChange={handleCheckInDateChange}
             onBlur={handleFilter}
             minDate={new Date()}
-            sx={{ mt: '1rem' }}
+            sx={{ mt: '1rem'}}
             disablePast={true}
-          />
-          <DatePicker
-            label="Check-Out date"
-            value={checkOutDate}
-            format='dd/MM/yyyy'
-            onChange={handleCheckOutDateChange}
-            onBlur={handleFilter}
-            sx={{ mt: '1rem' }}
-            minDate={new Date()}
-          />
+          /> */}
+
+          <Grid >
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you want to travel?</Typography>
+            <DatePicker
+              label="Check-in date"
+              value={checkInDate}
+              format='dd/MM/yyyy'
+              onChange={handleCheckInDateChange}
+              onBlur={handleFilter}
+              minDate={new Date()}
+              sx={{
+                mt: '1rem',
+                '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                  color: '#302253',
+                },
+                '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                  color: '#5e2b96',
+                },
+              }}
+              disablePast={true}
+            />
+          </Grid>
+          <Grid >
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you finish your trip?</Typography>
+
+            <DatePicker
+              label="Check-Out date"
+              value={checkOutDate}
+              format='dd/MM/yyyy'
+              onChange={handleCheckOutDateChange}
+              onBlur={handleFilter}
+              minDate={new Date()}
+              sx={{
+                mt: '1rem',
+                '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                  color: '#302253',
+                },
+                '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                  color: '#5e2b96',
+                },
+              }}
+            />
+          </Grid>
         </LocalizationProvider>
       </Grid>
     </Container>

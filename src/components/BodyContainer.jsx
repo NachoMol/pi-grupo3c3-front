@@ -18,6 +18,12 @@ const BodyContainer = () => {
     console.log('bodyCar', car)
 
     useEffect(() => {
+
+        // Limpiar los valores de localStorage al cargar el componente
+        localStorage.removeItem('startDate');
+        localStorage.removeItem('endDate');
+        localStorage.removeItem('totalPrice');
+
         const fetchCars = async () => {
             try {
                 const response = await axios.get(`${URL}/products/random?size=${size}`);
@@ -31,13 +37,18 @@ const BodyContainer = () => {
     }, []); // se vuelve a ejecutar cuando cambian 'page' o 'size'
 
     useEffect(() => {
-              setCar(filter)
-          console.log('Bodyfilter', filter)
-    }, [filter])
+        // Aplicar el filtro y limpiar los valores de localStorage al aplicar el filtro
+        setCar(filter);
+        localStorage.removeItem('startDate');
+        localStorage.removeItem('endDate');
+        localStorage.removeItem('totalPrice');
+        console.log('Bodyfilter', filter);
+    }, [filter]);
 
     return (
         <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;'}} >
             <FilterList />
+            <h2 style={{marginTop:'30px', paddingTop:'10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd'}}>Our Recommendations</h2>
             {filterLoadingProducts ? <CircularProgress sx={{color: '#5C4D6B', mt: '2rem'}} />: (
                 <Grid container spacing={2} sx={{ mt: '1rem' }}>
                     {car.length > 0 && car.map(car => (

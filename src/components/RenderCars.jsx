@@ -31,9 +31,9 @@ const RenderCars = ({ car }) => {
         if (!authData) {
             setMessage('Permission denied, you must log in to add favorites.');
             setOpen(true);
-            setTimeout(() => {
+            /*setTimeout(() => {
                 navigate('/register');
-            }, 6000); // Espera 6 segundos antes de redirigir
+            }, 6000); // Espera 6 segundos antes de redirigir*/
             return;
         }
         if (isFavorite) {
@@ -118,7 +118,7 @@ const RenderCars = ({ car }) => {
                     </Typography>
                     <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Typography variant="body2" color="text.secondary" sx={{fontSize:'16px', fontWeight:'600'}}>
-                            ${car.price}
+                            ${car.price} USD
                         </Typography>
                     </CardContent>
                 </CardActionArea>
