@@ -7,3 +7,20 @@
     width: 100% !important;
     margin-left: 0 !important;
 }
+
+.css-1cprt1l-MuiFormControl-root-MuiTextField-root {
+    min-width: 300px !important;
+    width: 50vw !important;
+}
+
+@media (max-width: 754px) {
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+font-size: 0.9rem !important;
+}
+}
+
+@media (max-width: 690px) {
+    .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+    width: 30vw !important;
+    }
+    }
