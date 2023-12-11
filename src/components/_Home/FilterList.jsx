@@ -173,8 +173,9 @@ const FilterList = () => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'The departure date cannot be before the arrival date.',
+        text: 'La fecha de devolución no puede ser anterior a la fecha de retiro.',
       });
+      setTempDate(null); // Limpiar la fecha temporal en caso de error
     } else {
       setDates((prevDates) => ({
         ...prevDates,
@@ -184,13 +185,12 @@ const FilterList = () => {
     }
   };
 
-
   const handleCheckOutDateChange = (date) => {
     if (checkInDate && isBefore(date, checkInDate)) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'The departure date cannot be before the arrival date.',
+        text: 'La fecha de devolución no puede ser anterior a la fecha de retiro.',
       });
     } else {
       setDates((prevDates) => ({
@@ -263,14 +263,14 @@ const FilterList = () => {
   }
 
   return (
-    <Container sx={{ margin: '0', padding: '0' }}>
+    <Container sx={{ margin: '0', padding: '0', }}>
       <Autocomplete
         options={options}
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search by name, dates or categories"
+            label="Search by name"
             value={selectedOption ? selectedOption.name : searchText}
             onChange={e => handleSearch(e)}
             onKeyDown={handleKeyDown}
@@ -304,7 +304,7 @@ const FilterList = () => {
 
       <Box sx={{ width: '100%' }}>
         <Grid>
-          <h2 style={{ marginTop: '30px', fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd' }}>Categories</h2>
+          <h2 style={{ marginTop: '10px', fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', fontSize: '20px' }}>Categories</h2>
         </Grid>
       </Box>
 
@@ -317,12 +317,12 @@ const FilterList = () => {
                   <Checkbox
                     checked={selectedCategories[category.name]}
                     onChange={handleChange}
-                    // onBlur={handleFilter} 
                     name={category.name}
                     id={`${category.id}`}
+                    sx={{ fontFamily: 'Quicksand' }} // Aplica la fuente al Checkbox
                   />
                 }
-                label={category.name}
+                label={<span style={{ fontFamily: 'Quicksand' }}>{category.name}</span>} // Aplica la fuente al span que contiene el nombre de la categoría
               />
               <CategoryIcon category={category.name} />
             </Item>
@@ -333,9 +333,6 @@ const FilterList = () => {
       {/* <Container sx={{ textAlign: 'start' }}>
         <span onClick={handleFilterReset} style={{ cursor: 'pointer', color: '#5C4D6B' }}>Clear Filter</span>
       </Container> */}
-      <Container sx={{ padding: '15px' }}>
-        <Button onClick={handleFilterReset} sx={{ bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, color: '#fff' }}> <FaTrash color="white" style={{ marginRight: '5px' }} /> Clear Filter</Button>
-      </Container>
       <Grid container spacing={2} mt={1} justifyContent={'space-evenly'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
           {/* <DatePicker
@@ -350,7 +347,7 @@ const FilterList = () => {
           /> */}
 
           <Grid >
-            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you want to travel?</Typography>
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>Pick-up date</Typography>
             <DatePicker
               label="Check-in date"
               value={checkInDate}
@@ -371,21 +368,22 @@ const FilterList = () => {
             />
           </Grid>
           <Grid >
-            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>When do you finish your trip?</Typography>
+            <Typography variant="h6" color="#5e2b96" fontFamily="Quicksand" fontSize='1.1rem' fontWeight='bold' textAlign='left' marginBottom='-10px'>Return date</Typography>
 
             <DatePicker
-              label="Check-Out date"
+              label="Check-out date"
               value={checkOutDate}
               format='dd/MM/yyyy'
               onChange={handleCheckOutDateChange}
               onBlur={handleFilter}
-              minDate={new Date()}
+              minDate={checkInDate || new Date()}
+              disablePast={true}
               sx={{
                 mt: '1rem',
-                '.MuiInputBase-root': { // Aplicamos el color a la base del input
+                '.MuiInputBase-root': {
                   color: '#302253',
                 },
-                '.MuiFormLabel-root.Mui-focused': { // Aplicamos el color al label cuando está enfocado
+                '.MuiFormLabel-root.Mui-focused': {
                   color: '#5e2b96',
                 },
               }}
@@ -393,6 +391,9 @@ const FilterList = () => {
           </Grid>
         </LocalizationProvider>
       </Grid>
+      <Container sx={{ padding: '15px' }}>
+        <Button onClick={handleFilterReset} sx={{ bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' }, color: '#fff', fontFamily: 'Quicksand' }}> <FaTrash color="white" style={{ marginRight: '5px' }} /> Clear Filter</Button>
+      </Container>
     </Container>
   )
 }
