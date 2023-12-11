@@ -195,7 +195,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="center" style={{ width: '100%' }}>
-                            <Button variant="contained" onClick={confirmReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', marginTop: '30px', '&:hover': { bgcolor: '#5e2b96' }, padding: '10px' }}>
+                            <Button variant="contained" onClick={confirmReservation} sx={{ mt: 1, mb: 2, bgcolor: '#302253', marginTop: '30px', '&:hover': { bgcolor: '#5e2b96' }, padding: '10px', fontFamily: 'Quicksand', fontWeight:'600' }}>
                                 Confirm Reservation
                             </Button>
                         </Grid>
@@ -203,7 +203,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
                     </form>
                 </div>
                 <Box component={Paper} elevation={3} p={3} mt={15} >
-                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
+                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight:'600' }}>
                         Product Policies
                     </Typography>
                     <ProductPolicies />

@@ -209,14 +209,14 @@ const Detail = ({ setSelectedDates }) => {
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                   <div className='detailsLeft' style={{ float: 'left', textAlign: 'center' }}>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }} >
                       {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
                       Price: ${totalPrice !== null ? totalPrice : car.price}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }}>
                       Category: {car.category?.name}
                     </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }}>
+                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }}>
                       City: {car.city?.city}
                     </Typography>
                   </div>
@@ -224,7 +224,7 @@ const Detail = ({ setSelectedDates }) => {
                     {car.details.map((detail) => (
                       <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
-                        <Typography variant="body1">{detail.name}</Typography>
+                        <Typography variant="body1" sx={{fontFamily: 'Quicksand', fontWeight:'600'}}>{detail.name}</Typography>
                       </div>
                     ))}
                   </div>
@@ -233,7 +233,7 @@ const Detail = ({ setSelectedDates }) => {
             </Container>
           </div>
 
-          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae' }}>
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', fontFamily: 'Quicksand', fontWeight:'600' }}>
             <DatePicker
               selected={startDate}
               onChange={onChange}
@@ -259,6 +259,8 @@ const Detail = ({ setSelectedDates }) => {
                 '&:hover': { bgcolor: '#5e2b96' },
                 marginTop: '15px',
                 '&.Mui-disabled': { color: '#fff', backgroundColor: '#302253' }, 
+                fontFamily: 'Quicksand', 
+                fontWeight:'600'
               }}
               disabled={!startDate || !endDate} // Deshabilitar el botón si startDate o endDate es null
             >
@@ -270,7 +272,7 @@ const Detail = ({ setSelectedDates }) => {
 
       <div>
         <Box component={Paper} elevation={3} p={3} mt={4} sx={{marginTop:'0'}}>
-          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontWeight: '800' }}>
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight:'800' }}>
             Product Policies
           </Typography>
           <ProductPolicies />
