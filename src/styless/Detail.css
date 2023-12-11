@@ -150,6 +150,9 @@
   padding-bottom: 50px !important;
 }
 
+.MuiTypography-h6 {
+  padding: 10px !important;
+}
 
 @media (max-width: 1160px) {
   .css-1u4wd3r-MuiPaper-root {
