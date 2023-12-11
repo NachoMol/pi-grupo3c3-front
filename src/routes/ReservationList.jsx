@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useContextGlobal } from '../context/Context';
 import { urlReservation } from '../config/config';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DefaultButton from '../components/DefaultButton';
 import { URL } from '../config/config';
 
@@ -102,7 +102,7 @@ const ReservationsList = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '80vw', marginBottom:'100px' }}>
+            <div style={{ width: '80vw', marginBottom: '100px' }}>
                 <h2 style={{ textAlign: 'center' }}>My Reservations</h2>
                 {loading && <p>Loading...</p>}
                 {!loading && sortedReservations.length === 0 && <p>No reservations found.</p>}
@@ -135,12 +135,17 @@ const ReservationsList = () => {
                                         Cancel
                                     </Button>
                                 )}
+                                {
+                                    !reservation.state && (
+                                        <Chip label="Cancelled" color="error" variant="elevated" sx={{ margin: 'auto 6px', backgroundColor: '#9C80BD', }} />
+                                    )
+                                }
                             </ListItem>
                         </React.Fragment>
                     ))}
                 </List>
             </div>
-            
+
             <Dialog
                 open={open}
                 onClose={handleClose}

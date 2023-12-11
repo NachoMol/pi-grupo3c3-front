@@ -190,7 +190,7 @@ const Detail = ({ setSelectedDates }) => {
           <CarGallery productImages={car.images.map(image => image.url)} productId={params.id} />
         </div>
 
-        <div className='ladoDerecho' style={{ display: 'flex', flexDirection: 'column', padding: '15px', width: '50%' }}>
+        <div className='ladoDerecho' style={{ display: 'flex', flexDirection: 'column', padding: '15px', paddingTop: '0px', width: '50%' }}>
           <div className='detail-information'>
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
@@ -207,9 +207,9 @@ const Detail = ({ setSelectedDates }) => {
                 alignItems: 'center',
                 backgroundColor: '#fff'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                <div className='containerCardetail' style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                    <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', alignContent: 'center' }}>
+                    <div className='detailsLeft' style={{ float: 'left', textAlign: 'start', alignContent: 'center' }}>
                       <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight: '600' }}>
                         {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
                         Price: ${totalPrice !== null ? totalPrice : car.price}
@@ -224,7 +224,7 @@ const Detail = ({ setSelectedDates }) => {
                   </div>
                   <div className='detailsRight' style={{ float: 'left', textAlign: 'center', marginLeft: '80px' }}>
                     {car.details.map((detail) => (
-                      <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
+                      <div key={detail.id} style={{ display: 'flex', alignItems: 'start', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
                         <Typography variant="body1" sx={{ fontFamily: 'Quicksand', fontWeight: '600' }}>{detail.name}</Typography>
                       </div>

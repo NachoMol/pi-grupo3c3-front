@@ -151,7 +151,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
                         />
                     </div>
                 </Grid>
-                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '100px', borderRadius: '5px', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: '#d9d9d9', width: '100%' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '100px', marginBottom: '20px', borderRadius: '5px', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: '#d9d9d9', width: '100%' }}>
                     {/*Formulario*/}
                     <form style={{ backgroundColor: '#fff', borderRadius: '5px', padding: '20px', width: '80%', boxShadow: '0px 0px 10px rgba(0,0,0,0.15)' }}>
 
@@ -202,8 +202,8 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
 
                     </form>
                 </div>
-                <Box component={Paper} elevation={3} p={3} mt={15} >
-                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight:'600' }}>
+                <Box component={Paper} elevation={3} p={3} mt={isSmallScreen ? 2 : 4} sx={{ marginTop: '0' }}>
+                    <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight: '800' }}>
                         Product Policies
                     </Typography>
                     <ProductPolicies />

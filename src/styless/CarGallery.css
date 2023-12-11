@@ -33,7 +33,7 @@
 .photosContainer {
   width: 38vw;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 18px;
   align-items: center;
   padding: 0;
@@ -64,7 +64,7 @@
 }
 
 
-@media  (max-width: 1108px){
+@media  (max-width: 1160px){
   .mainPhotoContainer {
     width: 80vw;
     
@@ -74,8 +74,7 @@
    
   }  
   .photosContainer {
-    width: 80vw;
-    
+    width: 80vw;    
   }
   .gallery {
     height: auto;
@@ -99,4 +98,18 @@
     height: 50px !important;
     width: 50px !important;
   }
+}
+
+@media (max-width: 430px){
+  .photosContainer {
+    gap: inherit;   
+  }
+  .arrowIcons {
+    width: 30px !important;
+  }
+}
+
+@media (max-width: 380px){
+ .arrowIcons {padding: 5px;
+}
 }
