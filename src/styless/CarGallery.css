@@ -55,6 +55,7 @@
 .arrowIcons{
   width: 40px;
   height: auto;
+  cursor:pointer;
 }
 
 @media(max-width: 1536px){
