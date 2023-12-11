@@ -30,16 +30,19 @@ const ProductPolicies = () => {
     }
 
     return (
-        <Grid container spacing={13} style={{ paddingBottom: '20px' }}>
+        <Grid container spacing={13}>
             {policies.map((policy, index) => (
                 <Grid item xs={12} sm={6} md={4} key={policy.id}>
-                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0' }}>
+                <div style={{ marginBottom: index !== policies.length - 1 ? '20px' : '0', }}>
                     <Typography variant="h6" sx={{marginBottom: '12px', fontFamily: 'Quicksand', fontWeight:'800'}}>{policy.title}</Typography>
                     <Typography variant="body1" style={{ paddingBottom: '20px', textAlign:'justify', fontFamily: 'Quicksand', fontWeight:'600' }}>{policy.description}</Typography>
                 </div>
+                <br />
+                <br />
                 </Grid>
             ))}
         </Grid>
+        
     )
 }
 
