@@ -1,4 +1,4 @@
-// build.js
+// build.cjs
 const { build } = require('vite')
 const config = require('./vite.config.js')
 
