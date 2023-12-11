@@ -110,22 +110,22 @@ const CategoryList = () => {
 
   return (
     <div className="category-list-container">
-      <h2>Categories</h2>
+      <h2 style={{fontSize:'30px'}}>Categories</h2>
       {!isMobile ? (
         <TableContainer component={Paper} sx={{ maxWidth: 800, margin: 'auto' }}>
           <Table sx={{ minWidth: 400 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>ID</StyledTableCell>
-                <StyledTableCell align="center">Category</StyledTableCell>
-                <StyledTableCell align="center">Delete</StyledTableCell>
+                <StyledTableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>ID</StyledTableCell>
+                <StyledTableCell align="center" sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>Category name</StyledTableCell>
+                <StyledTableCell align="center" sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>Delete</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {categories.map((row) => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row"> {row.id} </StyledTableCell>
-                  <StyledTableCell align="center"> {row.name} </StyledTableCell>
+                  <StyledTableCell component="th" scope="row"> {<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{row.id}</span>} </StyledTableCell>
+                  <StyledTableCell align="center">{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{row.name}</span>}</StyledTableCell>
                   {
                     loading ?
                       (<CircularProgress sx={{ color: '#705b85', mt: '4px' }} />)

@@ -66,8 +66,8 @@ const Detail = ({ setSelectedDates }) => {
 
   const onChange = dates => {
     const [start, end] = dates;
-   // if (!start || (end && isDateDisabled(start)) || (end && isDateDisabled(end))) {
-    if (isRangeOverlapping(start, end)){
+    // if (!start || (end && isDateDisabled(start)) || (end && isDateDisabled(end))) {
+    if (isRangeOverlapping(start, end)) {
       setError('The selected dates overlap with an existing reservation. Please select another date range.');
       setStartDate(null);
       setEndDate(null);
@@ -164,7 +164,7 @@ const Detail = ({ setSelectedDates }) => {
       localStorage.setItem('totalPrice', totalPrice !== null ? totalPrice.toString() : null);
       navigate(`/reservation/product/${car.id}`);
       console.log('Listo para reservar!');
-      
+
     }
   };
 
@@ -195,7 +195,7 @@ const Detail = ({ setSelectedDates }) => {
             <Container component="main" Width="100%" disableGutters>
               <CssBaseline />
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius: '5px', padding: '10px', fontWeight:'600' }}>
+                <Typography component="h1" variant="h5" style={{ width: '100%', backgroundColor: '#9c80bd', borderRadius: '5px', padding: '10px', fontWeight: '600' }}>
                   Car Details
                 </Typography>
               </div>
@@ -208,23 +208,25 @@ const Detail = ({ setSelectedDates }) => {
                 backgroundColor: '#fff'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center' }}>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }} >
-                      {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
-                      Price: ${totalPrice !== null ? totalPrice : car.price}
-                    </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }}>
-                      Category: {car.category?.name}
-                    </Typography>
-                    <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight:'600' }}>
-                      City: {car.city?.city}
-                    </Typography>
+                  <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                    <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', alignContent: 'center' }}>
+                      <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight: '600' }}>
+                        {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
+                        Price: ${totalPrice !== null ? totalPrice : car.price}
+                      </Typography>
+                      <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight: '600' }}>
+                        Category: {car.category?.name}
+                      </Typography>
+                      <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%', fontFamily: 'Quicksand', fontWeight: '600' }}>
+                        City: {car.city?.city}
+                      </Typography>
+                    </div>
                   </div>
                   <div className='detailsRight' style={{ float: 'left', textAlign: 'center', marginLeft: '80px' }}>
                     {car.details.map((detail) => (
                       <div key={detail.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', backgroundColor: '#FFF' }}>
                         <img src={detail.img_url} alt={detail.name} style={{ marginRight: '8px', width: '24px', height: '24px' }} />
-                        <Typography variant="body1" sx={{fontFamily: 'Quicksand', fontWeight:'600'}}>{detail.name}</Typography>
+                        <Typography variant="body1" sx={{ fontFamily: 'Quicksand', fontWeight: '600' }}>{detail.name}</Typography>
                       </div>
                     ))}
                   </div>
@@ -233,7 +235,7 @@ const Detail = ({ setSelectedDates }) => {
             </Container>
           </div>
 
-          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', fontFamily: 'Quicksand', fontWeight:'600' }}>
+          <div className="Calendario" style={{ padding: '10px', border: '1px solid #aeaeae', backgroundColor: '#aeaeae', fontFamily: 'Quicksand', fontWeight: '600' }}>
             <DatePicker
               selected={startDate}
               onChange={onChange}
@@ -258,9 +260,9 @@ const Detail = ({ setSelectedDates }) => {
                 bgcolor: '#302253',
                 '&:hover': { bgcolor: '#5e2b96' },
                 marginTop: '15px',
-                '&.Mui-disabled': { color: '#fff', backgroundColor: '#302253' }, 
-                fontFamily: 'Quicksand', 
-                fontWeight:'600'
+                '&.Mui-disabled': { color: '#fff', backgroundColor: '#302253' },
+                fontFamily: 'Quicksand',
+                fontWeight: '600'
               }}
               disabled={!startDate || !endDate} // Deshabilitar el botón si startDate o endDate es null
             >
@@ -271,8 +273,8 @@ const Detail = ({ setSelectedDates }) => {
       </div>
 
       <div>
-        <Box component={Paper} elevation={3} p={3} mt={4} sx={{marginTop:'0'}}>
-          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight:'800' }}>
+        <Box component={Paper} elevation={3} p={3} mt={4} sx={{ marginTop: '0' }}>
+          <Typography variant="h6" style={{ marginBottom: '20px', borderBottom: '2px solid #302253', fontSize: '28px', fontFamily: 'Quicksand', fontWeight: '800' }}>
             Product Policies
           </Typography>
           <ProductPolicies />

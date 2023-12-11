@@ -11,6 +11,7 @@ import { useContextGlobal } from '../context/Context';
 import { urlReservation } from '../config/config';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DefaultButton from '../components/DefaultButton';
+import { URL } from '../config/config';
 
 const ReservationsList = () => {
     const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ const ReservationsList = () => {
                     Authorization: `Bearer ${token}`,
                 }
             };
-            const response = await axios.put(`http://localhost:8080/reservations/cancel/${id}`, null, config);
+            const response = await axios.put(`${URL}/reservations/cancel/${id}`, null, config);
             console.log('Cancel Reservation Response:', response.data);
             fetchReservations();
 
@@ -60,7 +61,7 @@ const ReservationsList = () => {
     */
     const fetchReservations = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/reservations/availablereservations-user/${userData.user.id}`);
+            const response = await axios.get(`${URL}/reservations/availablereservations-user/${userData.user.id}`);
             console.log('Response:', response.data);
             setReservations(response.data.content);
             setLoading(false);
@@ -100,8 +101,8 @@ const ReservationsList = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
-            <div style={{ width: '80vw' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '80vw', marginBottom:'100px' }}>
                 <h2 style={{ textAlign: 'center' }}>My Reservations</h2>
                 {loading && <p>Loading...</p>}
                 {!loading && sortedReservations.length === 0 && <p>No reservations found.</p>}
@@ -139,6 +140,7 @@ const ReservationsList = () => {
                     ))}
                 </List>
             </div>
+            
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -150,7 +152,7 @@ const ReservationsList = () => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        {`If you cancel the reservation, keep in mind that you will need to make a new one, and it's possible that the dates are already chosen.`}
+                        {`If you cancel the reservation keep in mind you may not find the same option.`}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

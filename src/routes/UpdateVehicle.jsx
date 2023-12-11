@@ -32,7 +32,7 @@ const UpdateVehicle = () => {
 
   const handleAddImage = async (event) => {
     const file = event.target.files[0];
-
+  
     try {
       const formData = new FormData();
       formData.append('image', file);
@@ -42,11 +42,9 @@ const UpdateVehicle = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      const imageUrl = response.data.url;
-
+  
       // Actualiza las imágenes con la nueva URL
-      setImages((prevImages) => [...prevImages, imageUrl]);
+      setImages((prevImages) => [...prevImages, response.data.url]);
     } catch (error) {
       console.error('Error uploading image', error);
     }

@@ -70,27 +70,27 @@ const UsersList = () => {
 
   return (
     <Container sx={{paddingBottom:'100px'}}>
-      <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
+      <Typography variant="h4" gutterBottom sx={{ marginTop: 3, fontFamily: 'Quicksand', fontWeight:'600' }}>
         User List
       </Typography>
       <TableContainer component={Paper}>
         <Table >
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>ID</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>First Name</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>Last Name</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>Email</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.lastname}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{user.id}</span>}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{user.name}</span>}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{user.lastname}</span>}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{user.email}</span>}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
@@ -98,6 +98,8 @@ const UsersList = () => {
                       width: '120px',
                       backgroundColor: user.admin ? 'red' : 'blue',
                       color: 'white',
+                      fontFamily: 'Quicksand', 
+                      fontWeight:'600'
                     }}
                     onClick={() => handleAdminChange(user.id, !user.admin)}
                   >

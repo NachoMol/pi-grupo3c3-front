@@ -112,7 +112,7 @@ const UpdatePolicies = () => {
         </Typography>
       ) : (
         <>
-          <Typography variant="h6" style={{ marginTop: '20px' }}>
+          <Typography variant="h6" style={{ marginTop: '20px', fontFamily: 'Quicksand', fontWeight:'600', fontSize:'28px' }}>
             Update Policy
           </Typography>
           <FormControl fullWidth style={{ marginTop: '10px' }}>
@@ -155,7 +155,7 @@ const UpdatePolicies = () => {
           <Button
             variant="contained"
             onClick={handleUpdate}
-            style={{ marginTop: '10px' }}
+            style={{ marginTop: '10px', fontFamily: 'Quicksand', fontWeight:'600' }}
           >
             Update Policy
           </Button>

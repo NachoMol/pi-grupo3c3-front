@@ -219,7 +219,7 @@ const InsertVehicle = () => {
 
           <div className="category-label">
             <FormControl component="fieldset" className="category-label">
-              <FormLabel id="demo-radio-buttons-group-label">Category</FormLabel>
+              <FormLabel id="demo-radio-buttons-group-label" sx={{fontFamily: 'Quicksand', fontWeight:'600'}}>Category</FormLabel>
               <RadioGroup
                 value={vehicle.category.id}
                 onChange={handleCategoryChange}
@@ -230,7 +230,7 @@ const InsertVehicle = () => {
                     key={category.id}
                     value={category.id}
                     control={<Radio />}
-                    label={category.name}
+                    label={<span style={{ fontFamily: 'Quicksand' }}>{category.name}</span>}
                   />
                 ))}
               </RadioGroup>
@@ -239,7 +239,7 @@ const InsertVehicle = () => {
 
           <div className="city-label">
             <FormControl component="fieldset" className="city-label">
-              <FormLabel id="demo-radio-buttons-group-label">City</FormLabel>
+              <FormLabel id="demo-radio-buttons-group-label" sx={{fontFamily: 'Quicksand', fontWeight:'600px'}}>City</FormLabel>
               <RadioGroup
                 value={vehicle.city.id}
                 onChange={handleCitiesChange}
@@ -250,7 +250,7 @@ const InsertVehicle = () => {
                     key={city.id}
                     value={city.id}
                     control={<Radio />}
-                    label={city.city}
+                    label={<span style={{ fontFamily: 'Quicksand' }}>{city.city}</span>}
                   />
                 ))}
               </RadioGroup>
@@ -258,7 +258,7 @@ const InsertVehicle = () => {
           </div>
 
           <FormControl component="fieldset" className="details-label">
-            <FormLabel>Details</FormLabel>
+            <FormLabel sx={{fontFamily: 'Quicksand', fontWeight:'600px'}}>Details</FormLabel>
             <FormGroup>
               {details.map((detail) => (
                 <FormControlLabel
@@ -270,7 +270,7 @@ const InsertVehicle = () => {
                       color="primary"
                     />
                   }
-                  label={detail.name}
+                  label={<span style={{ fontFamily: 'Quicksand' }}>{detail.name}</span>}
                 />
               ))}
             </FormGroup>
@@ -279,7 +279,7 @@ const InsertVehicle = () => {
           <div className="button-container">
             <input type="file" accept="image/*" onChange={handleImageChange} multiple />
             {error && <p className="error-message">{error}</p>}
-            <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3 }}>
+            <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3,fontFamily: 'Quicksand', fontWeight:'600'  }}>
               Submit
             </Button>
           </div>

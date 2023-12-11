@@ -113,23 +113,23 @@ const DetailsTable = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
+      <Typography variant="h4" gutterBottom sx={{ marginTop: 3, fontFamily: 'Quicksand', fontWeight:'600' }}>
         Detail List
       </Typography>
       <TableContainer component={Paper} sx={{ Width: '90%', margin: 'auto', marginTop: '30px' }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Detail Name</StyledTableCell>
-              <StyledTableCell>Image</StyledTableCell>
+              <StyledTableCell sx={{ fontFamily: 'Quicksand', fontWeight:'600'}}>Detail Name</StyledTableCell>
+              <StyledTableCell sx={{ fontFamily: 'Quicksand', fontWeight:'600'}}>Image</StyledTableCell>
               <StyledTableCell></StyledTableCell>
-              <StyledTableCell>Actions</StyledTableCell>
+              <StyledTableCell sx={{ fontFamily: 'Quicksand', fontWeight:'600'}}>Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {details.map((detail) => (
               <StyledTableRow key={detail.id}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row"  sx={{ fontFamily: 'Quicksand', fontWeight:'600'}}>
                   {detail.name}
                 </StyledTableCell>
                 <StyledTableCell align="right">
@@ -142,7 +142,7 @@ const DetailsTable = () => {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <Link to={`/admin/update-detail/${detail.id}`}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary"  sx={{ fontFamily: 'Quicksand', fontWeight:'600'}}>
                       Update
                     </Button>
                   </Link>
@@ -165,7 +165,7 @@ const DetailsTable = () => {
       <Link to={'/admin/add-detail'}>
         <Button
           variant="contained"
-          sx={{ mt: 3, mb: 2, bgcolor: '#1976D2', '&:hover': { bgcolor: '#1565C0' }, marginBottom: '100px' }}
+          sx={{ mt: 3, mb: 2, bgcolor: '#1976D2', '&:hover': { bgcolor: '#1565C0' }, marginBottom: '100px', fontFamily: 'Quicksand', fontWeight:'600' }}
         >
           Add Detail
         </Button>
