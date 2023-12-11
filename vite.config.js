@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import emotionBabelPlugin from '@emotion/babel-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +13,7 @@ export default defineConfig({
     jsxFactory: `React.createElement`,
     jsxFragment: `React.Fragment`,
     plugins: [
-      require('@emotion/babel-plugin')
+      emotionBabelPlugin  
     ],
   },
 })
