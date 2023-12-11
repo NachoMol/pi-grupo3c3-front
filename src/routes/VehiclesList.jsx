@@ -84,25 +84,25 @@ const VehiclesList = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom sx={{ marginTop: 3 }}>
+      <Typography variant="h4" gutterBottom sx={{ marginTop: 3, fontFamily: 'Quicksand', fontWeight:'600' }}>
         Vehicle List
       </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px'}}>ID</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px', width:'320px'}}>Name</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px', width:'250px'}}>Category</TableCell>
+              <TableCell sx={{fontFamily: 'Quicksand', fontWeight:'600', fontSize:'18px', width:'250px'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {vehicles.map((vehicle) => (
               <TableRow key={vehicle.id}>
-                <TableCell>{vehicle.id}</TableCell>
-                <TableCell>{vehicle.name}</TableCell>
-                <TableCell>{vehicle.category.name}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{vehicle.id}</span>}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{vehicle.name}</span>}</TableCell>
+                <TableCell>{<span style={{ fontFamily: 'Quicksand', fontWeight:'600' }}>{vehicle.category.name}</span>}</TableCell>
                 <TableCell>
                   <Link to={'/admin/update-vehicle/' + vehicle.id}>
                     <Button sx={{
@@ -114,6 +114,8 @@ const VehiclesList = () => {
                       marginRight: '5px',
                       borderRadius: '5px',
                       cursor: 'pointer',
+                      fontFamily: 'Quicksand', 
+                      fontWeight:'600',
                       '&:hover': {
                         backgroundColor: 'darkblue',
                       },
@@ -128,6 +130,8 @@ const VehiclesList = () => {
                     marginRight: '5px',
                     borderRadius: '5px',
                     cursor: 'pointer',
+                    fontFamily: 'Quicksand', 
+                    fontWeight:'600',
                     '&:hover': {
                       backgroundColor: 'darkred',
                     },
