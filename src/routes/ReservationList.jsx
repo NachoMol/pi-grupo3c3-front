@@ -45,7 +45,7 @@ const ReservationsList = () => {
                     Authorization: `Bearer ${token}`,
                 }
             };
-            const response = await axios.put(`${URL}/reservations/cancel/${id}`, null, config);
+            const response = await axios.put(`${urlReservation}/cancel/${id}`, null, config);
             console.log('Cancel Reservation Response:', response.data);
             fetchReservations();
 
@@ -61,7 +61,7 @@ const ReservationsList = () => {
     */
     const fetchReservations = async () => {
         try {
-            const response = await axios.get(`${URL}/reservations/availablereservations-user/${userData.user.id}`);
+            const response = await axios.get(`${urlReservation}/availablereservations-user/${userData.user.id}`);
             console.log('Response:', response.data);
             setReservations(response.data.content);
             setLoading(false);
@@ -130,7 +130,7 @@ const ReservationsList = () => {
                                         </React.Fragment>
                                     }
                                 />
-                                {isCancelAllowed(reservation.checkin) && (
+                                {(isCancelAllowed(reservation.checkin) && reservation.state === true) && (
                                     <Button variant="contained" color="secondary" onClick={() => handleClickOpen(reservation.id)} style={{ margin: 'auto' }}>
                                         Cancel
                                     </Button>
