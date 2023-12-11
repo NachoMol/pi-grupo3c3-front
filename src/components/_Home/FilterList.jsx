@@ -65,7 +65,9 @@ const FilterList = () => {
   const { dispatchCarFilter, dispatchFilterLoading } = useCarStates();
   const { checkInDate, checkOutDate } = dates;
   const [tempDate, setTempDate] = useState(null);
+  const [rentalDays, setRentalDays] = useState(0);
 
+  
   /**
    * Handles the change event for the given input element.
    * @param {Event} e - The change event object.
