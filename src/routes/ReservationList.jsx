@@ -59,11 +59,10 @@ const ReservationsList = () => {
     * @returns {void}
     */
     const fetchReservations = async () => {
-        const url = `${urlReservation}/availablereservations-user/${userData.user.id}`;
         try {
-            const { data } = await axios.get(url);
-            const availableReservations = data.content.filter(reservation => reservation.state === true);
-            setReservations(availableReservations);
+            const response = await axios.get(`http://localhost:8080/reservations/availablereservations-user/${userData.user.id}`);
+            console.log('Response:', response.data);
+            setReservations(response.data.content);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching reservations:', error);
