@@ -146,6 +146,8 @@ const RenderCars = ({ car }) => {
                                 height: 42,
                                 color: 'white',
                                 bgcolor: '#302253', '&:hover': { bgcolor: '#5e2b96' },
+                                fontFamily: 'Quicksand',
+                                fontWeight:'600',
                             }}>
                             Car Details
                         </Button>
