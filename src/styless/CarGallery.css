@@ -64,7 +64,7 @@
 }
 
 
-@media (max-width: 1107px){
+@media  (max-width: 1108px){
   .mainPhotoContainer {
     width: 80vw;
     
@@ -81,14 +81,14 @@
     height: auto;
   }
   .photos img{
-    width: 100px;
+    width: 100px !important; 
   }
 }
 
 @media(max-width: 730px){
   .photos img{
-    width: 80px;
-  }
+    width: 80px !important;
+  } 
 }
 
 @media (max-width: 600px){
@@ -96,7 +96,7 @@
     height: 250px;
   }
   .photos img{
-    height: 50px;
-    width: 50px;
+    height: 50px !important;
+    width: 50px !important;
   }
 }
