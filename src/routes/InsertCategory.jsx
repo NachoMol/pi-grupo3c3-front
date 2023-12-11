@@ -101,6 +101,7 @@ const InsertCategory = () => {
                     maxWidth: '40vw',
                     minWidth: '10vw',
                     maxHeight: 'none',
+                    paddingBottom:'0'
                 }}
             >
                 <h2>Add Category</h2>
@@ -152,7 +153,7 @@ const InsertCategory = () => {
                                     className="button"
                                     type="submit"
                                     variant="contained"
-                                    sx={{ marginTop: 3 }}
+                                    sx={{ marginTop: 3, fontFamily: 'Quicksand', fontWeight:'600' }}
                                 >
                                     Submit
                                 </Button>

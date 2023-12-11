@@ -93,20 +93,20 @@ const Header = () => {
                     autoFocus={true}
                   >
                     <Link to={'/UserProfile'} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600', fontFamily: 'Quicksand' }} onClick={handleCloseAvatarMenu}>My Profile</MenuItem>
                     </Link>
                     <Link to={'/UserFavorites'} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600', fontFamily: 'Quicksand' }} onClick={handleCloseAvatarMenu}>Favorites</MenuItem>
                     </Link>
                     {userData.user.admin && (  // Verifica si el usuario es administrador
                       <Link to={'/admin'} style={{ textDecoration: 'none' }}>
-                        <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
+                        <MenuItem style={{ color: 'black', fontSize: 15, fontWeight: '600', fontFamily: 'Quicksand' }} onClick={handleCloseAvatarMenu}>Admin Panel</MenuItem>
                       </Link>
                     )}
                     <Link to={'/reservation-list'} style={{textDecoration: 'none'}}>
-                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleCloseAvatarMenu}>My Reservations</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600', fontFamily: 'Quicksand' }} onClick={handleCloseAvatarMenu}>Reservations</MenuItem>
                     </Link>
-                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600' }} onClick={handleLogoutClick}>Logout</MenuItem>
+                      <MenuItem style={{color: 'black', fontSize: 15, fontWeight: '600', fontFamily: 'Quicksand' }} onClick={handleLogoutClick}>Logout</MenuItem>
                   </Menu>
                 </div>
               ) : (
