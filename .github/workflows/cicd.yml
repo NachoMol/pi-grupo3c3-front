@@ -22,7 +22,7 @@ jobs:
       run: npm ci
 
     - name: Build
-      run: npm run build
+      run: node build.js
 
     - name: Deploy to Amazon S3
       uses: jakejarvis/s3-sync-action@v0.5.0
