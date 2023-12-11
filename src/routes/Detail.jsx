@@ -207,7 +207,7 @@ const Detail = ({ setSelectedDates }) => {
                 backgroundColor: '#fff'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center', marginRight: '100px' }}>
+                  <div className='detailsLeft' style={{ float: 'left', textAlign: 'center' }}>
                     <Typography variant="h6" sx={{ display: 'flex', paddingBottom: '8px', flexDirection: 'row', justifyContent: 'start', width: '100%' }} >
                       {/* Mostrar el precio total si está disponible, de lo contrario, mostrar el precio diario */}
                       Price: ${totalPrice !== null ? totalPrice : car.price}

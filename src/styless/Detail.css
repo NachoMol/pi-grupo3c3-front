@@ -63,7 +63,8 @@
 }
 
 .detail-information p {
-  font-size: 16px !important;
+  font-size: 20px !important;
+  width: max-content;
 }
 
 .detail-information strong {
@@ -136,6 +137,9 @@
   background-color: red !important;
   color: white !important;
 }
+/* .detailsLeft {
+  margin-right: 5px !important;
+    } */
 
 @media (max-width: 1107px) {
   .detail-div {
@@ -167,11 +171,12 @@
 @media (max-width: 720px) {
   .detail-information h1 {
     font-size: 20px !important;
-  }
+  }  
 
-  .detail-information p {
-    font-size: 14px !important;
-  }
+  .detailsLeft h6, .detail-information p{
+    font-size: 16px !important;
+  } 
+
 
   .react-datepicker__day-name,
   .react-datepicker__day {
@@ -182,6 +187,14 @@
   .validDate {
     font-size: 0.8rem;
   }
+
+  .detailsRight {
+margin-left: 0px !important;
+  }
+
+  .detailsLeft {
+    margin-right: 80px !important;
+      }
 }
 
 @media (max-width: 524px) {
@@ -205,10 +218,11 @@
     font-size: 22px !important;
   }
 
-  .detail-information p {
-    font-size: 16px !important;
-    width: min-content;
+  .detail-information p, .detailsLeft h6  {
+    font-size: 14px !important;
+    width: auto;
   }
+ 
 
   .react-datepicker__day-name,
   .react-datepicker__day {
@@ -220,4 +234,14 @@
     font-size: 0.75rem !important;
     line-height: 1.5 !important;
   }
+  .detailsLeft {
+    margin-right: 10px !important;
+      }
+}
+
+@media (max-width: 400px){
+.css-isjyhb-MuiTypography-root, .detail-information p {
+  font-size: 14px !important;
+  text-align: left !important;
+}
 }
