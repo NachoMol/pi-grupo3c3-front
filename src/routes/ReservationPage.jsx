@@ -118,7 +118,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
     return (
         <Container maxWidth={false} sx={{ width: '100%', paddingRight: '0px', paddingLeft: '0px' }}>
             <Grid container spacing={2} sx={{ paddingTop: '0', marginTop: '0' }} >
-                <header style={{ display: 'flex', width: '100%', alignItems: 'center', backgroundColor: 'rgba(55, 25, 87, 1)' }}>
+                <header className='detail_header'>
                     <Link to={`/detail/${params.id}`}>
                         <img style={{ filter: 'invert(1)', width: '40px', height: 'auto', padding: '10px 5px 10px 30px' }} src="https://www.iconpacks.net/icons/3/free-icon-left-arrow-7252.png" alt="" />
                     </Link>
