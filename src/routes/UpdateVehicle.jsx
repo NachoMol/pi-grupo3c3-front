@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useParams } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const UpdateVehicle = () => {
   const [car, setCar] = useState({});
@@ -37,7 +38,7 @@ const UpdateVehicle = () => {
       formData.append('images', file);
   
       // Usa la URL correcta para la actualización de imágenes en el servidor
-      const response = await axios.put(`http://localhost:8080/products/update/${car.id}`, formData, {
+      const response = await axios.put(`${URL}/products/update/${car.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -62,7 +63,7 @@ const UpdateVehicle = () => {
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/products/${params.id}`, {
+        const response = await axios.get(`${URL}/products/${params.id}`, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ const UpdateVehicle = () => {
         setCar(carData);
   
         // Modifica los detalles para que estén administrados por Hibernate
-        const detailsResponse = await axios.get('http://localhost:8080/details', {
+        const detailsResponse = await axios.get(`${URL}/details`, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -102,9 +103,9 @@ const UpdateVehicle = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await axios.get('http://localhost:8080/categories');
-        const detailsResponse = await axios.get('http://localhost:8080/details');
-        const citiesResponse = await axios.get('http://localhost:8080/cities');
+        const categoriesResponse = await axios.get(`${URL}/categories`);
+        const detailsResponse = await axios.get(`${URL}/details`);
+        const citiesResponse = await axios.get(`${URL}/cities`);
         setCategories(categoriesResponse.data);
         setDetails(detailsResponse.data);
         setCities(citiesResponse.data);
@@ -194,7 +195,7 @@ const UpdateVehicle = () => {
         images: images,  // Incluye las imágenes actualizadas
       };
   
-      const updateResponse = await axios.put(`http://localhost:8080/products/update/${car.id}`, updateData);
+      const updateResponse = await axios.put(`${URL}/products/update/${car.id}`, updateData);
   
       console.log('Product response:', updateResponse);
   

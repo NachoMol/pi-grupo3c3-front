@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import axios from 'axios';
 import { useContextGlobal } from '../context/Context';
+import { URL } from '../config/config';
 
 const UsersList = () => {
   const { userData } = useContextGlobal();
@@ -12,7 +13,7 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/users');
+        const response = await axios.get(`${URL}/users`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -44,7 +45,7 @@ const UsersList = () => {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:8080/users/update/${userId}`, { admin: makeAdmin });
+      const response = await axios.put(`${URL}/users/update/${userId}`, { admin: makeAdmin });
       setUsers((prevState) => {
         const updatedUsers = prevState.map((user) => {
           if (user.id === userId) {

@@ -10,6 +10,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import axios from 'axios';
+import { URL } from '../config/config';
 
 
 const UpdatePolicies = () => {
@@ -24,7 +25,7 @@ const UpdatePolicies = () => {
   useEffect(() => {
     const fetchPolicyTitles = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/policies');
+        const response = await axios.get(`${URL}/policies`);
         const titles = response.data.map(policy => ({
           id: policy.id,
           name: policy.title,
@@ -45,7 +46,7 @@ const UpdatePolicies = () => {
     const fetchPolicyDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/policies/${selectedPolicyId}`
+          `${URL}/policies/${selectedPolicyId}`
         );
         const policyDetails = response.data;
 
@@ -86,7 +87,7 @@ const UpdatePolicies = () => {
     }
     try {
       // Realizar la solicitud de actualización al backend
-      await axios.put(`http://localhost:8080/policies/update/${selectedPolicyId}`, {
+      await axios.put(`${URL}/policies/update/${selectedPolicyId}`, {
         title,
         description,
       });

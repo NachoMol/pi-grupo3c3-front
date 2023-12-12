@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
+import { URL } from '../config/config';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,7 +45,7 @@ const DetailsTable = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/details');
+        const response = await axios.get(`${URL}/details`);
         setDetails(response.data);
         setLoading(false);
       } catch (error) {
@@ -88,7 +89,7 @@ const DetailsTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8080/details/delete/${id}`);
+          await axios.delete(`${URL}/details/delete/${id}`);
           setDetails((prevDetails) => prevDetails.filter((detail) => detail.id !== id));
           Swal.fire(
             'Deleted!',

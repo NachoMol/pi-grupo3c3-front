@@ -24,6 +24,7 @@ import '../styless/ReservationPage.css';
 import '../styless/Detail.css';
 import '../styless/CarGallery.css';
 import Swal from 'sweetalert2';
+import { URL } from '../config/config';
 
 const ReservationPage = ({ selectedDates, onDateChange }) => {
     const params = useParams();
@@ -46,7 +47,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
     };
 
     const fetchProduct = async () => {
-        const response = await axios.get('http://localhost:8080/products/' + params.id);
+        const response = await axios.get(`${URL}/products/${params.id}`);
         return response.data;
     };
 
@@ -77,7 +78,7 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/reservations/create', reservationDTO);
+            const response = await axios.post(`${URL}/reservations/create`, reservationDTO);
             console.log('Reserva creada:', response.data);
             // Alerta de éxito con SweetAlert2
             Swal.fire({

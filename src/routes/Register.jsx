@@ -14,6 +14,7 @@ import axios from 'axios';
 import DefaultButton from '../components/DefaultButton';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { URL } from '../config/config';
 
 //template sacada de https://github.com/mui/material-ui/blob/v5.14.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
 const Register = () => {
@@ -99,8 +100,8 @@ const Register = () => {
       };
 
       try {
-        const response = await axios.post('http://localhost:8080/users/create', user);
-
+        const response = await axios.post(`${URL}/users/create`, user);
+      
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -118,7 +119,7 @@ const Register = () => {
           }).then((result) => {
             if (result.isConfirmed) {
               // Aquí puedes hacer la petición para reenviar el correo
-              fetch(`http://localhost:8080/users/forwardmail/${email}`, {
+              fetch(`${URL}/users/forwardmail/${email}`, {
                 method: 'POST',
                 // Aquí puedes agregar más configuraciones para tu petición si es necesario
               }).then(response => {

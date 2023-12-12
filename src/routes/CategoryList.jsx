@@ -7,6 +7,7 @@ import '../styless/CategoryList.css';
 import { toastMessage } from '../helpers/toastMessage';
 import { urlCategories } from '../config/config';
 import DefaultButton from '../components/DefaultButton';
+import { URL } from '../config/config';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,7 +47,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/categories');
+        const response = await axios.get(`${URL}/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories', error);

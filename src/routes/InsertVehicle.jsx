@@ -14,6 +14,7 @@ import FormGroup from '@mui/material/FormGroup';
 import '../styless/InsertVehicle.css';
 import { useContextGlobal } from '../context/Context';
 import { Link } from 'react-router-dom';
+import { URL } from '../config/config';
 
 const InsertVehicle = () => {
   const [vehicle, setVehicle] = useState({
@@ -37,9 +38,9 @@ const InsertVehicle = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await axios.get('http://localhost:8080/categories');
-        const detailsResponse = await axios.get('http://localhost:8080/details');
-        const citiesResponse = await axios.get('http://localhost:8080/cities');
+        const categoriesResponse = await axios.get(`${URL}/categories`);
+        const detailsResponse = await axios.get(`${URL}/details`);
+        const citiesResponse = await axios.get(`${URL}/cities`);
         setCategories(categoriesResponse.data);
         setDetails(detailsResponse.data);
         setCities(citiesResponse.data);
@@ -153,14 +154,14 @@ const InsertVehicle = () => {
         city: { id: selectedCityId },
       }));
 
-      const productResponse = await axios.post('http://localhost:8080/products/add', formData);
+      const productResponse = await axios.post(`${URL}/products/add`, formData);
 
       const vehicleID = productResponse.data.id;
       console.log('Product response:', productResponse);
 
       const selectedDetailsAsNumbers = selectedDetails.map(Number);
 
-      await axios.post(`http://localhost:8080/products/${vehicleID}/add-details`, selectedDetailsAsNumbers, {
+      await axios.post(`${URL}/products/${vehicleID}/add-details`, selectedDetailsAsNumbers, {
         headers: {
           'Content-Type': 'application/json',
         }

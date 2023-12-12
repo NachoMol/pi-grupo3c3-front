@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import { useContextGlobal } from '../context/Context';
+import { URL } from '../config/config';
 
 const InsertCategory = () => {
     const [category, setCategory] = useState({
@@ -57,7 +58,7 @@ const InsertCategory = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                'http://localhost:8080/categories/create',
+                `${URL}/categories/create`,
                 {
                     name: category.title,
                     description: category.description,

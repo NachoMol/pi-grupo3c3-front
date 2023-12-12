@@ -4,6 +4,7 @@ import { CircularProgress, Container, Grid } from '@mui/material';
 import RenderCars from './RenderCars';
 import { useCarStates } from '../context/Context';
 import FilterList from './_Home/FilterList';
+import { URL } from '../config/config';
 
 const BodyContainer = () => {
     // debugger;
@@ -25,7 +26,7 @@ const BodyContainer = () => {
 
         const fetchCars = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/products/random?size=${size}`);
+                const response = await axios.get(`${URL}/products/random?size=${size}`);
                 console.log('fecthInicialdelcar', response.data)
                 setCar(response.data); // los productos están en la propiedad 'data'           
             } catch (error) {
