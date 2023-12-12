@@ -297,29 +297,6 @@ const UpdateVehicle = () => {
             ))}
           </FormGroup>
         </FormControl>
-        <FormGroup>
-          <FormLabel sx={{ fontSize: '22px' }}>Images</FormLabel>
-          {images.map((image, index) => (
-             <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-             <img
-               src={image.url}
-               alt={`Image ${index}`}
-               style={{ width: '100px', height: '60px', objectFit: 'contain', marginRight: '25px', backgroundColor:'rgb(201, 201, 201)' }}
-             />
-             <Button onClick={() => handleRemoveImage(index)} variant="outlined" color="error">
-               Remove
-             </Button>
-           </div>
-          ))}
-          <Button
-            variant="contained"
-            component="label"
-            sx={{ marginTop: '8px', fontSize: '16px' }}
-          >
-            Add Image
-            <input type="file" accept="image/*" onChange={handleAddImage} style={{ display: 'none' }} />
-          </Button>
-        </FormGroup>
         <Button className="button" type="submit" variant="contained" sx={{ marginTop: 3, fontSize: '16px', backgroundColor:'#402253', '&:hover': { bgcolor: '#5e2b96' }, }} onClick={handleSubmit}>
           Update
         </Button>

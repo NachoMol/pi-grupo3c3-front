@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useContextGlobal } from '../context/Context';
 import { urlReservation } from '../config/config';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DefaultButton from '../components/DefaultButton';
 
 const ReservationsList = () => {
@@ -44,7 +44,7 @@ const ReservationsList = () => {
                     Authorization: `Bearer ${token}`,
                 }
             };
-            const response = await axios.put(`http://localhost:8080/reservations/cancel/${id}`, null, config);
+            const response = await axios.put(`${urlReservation}/cancel/${id}`, null, config);
             console.log('Cancel Reservation Response:', response.data);
             fetchReservations();
 
@@ -60,7 +60,7 @@ const ReservationsList = () => {
     */
     const fetchReservations = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/reservations/availablereservations-user/${userData.user.id}`);
+            const response = await axios.get(`${urlReservation}/availablereservations-user/${userData.user.id}`);
             console.log('Response:', response.data);
             setReservations(response.data.content);
             setLoading(false);
@@ -101,7 +101,7 @@ const ReservationsList = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '80vw', marginBottom:'100px' }}>
+            <div style={{ width: '80vw', marginBottom: '100px' }}>
                 <h2 style={{ textAlign: 'center' }}>My Reservations</h2>
                 {loading && <p>Loading...</p>}
                 {!loading && sortedReservations.length === 0 && <p>No reservations found.</p>}
@@ -129,17 +129,22 @@ const ReservationsList = () => {
                                         </React.Fragment>
                                     }
                                 />
-                                {isCancelAllowed(reservation.checkin) && (
+                                {(isCancelAllowed(reservation.checkin) && reservation.state === true) && (
                                     <Button variant="contained" color="secondary" onClick={() => handleClickOpen(reservation.id)} style={{ margin: 'auto' }}>
                                         Cancel
                                     </Button>
                                 )}
+                                {
+                                    !reservation.state && (
+                                        <Chip label="Cancelled" color="error" variant="elevated" sx={{ margin: 'auto 6px', backgroundColor: '#9C80BD', }} />
+                                    )
+                                }
                             </ListItem>
                         </React.Fragment>
                     ))}
                 </List>
             </div>
-            
+
             <Dialog
                 open={open}
                 onClose={handleClose}

@@ -116,8 +116,8 @@ const RenderCars = ({ car }) => {
                         {car.name}
                     </Typography>
                     <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="body2" color="text.secondary" sx={{fontSize:'16px', fontWeight:'600'}}>
-                            ${car.price} USD
+                        <Typography variant="body2" color="text.secondary" sx={{fontSize:'16px', fontWeight:'600', fontFamily: 'Quicksand'}}>
+                            Daily price ${car.price} USD
                         </Typography>
                     </CardContent>
                 </CardActionArea>

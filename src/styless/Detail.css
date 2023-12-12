@@ -63,12 +63,16 @@
 }
 
 .detail-information p {
-  font-size: 20px !important;
+  font-size: 1.25rem !important;
   width: max-content;
 }
 
 .detail-information strong {
   font-weight: bold;
+}
+
+.detailsLeft h6 {
+  width: max-content;
 }
 
 .info {
@@ -137,11 +141,24 @@
   background-color: red !important;
   color: white !important;
 }
-/* .detailsLeft {
-  margin-right: 5px !important;
-    } */
 
-@media (max-width: 1107px) {
+/* Product policies */
+.css-1u4wd3r-MuiPaper-root {
+  padding: 0px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-bottom: 50px !important;
+}
+
+.MuiTypography-h6 {
+  padding: 10px !important;
+}
+
+@media (max-width: 1160px) {
+  .css-1u4wd3r-MuiPaper-root {
+    padding-bottom: 70px !important;
+  }
+
   .detail-div {
     display: flex;
     flex-direction: column;
@@ -162,20 +179,25 @@
   .Calendario {
     width: 80vw;
   }
+
   .validDate {
     width: max-content;
-   
+  }
+
+  .MuiTypography-h6 {
+    font-size: 24px !important;
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 730px) {
   .detail-information h1 {
     font-size: 20px !important;
-  }  
+  }
 
-  .detailsLeft h6, .detail-information p{
+  .detailsLeft h6,
+  .detail-information p {
     font-size: 16px !important;
-  } 
+  }
 
 
   .react-datepicker__day-name,
@@ -189,21 +211,25 @@
   }
 
   .detailsRight {
-margin-left: 0px !important;
+    margin-left: 0px !important;
   }
 
   .detailsLeft {
     margin-right: 80px !important;
-      }
+  }
+
+  .MuiTypography-h6 {
+    font-size: 22px !important;
+  }
 }
 
-@media (max-width: 524px) {
+@media (max-width: 600px) {
   .containerDetailsLeftAndRight {
     flex-direction: column;
     align-items: center;
     border: 2px solid #9c80bd;
   }
- 
+
   .validDate {
     width: max-content;
     font-size: 0.7rem;
@@ -218,11 +244,12 @@ margin-left: 0px !important;
     font-size: 22px !important;
   }
 
-  .detail-information p, .detailsLeft h6  {
+  .detail-information p,
+  .detailsLeft h6 {
     font-size: 14px !important;
-    width: auto;
+    /* width: auto; */
   }
- 
+
 
   .react-datepicker__day-name,
   .react-datepicker__day {
@@ -234,14 +261,26 @@ margin-left: 0px !important;
     font-size: 0.75rem !important;
     line-height: 1.5 !important;
   }
+
   .detailsLeft {
     margin-right: 10px !important;
-      }
+  }
+
+  .MuiTypography-h6 {
+    font-size: 20px !important;
+  }
 }
 
-@media (max-width: 400px){
-.css-isjyhb-MuiTypography-root, .detail-information p {
-  font-size: 14px !important;
-  text-align: left !important;
-}
+@media (max-width: 430px) {
+
+  .css-isjyhb-MuiTypography-root,
+  .detail-information p {
+    font-size: 14px !important;
+    text-align: left !important;
+  }
+
+  .containerCardetail {
+    flex-direction: column;
+    align-items: center;
+  }
 }
