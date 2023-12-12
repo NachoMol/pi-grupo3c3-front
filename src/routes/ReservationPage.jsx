@@ -208,6 +208,9 @@ const ReservationPage = ({ selectedDates, onDateChange }) => {
                     </Typography>
                     <ProductPolicies />
                 </Box>
+                <br />
+                <br />
+                <br />
 
             </Grid>
         </Container>
