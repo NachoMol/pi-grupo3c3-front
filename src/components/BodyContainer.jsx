@@ -46,9 +46,8 @@ const BodyContainer = () => {
     }, [filter]);
 
     return (
-        <Container sx={{ background: '#D9D9D9;', width: '100%' }} >
+        <Container sx={{ background: '#D9D9D9;', maxWidth: '100%' }} >
             <FilterList />
-            
             <h2 style={{marginTop:'30px', paddingTop:'10px', paddingBottom: '10px', width: '100%', color:"#5e2b96"}}>Our Recommendations</h2>
             {filterLoadingProducts ? <CircularProgress sx={{ color: '#5C4D6B', mt: '2rem' }} /> : (
                 <Grid container spacing={2} sx={{ mt: '1rem' }}>

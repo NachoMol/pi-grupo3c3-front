@@ -20,8 +20,8 @@ import {
 import ProductPolicies from './ProductPolicies';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import '../styless/ReservationPage.css';
 import '../styless/Detail.css';
+import '../styless/ReservationPage.css';
 import '../styless/CarGallery.css';
 import Swal from 'sweetalert2';
 import { URL } from '../config/config';
