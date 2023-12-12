@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from '@mui/material'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import CarGallery from '../components/CarGallery';
-import '../styless/App.css';
+//import '../styless/App.css';
 import '../styless/Detail.css';
 import axios from 'axios';
 import { useContextGlobal } from '../context/Context';
