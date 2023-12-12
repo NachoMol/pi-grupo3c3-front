@@ -307,7 +307,7 @@ const FilterList = () => {
 
       <Box sx={{ width: '100%' }}>
         <Grid>
-          <h2 style={{ marginTop: '10px', fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', fontSize: '20px' }}>Categories</h2>
+          <h2 style={{ marginTop: '10px', color: "#5e2b96", fontFamily: 'Quicksand', paddingTop: '10px', paddingBottom: '10px', width: '100%', fontSize: '20px' }}>Categories</h2>
         </Grid>
       </Box>
 

@@ -46,11 +46,10 @@ const BodyContainer = () => {
     }, [filter]);
 
     return (
-        <Container sx={{ background: '#D9D9D9;', maxWidth: '100%' }} >
-            <div style={{ backgroundColor: 'RGB(190, 190, 190)', paddingBottom:'15px', paddingTop:'10px' }}>
-                <FilterList />
-            </div>
-            {/* <h2 style={{marginTop:'30px', paddingTop:'10px', paddingBottom: '10px', width: '100%', backgroundColor: '#9c80bd'}}>Recommendations</h2> */}
+        <Container sx={{ background: '#D9D9D9;', width: '100%' }} >
+            <FilterList />
+            
+            <h2 style={{marginTop:'30px', paddingTop:'10px', paddingBottom: '10px', width: '100%', color:"#5e2b96"}}>Our Recommendations</h2>
             {filterLoadingProducts ? <CircularProgress sx={{ color: '#5C4D6B', mt: '2rem' }} /> : (
                 <Grid container spacing={2} sx={{ mt: '1rem' }}>
                     {car.length > 0 && car.map(car => (

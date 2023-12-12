@@ -113,7 +113,7 @@ const RenderCars = ({ car }) => {
                         image={car.images && car.images.length > 0 ? car.images[0].url : 'default_image_url'}
                         alt={`image ${car.name}`}   
                     />
-                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontSize: '22px', fontWeight: '800', margin:'5px' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'normal', fontFamily: 'Quicksand', fontSize: '22px', fontWeight: '800', margin:'5px' }}>
                         {car.name}
                     </Typography>
                     <CardContent sx={{ background: '#FFF', border: '3px solid #000', margin: '11px 0 4px 0', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
