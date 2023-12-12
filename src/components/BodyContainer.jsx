@@ -46,7 +46,7 @@ const BodyContainer = () => {
     }, [filter]);
 
     return (
-        <Container disableGutters maxWidth='1980px' sx={{ background: '#D9D9D9;', maxWidth: '100%' }} >
+        <Container sx={{ background: '#D9D9D9;', maxWidth: '100%' }} >
             <div style={{ backgroundColor: 'RGB(190, 190, 190)', paddingBottom:'15px', paddingTop:'10px' }}>
                 <FilterList />
             </div>

@@ -266,7 +266,7 @@ const FilterList = () => {
   }
 
   return (
-    <Container sx={{ margin: '0', padding: '0', }}>
+    <Container sx={{ margin: '0', padding: '0'}}>
       <Autocomplete
         options={options}
         getOptionLabel={(option) => option.name}
