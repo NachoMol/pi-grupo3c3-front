@@ -62,8 +62,7 @@ const ReservationsList = () => {
         try {
             const response = await axios.get(`http://localhost:8080/reservations/availablereservations-user/${userData.user.id}`);
             console.log('Response:', response.data);
-            const activeReservations = response.data.content.filter(reservation => reservation.state);
-            setReservations(activeReservations);
+            setReservations(response.data.content);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching reservations:', error);
