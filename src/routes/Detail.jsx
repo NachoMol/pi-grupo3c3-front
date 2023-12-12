@@ -280,6 +280,9 @@ const Detail = ({ setSelectedDates }) => {
           <ProductPolicies />
         </Box>
       </div>
+      <br />
+      <br />
+      <br />
 
       <Dialog
         open={open}
