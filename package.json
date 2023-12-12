@@ -15,7 +15,8 @@
     "@hookform/error-message": "^2.0.1",
     "@mui/icons-material": "^5.14.14",
     "@mui/lab": "^5.0.0-alpha.155",
-    "@mui/material": "^5.14.16",
+    "@mui/material": "^5.14.20",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.7",
     "@mui/x-date-pickers": "^6.18.2",
     "axios": "^1.6.0",
     "date-fns": "^2.30.0",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.17.0",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.1",
     "sweetalert2": "^11.6.13",
     "sweetalert2-react-content": "^5.0.7"
   },
