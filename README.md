@@ -2,7 +2,7 @@
 
 # Renta de Coches Explorer App
 
-Link del sitio: http://app-explorer.s3-website-us-east-1.amazonaws.com/admin
+Link del sitio: http://app-explorer.s3-website-us-east-1.amazonaws.com
 
 Esta es una aplicación de renta de coches construida con Vite y gestionada con pnpm.
 
